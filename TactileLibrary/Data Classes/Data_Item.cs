@@ -157,6 +157,12 @@ namespace TactileLibrary
                 if (stat > 0) return true;
             return false;
         }
+        public bool is_skill_book()
+        {
+            if (Skills.Count == 1 && Stat_Boost[(int)Boosts.WExp] == 1)
+                return true;
+            return false;
+        }
 
         public bool is_growth_booster()
         {

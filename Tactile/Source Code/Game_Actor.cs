@@ -10,6 +10,7 @@ using ListExtension;
 using TactileDictionaryExtension;
 using TactileWeaponExtension;
 using TactileVersionExtension;
+using HashSetExtension;
 
 namespace Tactile
 {
@@ -46,6 +47,7 @@ namespace Tactile
         private int Needed_Levels = 0;
         private bool Instant_Level = false;
         private HashSet<string> Skills = new HashSet<string>();
+        private HashSet<int> Learned_Skills = new HashSet<int>() { };
         private bool Skills_Need_Updated = false;
 
         #region Serialization
@@ -86,6 +88,7 @@ namespace Tactile
             Support_Progress.write(writer);
             Supports.write(writer);
             writer.Write(Bond);
+            Learned_Skills.write(writer);
         }
 
         public void read(BinaryReader reader) // Make this static, maybe? //Yeti
@@ -218,6 +221,7 @@ namespace Tactile
                     Support_Progress[pair.Key] = pair.Value;
             Supports.read(reader);
             Bond = reader.ReadInt32();
+            Learned_Skills.read(reader);
 
             skill_list_update();
         }
@@ -1750,7 +1754,7 @@ namespace Tactile
                 if (item_data.Id > 0 && item_data.is_item)
                 {
                     Data_Item item = item_data.to_item;
-                    if (is_useable(item))
+                    if (is_useable(item) && !item.is_skill_book())
                         foreach (int skill_id in item.Skills)
                             if (Global.data_skills[skill_id].Abstract == name)
                                 return true;
@@ -1774,6 +1778,9 @@ namespace Tactile
                 skills.Add(skill_id);
             // Class skills
             foreach (int skill_id in class_skills())
+                skills.Add(skill_id);
+            // Learned skills
+            foreach (int skill_id in Learned_Skills)
                 skills.Add(skill_id);
             // Weapon skills
             if (this.weapon != null)
@@ -1829,6 +1836,9 @@ namespace Tactile
                 foreach (int skill_id in class_skills())
                     if (!skills.Contains(skill_id))
                         skills.Add(skill_id);
+                foreach (int skill_id in Learned_Skills)
+                    if (!skills.Contains(skill_id))
+                        skills.Add(skill_id);
                 return skills;
             }
         }
@@ -1847,13 +1857,17 @@ namespace Tactile
                     if (item_data.Id > 0 && item_data.is_item)
                     {
                         Data_Item item = item_data.to_item;
-                        if (is_useable(item))
+                        if (is_useable(item) && !item.is_skill_book())
                             foreach (int skill_id in item.Skills)
                                 if (!skills.Contains(skill_id))
                                     skills.Add(skill_id);
                     }
                 return skills;
             }
+        }
+        public void learn_skill(int id)
+        {
+            Learned_Skills.Add(id);
         }
 
         public List<int> all_skills
@@ -1867,7 +1881,9 @@ namespace Tactile
                 // Class skills
                 foreach (int skill_id in class_skills())
                     skills.Add(skill_id);
-
+                // Learned Skills
+                foreach (int skill_id in Learned_Skills)
+                    skills.Add(skill_id);
                 // Weapon skills
                 if (this.weapon != null)
                     foreach (int skill_id in this.weapon.Skills)
@@ -1882,7 +1898,7 @@ namespace Tactile
                     if (item_data.Id > 0 && item_data.is_item)
                     {
                         Data_Item item = item_data.to_item;
-                        if (is_useable(item))
+                        if (is_useable(item) && !item.is_skill_book())
                             foreach (int skill_id in item.Skills)
                                 skills.Add(skill_id);
                     }
@@ -2681,6 +2697,9 @@ namespace Tactile
                             break;
                     }
             }
+            // Skill Learn
+            if (item.is_skill_book())
+                learn_skill(item.Skills[0]);
             // Growth Boost
             for (int i = 0; i < item.Growth_Boost.Length; i++)
                 Growth_Bonuses[i] += item.Growth_Boost[i];
