@@ -44,7 +44,7 @@ namespace Tactile.Windows.Target
             Unit_Id = unit_id;
             var staff = Global.data_weapons[get_unit().actor.items[item_index].Id];
             Mode = target_mode(staff);
-            if (staff.Torch())
+            if (staff.Torch() || staff.Light_Rune())
                 Manual_Targeting = true;
 
             Right_X = Config.WINDOW_WIDTH - this.window_width;
@@ -69,7 +69,7 @@ namespace Tactile.Windows.Target
         {
             if (staff.is_attack_staff())
                 return Staff_Target_Mode.Status_Inflict;
-            else if (staff.Torch())
+            else if (staff.Torch() || staff.Light_Rune())
                 return Staff_Target_Mode.Torch;
             else if (staff.Heals())
                 return Staff_Target_Mode.Heal;

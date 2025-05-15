@@ -4796,6 +4796,10 @@ namespace Tactile
                     if (Global.game_map.fow)
                         in_range_weapons.Add(useable_weapon);
                 }
+                if (Global.data_weapons[items[useable_weapon].Id].Light_Rune())
+                {
+                    in_range_weapons.Add(useable_weapon);
+                }
                 else if (Global.data_weapons[items[useable_weapon].Id].Hits_All_in_Range())
                 {
                     //in_range_weapons.Add(useable_weapon);

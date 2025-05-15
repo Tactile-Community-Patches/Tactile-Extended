@@ -3209,7 +3209,7 @@ namespace Tactile
                 Item_Data item_data = items[result[i]];
                 Data_Weapon weapon = Global.data_weapons[item_data.Id];
                 if (!weapon.is_attack_staff() &&
-                        (weapon.Torch() || (weapon.Hits_All_in_Range() &&
+                        ((weapon.Torch() || weapon.Light_Rune()) || (weapon.Hits_All_in_Range() &&
                         !(weapon.Heals() || weapon.Status_Remove.Count > 0))))
                     i++;
                 else

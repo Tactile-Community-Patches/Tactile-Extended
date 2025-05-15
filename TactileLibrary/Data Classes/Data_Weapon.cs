@@ -458,6 +458,7 @@ namespace TactileLibrary
         #region Staff_Traits
         public bool Heals() { return Staff_Traits[(int)Stave_Traits.Heals]; }
         public bool Torch() { return Staff_Traits[(int)Stave_Traits.Torch]; }
+        public bool Light_Rune() { return Config.StaffConfig.Light_Rune_Staves.Contains(Id); }
         public bool Unlock() { return Staff_Traits[(int)Stave_Traits.Unlock]; }
         public bool Repair() { return Staff_Traits[(int)Stave_Traits.Repair]; }
         public bool Barrier() { return Staff_Traits[(int)Stave_Traits.Barrier]; }

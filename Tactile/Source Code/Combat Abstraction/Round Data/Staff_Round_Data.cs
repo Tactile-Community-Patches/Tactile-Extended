@@ -41,6 +41,9 @@ namespace Tactile
             // Flare
             else if (StaffMode == Staff_Modes.Torch)
                 return Combat.set_torch(this.AttackerUnit, weapon);
+            // Light Rune
+            else if (StaffMode == Staff_Modes.Light_Rune)
+                return Combat.set_torch(this.AttackerUnit, weapon);
             else
                 return new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() }; // Additional results add on after here //Yeti
         }

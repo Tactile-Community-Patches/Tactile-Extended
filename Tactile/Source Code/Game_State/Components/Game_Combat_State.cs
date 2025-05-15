@@ -1429,6 +1429,10 @@ namespace Tactile.State
             }
             if (weapon.Torch())
                 Global.game_map.add_torch_staff(Staff_Target_Loc);
+            if (weapon.Light_Rune())
+            {
+                //code for adding light rune goes here //gooseish
+            }    
         }
         #endregion
 
@@ -1849,11 +1853,19 @@ namespace Tactile.State
                                 {
                                     if (Weapon1.Torch())
                                         Global.game_map.add_torch_staff(Staff_Target_Loc);
+                                    if (Weapon1.Light_Rune())
+                                    {
+                                        //gooseish
+                                    }
                                 }
                                 else if (Map_Combat_Data.Data[Attack_Id].Key.Attacker == 2)
                                 {
                                     if (Weapon2.Torch())
                                         Global.game_map.add_torch_staff(Staff_Target_Loc);
+                                    if (Weapon2.Light_Rune())
+                                    {
+                                        //gooseish
+                                    }
                                 }
                                 Attack_Id++;
                             }
