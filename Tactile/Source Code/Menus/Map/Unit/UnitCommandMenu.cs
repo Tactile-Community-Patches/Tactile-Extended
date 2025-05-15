@@ -566,6 +566,7 @@ namespace Tactile.Menus.Map.Unit
                 item_indices, new HashSet<Vector2> { unit.loc });
             //Global.game_temp.temp_staff_range = Global.game_map.get_unit_range(new List<Vector2> { unit.loc },
             //    unit.min_range_absolute(), unit.max_range_absolute()); // this should care about the exact weapons, I think //Yeti
+            
         }
         public void RefreshTempStaffRange(int itemIndex)
         {
@@ -575,6 +576,20 @@ namespace Tactile.Menus.Map.Unit
                 new HashSet<Vector2> { unit.loc },
                 unit.min_range(itemIndex), unit.max_range(itemIndex),
                 weapon.range_blocked_by_walls());
+
+            if (weapon.Light_Rune())
+            {
+                List<Vector2> blocked_tiles = new List<Vector2> { };
+                foreach (Vector2 tile in Global.game_temp.temp_staff_range)
+                {
+                    if (!Global.game_map.no_unit_at_location(tile))
+                    {
+                        blocked_tiles.Add(tile);
+                    }
+                }
+                foreach (Vector2 tile in blocked_tiles)
+                    Global.game_temp.temp_staff_range.Remove(tile);
+            }
         }
     }
 }

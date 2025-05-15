@@ -9,7 +9,6 @@ namespace TactileLibrary.Config
     {
         public static readonly HashSet<int> Light_Rune_Staves = new HashSet<int>
         {
-            171,
         };
     }
 }
