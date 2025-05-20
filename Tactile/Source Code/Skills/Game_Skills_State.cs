@@ -7,12 +7,14 @@ namespace Tactile.State
         internal Game_Dance_State Dance_State { get; private set; }
         internal Game_Sacrifice_State Sacrifice_State { get; private set; }
         internal Game_Steal_State Steal_State { get; private set; }
+        internal Game_Skill_Flash_State Skill_Flash_State { get; private set; }
 
         internal override void write(BinaryWriter writer)
         {
             Dance_State.write(writer);
             Sacrifice_State.write(writer);
             Steal_State.write(writer);
+            Skill_Flash_State.write(writer);
         }
 
         internal override void read(BinaryReader reader)
@@ -20,6 +22,7 @@ namespace Tactile.State
             Dance_State.read(reader);
             Sacrifice_State.read(reader);
             Steal_State.read(reader);
+            Skill_Flash_State.read(reader);
         }
 
         internal Game_Skills_State()
@@ -27,6 +30,7 @@ namespace Tactile.State
             Dance_State = new Game_Dance_State();
             Sacrifice_State = new Game_Sacrifice_State();
             Steal_State = new Game_Steal_State();
+            Skill_Flash_State = new Game_Skill_Flash_State();
         }
 
         internal override void update()
@@ -34,6 +38,7 @@ namespace Tactile.State
             Dance_State.update();
             Sacrifice_State.update();
             Steal_State.update();
+            Skill_Flash_State.update();
         }
 
         internal bool is_skill_ready()
@@ -41,6 +46,7 @@ namespace Tactile.State
             if (dance_active) return false;
             if (sacrifice_active) return false;
             if (steal_active) return false;
+            if (skill_flash_active) return false;
             return true;
         }
 
@@ -52,5 +58,6 @@ namespace Tactile.State
         internal bool dance_active { get { return Dance_State.dance_calling || Dance_State.in_dance; } }
         internal bool sacrifice_active { get { return Sacrifice_State.sacrifice_calling || Sacrifice_State.in_sacrifice; } }
         internal bool steal_active { get { return Steal_State.steal_calling || Steal_State.in_steal; } }
+        internal bool skill_flash_active { get { return Skill_Flash_State.skill_flash_calling || Skill_Flash_State.in_skill_flash; } }
     }
 }

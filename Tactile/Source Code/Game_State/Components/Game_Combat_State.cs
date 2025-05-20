@@ -767,9 +767,9 @@ namespace Tactile.State
                                     else
                                         Battler_1.start_wait(false);
                                 }
-                                Battler_1.end_battle();
+                                Battler_1.end_battle(Battler_2);
                                 if (is_target_unit)
-                                    Battler_2.end_battle();
+                                    Battler_2.end_battle(Battler_1);
 
                                 Battler_1.battling = false;
                                 if (is_target_unit)
@@ -1694,8 +1694,8 @@ namespace Tactile.State
                                             else
                                                 Battler_1.start_wait(false);
                                         }
-                                        Battler_1.end_battle();
-                                        Battler_2.end_battle();
+                                        Battler_1.end_battle(Battler_2);
+                                        Battler_2.end_battle(Battler_1);
 
                                         Battler_1.battling = false;
                                         Battler_2.battling = false;
@@ -2001,9 +2001,9 @@ namespace Tactile.State
                                             else
                                                 Battler_1.start_wait(false);
                                         }
-                                        Battler_1.end_battle();
+                                        Battler_1.end_battle(Battler_2);
                                         if (is_target_unit)
-                                            Battler_2.end_battle();
+                                            Battler_2.end_battle(Battler_1);
 
                                         Battler_1.battling = false;
                                         if (is_target_unit)

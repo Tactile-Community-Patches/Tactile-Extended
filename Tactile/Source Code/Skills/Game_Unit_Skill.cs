@@ -84,7 +84,7 @@ namespace Tactile
         {
         }
 
-        private void end_battle_skills()
+        private void end_battle_skills(Game_Unit target)
         {
             // Overwritten by Vendetta and Swoop //Yeti
             // Skills: Swoop
@@ -98,6 +98,29 @@ namespace Tactile
                 if (mastery_called(MASTERIES[i]))
                     Mastery_Gauges[MASTERIES[i]] = 0;
             }
+            // Skills: Volley
+            if (actor.has_skill("VOLLEY"))
+            {
+                if (is_active_team && actor.weapon != null && actor.weapon.main_type().Name == "Bow" && is_attackable_team(target))
+                {
+                    HashSet<Game_Unit> foes_in_volley_aoe = new HashSet<Game_Unit>();
+                    foreach (int id in target.units_in_range(1))
+                    {
+                        Game_Unit unit = Global.game_map.units[id];
+                        if (is_attackable_team(unit))
+                        {
+                            foes_in_volley_aoe.Add(unit);
+                        }
+                    }
+                    if (!target.dead || foes_in_volley_aoe.Count > 0)
+                        Global.game_state.call_skill_flash(id, target.id, "VOLLEY");
+                }
+            }
+            // Skills: Poison Knife
+            if (actor.has_skill("POISON_KNIFE"))
+                if (is_active_team && is_attackable_team(target) && !target.is_dead)
+                    Global.game_state.call_skill_flash(id, target.id, "POISON_KNIFE");
+
             reset_masteries();
         }
         #endregion

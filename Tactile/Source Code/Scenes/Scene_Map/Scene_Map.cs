@@ -2429,6 +2429,13 @@ namespace Tactile
                     Status_Heal.draw(sprite_batch, Global.game_map.display_loc, camera.matrix);
                     sprite_batch.End();
                 }
+                // Draw HP Gauges for Targets of Skill Flashes
+                if (Global.game_state.skill_flash_active && Global.game_state.skill_flash_hit_flash)
+                {
+                    sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, Unit_Transition_State);
+                    Global.game_state.Draw_Target_HP_Gauges(sprite_batch, hp_gauge_draw_vector(), camera, Map_Sprites);
+                    sprite_batch.End();
+                }
             }
         }
 
@@ -2464,6 +2471,15 @@ namespace Tactile
                 DeferredUnitIds.Add(Global.game_state.stealer_id);
                 skip_selected = true;
             }
+            // Skill Flash Aoe Targets
+            if (Global.game_state.skill_flash_targets.Count > 0)
+            {
+                foreach (int id in Global.game_state.skill_flash_targets)
+                    DeferredUnitIds.Add(id);
+            }
+            else if (Global.game_state.skill_flash_hit_flash && Global.game_state.skill_flash_active)
+                DeferredUnitIds.Add(Global.game_state.skill_flash_target);
+
             if (Global.game_state.steal_target_id != -1)
                 DeferredUnitIds.Add(Global.game_state.steal_target_id);
             // Active AI unit

@@ -1595,7 +1595,7 @@ namespace Tactile
             start_attack_skills(attackIndex, target);
         }
 
-        public void end_battle()
+        public void end_battle(Game_Unit target)
         {
             if (Using_Siege_Engine)
                 actor.setup_items();
@@ -1603,7 +1603,7 @@ namespace Tactile
                 Global.game_map.get_siege(Loc).refresh_sprite();
             Using_Siege_Engine = false;
             actor.reset_skills(true);
-            end_battle_skills();
+            end_battle_skills(target);
         }
 
         protected bool is_correct_attack_type()

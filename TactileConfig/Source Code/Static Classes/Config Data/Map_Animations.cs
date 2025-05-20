@@ -716,6 +716,32 @@ namespace Tactile
             new Dictionary<int, Map_Effect_Data>
         {
         };
+
+        public static Map_Effect_Data SKILL_FLASH_MAP_EFFECT(int id)
+        {
+            return new Map_Effect_Data
+            {
+                image = new KeyValuePair<string, int>("Skill_Flash_Icons", 30),
+                animation_data = new List<KeyValuePair<int[], int>>
+                {
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 255 }, 1),
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 204 }, 1),
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 153 }, 1),
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 102 }, 1),
+                    new KeyValuePair<int[], int>(new int[] { id, 250,  51 }, 1),
+                    new KeyValuePair<int[], int>(new int[] { id, 250,   0 }, 6),
+                    new KeyValuePair<int[], int>(new int[] { id, 250,  51 }, 3),
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 102 }, 3),
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 153 }, 3),
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 204 }, 3),
+                    new KeyValuePair<int[], int>(new int[] { id, 250, 255 }, 3)
+                },
+                processing_data = new List<KeyValuePair<int, string[]>>
+                    {
+                        new KeyValuePair<int, string[]> (5, new string[] { "s", "Skill_Flash" })
+                    }
+            };
+        }
         #endregion
 
         #region Status Data
@@ -1051,6 +1077,8 @@ namespace Tactile
                     if (MAP_EFFECTS.ContainsKey(id))
                         return MAP_EFFECTS[id];
                     break;
+                case 5:
+                    return SKILL_FLASH_MAP_EFFECT(id);
             }
             type = 0;
             id = 1;
