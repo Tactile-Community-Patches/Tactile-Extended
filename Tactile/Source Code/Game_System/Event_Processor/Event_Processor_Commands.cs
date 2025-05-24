@@ -2783,6 +2783,19 @@ namespace Tactile
                     }
                     break;
                 #endregion
+                case "Set Map Effect":
+                    #region Set Map Effect
+                    // Value[1] = X
+                    // Value[2] = Y
+                    // Value[3] = Type
+                    // Value[4] = Id
+                    int X = process_number(command.Value[1]);
+                    int Y = process_number(command.Value[2]);
+                    int type = process_number(command.Value[3]);
+                    int id = process_number(command.Value[4]);
+                    ((Scene_Map)Global.scene).set_map_effect(new Vector2(X, Y), type, id);
+                    break;
+                #endregion
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);
