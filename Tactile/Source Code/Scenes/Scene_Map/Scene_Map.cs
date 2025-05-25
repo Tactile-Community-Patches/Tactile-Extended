@@ -1616,12 +1616,21 @@ namespace Tactile
 #endif
                 }
             }
-            // Darken screen for spells if needed
+
             sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
                 SamplerState.PointClamp, null, null, alpha_shader);
             sprite_batch.Draw(render_targets[0], Vector2.Zero,
                 new Color(Map_Spell_Darken, Map_Spell_Darken, Map_Spell_Darken, 255));
             sprite_batch.End();
+            
+            {
+                // Darken screen for spells if needed
+                sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
+                //sprite_batch.Draw(White_Square, new Rectangle(0, 0, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT), Color.White);
+                sprite_batch.Draw(Current_Map_Alpha, -Global.game_map.display_loc, Color.White);
+                sprite_batch.End();
+            }
+
 #if __ANDROID__
             // There has to be a way to do this for both
             if (alpha_shader != null)
@@ -1642,8 +1651,7 @@ namespace Tactile
                 map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
                 map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
             }
-            sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,
-                SamplerState.PointClamp, null, null, map_shader);
+            sprite_batch.Begin();
             sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);
             sprite_batch.End();
         }

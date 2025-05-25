@@ -1,0 +1,23 @@
+float4 map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
+{
+	float4 map_tint = float4(0, 0, 0.2, 0.90);
+	float4 flame_tint = float4(0.3, 0.12, 0, 0.2);
+
+	float4 Color = tex2D(TextureSampler, uv);
+	
+	float nominal_light_level = (tex2D(Map_Alpha, (uv * game_size + alpha_offset) / (16 * map_size))).r;
+	float light_level = min((nominal_light_level-0.4)*1.5, 0.5);
+	
+	float4 adjusted_map_tint = map_tint;
+	adjusted_map_tint.a *= (1-light_level*light_level);
+	
+	float4 adjusted_flame_tint = flame_tint*(light_level);
+	
+	//Color.rgb = adjusted_map_tint.rgb;
+	
+	Color.rgb = adjusted_map_tint.rgb + (Color.rgb * (1 - adjusted_map_tint.a));
+	Color.rgb = adjusted_flame_tint.rgb + (Color.rgb * (1 - adjusted_flame_tint.a));
+	
+	
+	return Color * color;
+}
