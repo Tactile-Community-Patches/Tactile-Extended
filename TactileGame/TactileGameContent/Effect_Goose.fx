@@ -257,7 +257,7 @@ float4 map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 
 	float4 Color = tex2D(TextureSampler, uv);
 	
-	float nominal_light_level = (tex2D(Map_Alpha, (uv * game_size + alpha_offset) / (16 * map_size))).r;
+	float nominal_light_level = (tex2D(Map_Alpha, (uv * game_size + alpha_offset) / (16 * map_size))).a;
 	float light_level = min((nominal_light_level-0.4)*1.5, 0.5);
 	
 	float4 adjusted_map_tint = map_tint;

@@ -300,7 +300,7 @@ namespace Tactile
                         Global.game_map.Tile_Alpha[x, y] * (256f / (Constants.Map.ALPHA_MAX)) *
                             (256 - Global.game_map.min_alpha) / 256 + Global.game_map.min_alpha,
                         Global.game_map.min_alpha, 255);
-                    data[x + y * Map_Alpha_Target.Width] = new Color(alpha, alpha, alpha, 255);
+                    data[x + y * Map_Alpha_Target.Width] = new Color(0, 0, 0, alpha);
                 }
             Map_Alpha_Target.SetData<Color>(data);
 
@@ -1622,14 +1622,6 @@ namespace Tactile
             sprite_batch.Draw(render_targets[0], Vector2.Zero,
                 new Color(Map_Spell_Darken, Map_Spell_Darken, Map_Spell_Darken, 255));
             sprite_batch.End();
-            
-            {
-                // Darken screen for spells if needed
-                sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
-                //sprite_batch.Draw(White_Square, new Rectangle(0, 0, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT), Color.White);
-                sprite_batch.Draw(Current_Map_Alpha, -Global.game_map.display_loc, Color.White);
-                sprite_batch.End();
-            }
 
 #if __ANDROID__
             // There has to be a way to do this for both
