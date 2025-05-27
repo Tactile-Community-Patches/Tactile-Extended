@@ -218,6 +218,27 @@ namespace TactileVector2Extension
         }
     }
 }
+namespace TactileColorExtension
+{
+    static partial class Extension
+    {
+        public static void write(this Color color, BinaryWriter writer)
+        {
+            writer.Write(color.R);
+            writer.Write(color.G);
+            writer.Write(color.B);
+            writer.Write(color.A);
+        }
+        public static void read(this ref Color color, BinaryReader reader)
+        {
+            color = Color.White;
+            color.R = reader.ReadByte();
+            color.G = reader.ReadByte();
+            color.B = reader.ReadByte();
+            color.A = reader.ReadByte();
+        }
+    }
+}
 
 namespace TactileListExtension
 {
