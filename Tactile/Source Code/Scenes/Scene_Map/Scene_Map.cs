@@ -259,11 +259,11 @@ namespace Tactile
         }
 
         #region Map Alpha
-        public void set_map_alpha_texture(float[,] alpha_data)
+        public void set_map_alpha_texture(Color[,] alpha_data)
         {
             set_map_alpha_texture(alpha_data, 0);
         }
-        public void set_map_alpha_texture(float[,] alpha_data, int time)
+        public void set_map_alpha_texture(Color[,] alpha_data, int time)
         {
             // If no data to set, dispose and return
             if (alpha_data.GetLength(0) == 0)
@@ -297,11 +297,14 @@ namespace Tactile
                 for (int x = 0; x < Map_Alpha_Target.Width; x++)
                 {
                     alpha = (int)MathHelper.Clamp(
-                        Global.game_map.Tile_Alpha[x, y] * (256f / (Constants.Map.ALPHA_MAX)) *
+                        Global.game_map.Tile_Alpha[x, y].A * (256f / (Constants.Map.ALPHA_MAX)) *
                             (256 - Global.game_map.min_alpha) / 256 + Global.game_map.min_alpha,
                         Global.game_map.min_alpha, 255);
-                    data[x + y * Map_Alpha_Target.Width] = new Color(0, 0, 0, alpha);
+                    //data[x + y * Map_Alpha_Target.Width] = new Color(0, 0, 0, alpha);
+                    data[x + y * Map_Alpha_Target.Width] = Global.game_map.Tile_Alpha[x, y];
+                    data[x + y * Map_Alpha_Target.Width].A = (byte)alpha;
                 }
+
             Map_Alpha_Target.SetData<Color>(data);
 
             // If time is 0, or the size of the existing data is not equal to the size of the target data, set alpha to target instantly

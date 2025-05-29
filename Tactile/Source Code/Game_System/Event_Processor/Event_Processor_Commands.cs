@@ -2249,7 +2249,7 @@ namespace Tactile
             // Value[6] = b
             int value = process_number(command.Value[2]) *
                 Constants.Map.ALPHA_MAX / process_number(command.Value[3]) - 1;
-            Color color = new Color(process_number(command.Value[4]), process_number(command.Value[5]), process_number(command.Value[6]), 0);
+            Color color = new Color(process_number(command.Value[4]), process_number(command.Value[5]), process_number(command.Value[6]), value);
             if (value > 0)
             {
                 Global.game_map.add_alpha_source(

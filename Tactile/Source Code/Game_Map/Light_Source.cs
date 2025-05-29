@@ -44,11 +44,12 @@ namespace Tactile
             Loc = Vector2.Zero;
             Brightness = 0;
         }
-        public Light_Source(Color color, Vector2 loc, int intensity)
+        public Light_Source(Color color, Vector2 loc, int brightness)
         {
             Color = color;
             Loc = loc;
-            Brightness = intensity;
+            Brightness = brightness;
+            Color.A = (byte)Brightness;
         }
     }
 }

@@ -254,10 +254,13 @@ float4 map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 {
 	float4 map_tint = float4(0, 0, 0.2, 0.90);
 	float4 flame_tint = float4(0.3, 0.12, 0, 0.2);
-
+	
+	float4 light_color = (tex2D(Map_Alpha, (uv * game_size + alpha_offset) / (16 * map_size)));
+	flame_tint.rgb = light_color.rgb;
+	
 	float4 Color = tex2D(TextureSampler, uv);
 	
-	float nominal_light_level = (tex2D(Map_Alpha, (uv * game_size + alpha_offset) / (16 * map_size))).a;
+	float nominal_light_level = light_color.a;
 	float light_level = min((nominal_light_level-0.4)*1.5, 0.5);
 	
 	float4 adjusted_map_tint = map_tint;
