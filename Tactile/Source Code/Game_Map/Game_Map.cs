@@ -72,7 +72,7 @@ namespace Tactile
         private HashSet<Vector2> Seized_Points = new HashSet<Vector2>();
         private List<Tuple<Rectangle, string>> Area_Background = new List<Tuple<Rectangle, string>>();
         private int Grid_Opacity = 32;
-        private List<Vector2>[] Light_Sources = new List<Vector2>[0];
+        private List<Light_Source>[] Light_Sources = new List<Light_Source>[0];
         private int Min_Alpha = 0;
         private int Ally_Alpha;
         private Dictionary<int, List<Rectangle>>[] Team_Defend_Areas;
@@ -888,9 +888,9 @@ namespace Tactile
             Window_Minimap.clear();
             UnitsHidden = false;
 
-            Light_Sources = new List<Vector2>[Constants.Map.ALPHA_MAX];
+            Light_Sources = new List<Light_Source>[Constants.Map.ALPHA_MAX];
             for(int i = 0; i < Light_Sources.Length; i++)
-                Light_Sources[i] = new List<Vector2>();
+                Light_Sources[i] = new List<Light_Source>();
             Min_Alpha = 255;
             Ally_Alpha = -1;
             refresh_alpha();
@@ -1244,11 +1244,11 @@ namespace Tactile
                 return;
             }
             Dictionary<float, List<Vector2>> light_sources = new Dictionary<float, List<Vector2>>();
-            List<Vector2>[] sources_with_units = new List<Vector2>[Light_Sources.Length];
+            List<Light_Source>[] sources_with_units = new List<Light_Source>[Light_Sources.Length];
 
             for (int i = 0; i < sources_with_units.Length; i++)
             {
-                sources_with_units[i] = new List<Vector2>();
+                sources_with_units[i] = new List<Light_Source>();
                 sources_with_units[i].AddRange(Light_Sources[i]);
             }
             if (Ally_Alpha >= 0)
@@ -1256,15 +1256,15 @@ namespace Tactile
                     for (int x = 0; x < this.width; x++)
                         if (get_unit(new Vector2(x, y)) != null && get_unit(new Vector2(x, y)).is_ally) //Multi
                         {
-                            sources_with_units[Ally_Alpha].Add(new Vector2(x, y));
+                            sources_with_units[Ally_Alpha].Add(new Light_Source(Color.White, new Vector2(x, y), Ally_Alpha));
                         }
 
             for (int i = 0; i < sources_with_units.Length; i++)
-                foreach (Vector2 source in sources_with_units[i])
+                foreach (Light_Source source in sources_with_units[i])
                     for (int oy = 0; oy < Constants.Map.ALPHA_GRANULARITY; oy++)
                         for (int ox = 0; ox < Constants.Map.ALPHA_GRANULARITY; ox++)
                             lighting_add(light_sources, i + 1,
-                                source * Constants.Map.ALPHA_GRANULARITY + new Vector2(ox, oy));
+                                source.loc * Constants.Map.ALPHA_GRANULARITY + new Vector2(ox, oy));
             // Loop through light sources
             while (light_sources.Count > 0)
             {
@@ -1323,9 +1323,10 @@ namespace Tactile
             return 1;
         }
 
-        public void add_alpha_source(Vector2 loc, int value)
+        public void add_alpha_source(Vector2 loc, int value, Color color)
         {
-            Light_Sources[value].Add(loc);
+            Light_Source light_source = new Light_Source(color, loc, value);
+            Light_Sources[value].Add(light_source);
         }
 
         public void clear_alpha()

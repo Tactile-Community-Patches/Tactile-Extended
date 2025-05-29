@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System.IO;
 using TactileLibrary;
 using System.Linq;
+using Tactile;
 
 namespace TactileLibrary
 {

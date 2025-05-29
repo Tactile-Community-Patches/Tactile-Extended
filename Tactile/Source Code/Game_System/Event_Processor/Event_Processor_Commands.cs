@@ -2244,12 +2244,16 @@ namespace Tactile
             // Value[1] = y
             // Value[2] = multiplier
             // Value[3] = divisor
+            // Value[4] = r
+            // Value[5] = g
+            // Value[6] = b
             int value = process_number(command.Value[2]) *
                 Constants.Map.ALPHA_MAX / process_number(command.Value[3]) - 1;
+            Color color = new Color(process_number(command.Value[4]), process_number(command.Value[5]), process_number(command.Value[6]), 0);
             if (value > 0)
             {
                 Global.game_map.add_alpha_source(
-                    new Vector2(process_number(command.Value[0]), process_number(command.Value[1])), value);
+                    new Vector2(process_number(command.Value[0]), process_number(command.Value[1])), value, color);
             }
             Index++;
             return true;

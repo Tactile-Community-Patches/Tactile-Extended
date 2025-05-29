@@ -139,6 +139,45 @@ namespace TactileArrayExtension
             }
             return result;
         }
+        // List<Light_Source>[]
+        public static void write(this List<Tactile.Light_Source>[] ary, BinaryWriter writer)
+        {
+            writer.Write(ary.Length);
+            for (int i = 0; i < ary.GetLength(0); i++)
+            {
+                ary[i].write(writer);
+            }
+        }
+        public static List<Tactile.Light_Source>[] read(this List<Tactile.Light_Source>[] ary, BinaryReader reader)
+        {
+            List<Tactile.Light_Source>[] result = new List<Tactile.Light_Source>[reader.ReadInt32()];
+            for (int i = 0; i < result.GetLength(0); i++)
+            {
+                result[i] = new List<Tactile.Light_Source>();
+                result[i].read(reader);
+            }
+            return result;
+        }
+
+        // List<Light_Source>
+        public static void write(this List<Tactile.Light_Source> list, BinaryWriter writer)
+        {
+            writer.Write(list.Count);
+            foreach (Tactile.Light_Source light_source in list)
+                light_source.write(writer);
+        }
+
+        public static void read(this List<Tactile.Light_Source> list, BinaryReader reader)
+        {
+            list.Clear();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                Tactile.Light_Source v = new Tactile.Light_Source();
+                v.read(reader);
+                list.Add(v);
+            }
+        }
 
         // Item_Data[]
         public static void write(this TactileLibrary.Item_Data[] ary, BinaryWriter writer)
