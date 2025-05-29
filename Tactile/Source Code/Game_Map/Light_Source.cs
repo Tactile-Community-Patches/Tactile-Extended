@@ -16,39 +16,39 @@ namespace Tactile
     {
         private Color @Color;
         private Vector2 Loc;
-        private int Intensity;
+        private int Brightness;
 
         #region Serialization
         public void write(BinaryWriter writer)
         {
             Color.write(writer);
             Loc.write(writer);
-            writer.Write(Intensity);
+            writer.Write(Brightness);
         }
         public void read(BinaryReader reader)
         {
             Color.read(reader);
-            Loc.read(reader);
-            Intensity = reader.ReadInt32();
+            Loc = Loc.read(reader);
+            Brightness = reader.ReadInt32();
         }
         #endregion
 
         #region Accessors
         public Color color { get { return Color; } }
         public Vector2 loc { get { return Loc; } }
-        public int intensity { get { return Intensity; } }
+        public int brightness { get { return Brightness; } }
         #endregion
         public Light_Source()
         {
             Color = Color.White;
             Loc = Vector2.Zero;
-            Intensity = 0;
+            Brightness = 0;
         }
         public Light_Source(Color color, Vector2 loc, int intensity)
         {
             Color = color;
             Loc = loc;
-            Intensity = intensity;
+            Brightness = intensity;
         }
     }
 }

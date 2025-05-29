@@ -1243,7 +1243,7 @@ namespace Tactile
                 Tile_Alpha = tile_alpha;
                 return;
             }
-            Dictionary<float, List<Vector2>> light_sources = new Dictionary<float, List<Vector2>>();
+            Dictionary<float, List<Light_Source>> light_sources = new Dictionary<float, List<Light_Source>>();
             List<Light_Source>[] sources_with_units = new List<Light_Source>[Light_Sources.Length];
 
             for (int i = 0; i < sources_with_units.Length; i++)
@@ -1264,21 +1264,21 @@ namespace Tactile
                     for (int oy = 0; oy < Constants.Map.ALPHA_GRANULARITY; oy++)
                         for (int ox = 0; ox < Constants.Map.ALPHA_GRANULARITY; ox++)
                             lighting_add(light_sources, i + 1,
-                                source.loc * Constants.Map.ALPHA_GRANULARITY + new Vector2(ox, oy));
+                                new Light_Source(source.color, source.loc * Constants.Map.ALPHA_GRANULARITY + new Vector2(ox, oy), source.brightness));
             // Loop through light sources
             while (light_sources.Count > 0)
             {
                 float alpha = light_sources.Keys.Max();
-                List<Vector2> temp_light_sources = new List<Vector2>();
+                List<Light_Source> temp_light_sources = new List<Light_Source>();
                 temp_light_sources.AddRange(light_sources[alpha]);
                 temp_light_sources = temp_light_sources.Distinct().ToList(); //ListOrEquals
-                foreach (Vector2 source in temp_light_sources)
+                foreach (Light_Source source in temp_light_sources)
                 {
-                    if (is_off_map(source / Constants.Map.ALPHA_GRANULARITY, false))
+                    if (is_off_map(source.loc / Constants.Map.ALPHA_GRANULARITY, false))
                         continue;
-                    if (tile_alpha[(int)source.X, (int)source.Y] < alpha)
+                    if (tile_alpha[(int)source.loc.X, (int)source.loc.Y] < alpha)
                     {
-                        tile_alpha[(int)source.X, (int)source.Y] = alpha;
+                        tile_alpha[(int)source.loc.X, (int)source.loc.Y] = alpha;
                         //foreach (Vector2 offset in new Vector2[] { //Debug
                         //    new Vector2(0, -1), new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, 1) })
                         for (int oy = -1; oy <= 1; oy++)
@@ -1288,15 +1288,15 @@ namespace Tactile
                                 if (oy != 0 && ox != 0) continue; //Debug
                                 Vector2 offset = new Vector2(ox, oy);
                                 if (!is_off_map(
-                                    (source + offset) / Constants.Map.ALPHA_GRANULARITY,
+                                    (source.loc + offset) / Constants.Map.ALPHA_GRANULARITY,
                                     false))
                                 {
                                     float cost = alpha_cost(
-                                        (source + offset) /
+                                        (source.loc + offset) /
                                             Constants.Map.ALPHA_GRANULARITY) *
                                             offset.Length();
                                     if (alpha - cost > 0)
-                                        lighting_add(light_sources, alpha - cost, source + offset);
+                                        lighting_add(light_sources, alpha - cost, new Light_Source(source.color, source.loc + offset, source.brightness)); // Intensity being carried over here is not correct. Why does yeti switch from int keys to floats?
                                 }
                             }
                     }
@@ -1306,10 +1306,10 @@ namespace Tactile
             Tile_Alpha = tile_alpha;
         }
 
-        void lighting_add(Dictionary<float, List<Vector2>> dict, float key, Vector2 value)
+        void lighting_add(Dictionary<float, List<Light_Source>> dict, float key, Light_Source value)
         {
             if (!dict.ContainsKey(key))
-                dict.Add(key, new List<Vector2>());
+                dict.Add(key, new List<Light_Source>());
             dict[key].Add(value);
         }
 
