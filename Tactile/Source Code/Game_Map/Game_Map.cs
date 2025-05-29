@@ -90,7 +90,7 @@ namespace Tactile
         private int rescue_anim_timer = 0;
         private int rescue_anim_loops = 0;
         public List<int> move_sound_timers = new List<int> { 0, 0, 0 };
-        public float[,] Tile_Alpha;
+        public Color[,] Tile_Alpha;
         private bool Controlled_Scroll = false;
         private Vector2 ScrollSpeed = Vector2.Zero;
 
@@ -1225,7 +1225,7 @@ namespace Tactile
             // If alpha is irrelevant
             if (time == 0 && Min_Alpha == 255)
             {
-                Tile_Alpha = new float[,] { { 1f } };
+                Tile_Alpha = new Color[,] { { Color.White } };
             }
             else
                 set_map_alpha();
@@ -1235,7 +1235,7 @@ namespace Tactile
 
         void set_map_alpha()
         {
-            float[,] tile_alpha = new float[
+            Color[,] tile_alpha = new Color[
                 this.width * Constants.Map.ALPHA_GRANULARITY,
                 this.height * Constants.Map.ALPHA_GRANULARITY];
             if (this.width == 0 || this.height == 0)
@@ -1276,9 +1276,9 @@ namespace Tactile
                 {
                     if (is_off_map(source.loc / Constants.Map.ALPHA_GRANULARITY, false))
                         continue;
-                    if (tile_alpha[(int)source.loc.X, (int)source.loc.Y] < alpha)
+                    if (tile_alpha[(int)source.loc.X, (int)source.loc.Y].A < alpha)
                     {
-                        tile_alpha[(int)source.loc.X, (int)source.loc.Y] = alpha;
+                        tile_alpha[(int)source.loc.X, (int)source.loc.Y] = source.color;
                         //foreach (Vector2 offset in new Vector2[] { //Debug
                         //    new Vector2(0, -1), new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, 1) })
                         for (int oy = -1; oy <= 1; oy++)
@@ -1296,7 +1296,7 @@ namespace Tactile
                                             Constants.Map.ALPHA_GRANULARITY) *
                                             offset.Length();
                                     if (alpha - cost > 0)
-                                        lighting_add(light_sources, alpha - cost, new Light_Source(source.color, source.loc + offset, source.brightness)); // Intensity being carried over here is not correct. Why does yeti switch from int keys to floats?
+                                        lighting_add(light_sources, alpha - cost, new Light_Source(source.color, source.loc + offset, (int)(alpha-cost))); // Why does yeti switch from int keys to floats?
                                 }
                             }
                     }
@@ -1350,7 +1350,7 @@ namespace Tactile
             //    Tile_Alpha[x, y] * (256f / Config.ALPHA_MAX),
             //    min_alpha, 255);
             int alpha = (int)MathHelper.Clamp(
-                Tile_Alpha[x, y] * (256f / Constants.Map.ALPHA_MAX) *
+                Tile_Alpha[x, y].A * (256f / Constants.Map.ALPHA_MAX) *
                 (256 - min_alpha) / 256 + min_alpha,
                 min_alpha, 255);
             return new Color(alpha, alpha, alpha, 255);
