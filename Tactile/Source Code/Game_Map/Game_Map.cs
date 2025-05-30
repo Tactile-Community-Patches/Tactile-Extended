@@ -1285,7 +1285,7 @@ namespace Tactile
                             for (int ox = -1; ox <= 1; ox++)
                             {
                                 if (oy == 0 && ox == 0) continue;
-                                if (oy != 0 && ox != 0) continue; //Debug
+                                //if (oy != 0 && ox != 0) continue; //Debug
                                 Vector2 offset = new Vector2(ox, oy);
                                 if (!is_off_map(
                                     (source.loc + offset) / Constants.Map.ALPHA_GRANULARITY,
@@ -1293,10 +1293,11 @@ namespace Tactile
                                 {
                                     float cost = alpha_cost(
                                         (source.loc + offset) /
-                                            Constants.Map.ALPHA_GRANULARITY) *
-                                            offset.Length();
+                                            Constants.Map.ALPHA_GRANULARITY);
+                                    if (oy != 0 && ox != 0)
+                                        cost *= 1.5f;
                                     if (alpha - cost > 0)
-                                        lighting_add(light_sources, alpha - cost, new Light_Source(source.color, source.loc + offset, (int)(alpha-cost))); // Why does yeti switch from int keys to floats?
+                                        lighting_add(light_sources, alpha - cost, new Light_Source(source.color, source.loc + offset, (int)(alpha-cost)));
                                 }
                             }
                     }
