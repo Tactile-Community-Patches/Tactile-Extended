@@ -404,8 +404,8 @@ namespace Tactile
                         for (int x = 0; x < Current_Map_Alpha.Width; x++)
                         {
                             Map_Alpha_Data[x + y * Current_Map_Alpha.Width] = new Color(
-                                target_data[x + y * Current_Map_Alpha.Width].ToVector3() * Map_Alpha_Timer / Map_Alpha_Duration +
-                                    (map_data[x + y * Current_Map_Alpha.Width].ToVector3() * (Map_Alpha_Duration - Map_Alpha_Timer) / Map_Alpha_Duration));
+                                target_data[x + y * Current_Map_Alpha.Width].ToVector4() * Map_Alpha_Timer / Map_Alpha_Duration +
+                                    (map_data[x + y * Current_Map_Alpha.Width].ToVector4() * (Map_Alpha_Duration - Map_Alpha_Timer) / Map_Alpha_Duration));
                         }
                     Current_Map_Alpha.SetData<Color>(Map_Alpha_Data);
                 }
