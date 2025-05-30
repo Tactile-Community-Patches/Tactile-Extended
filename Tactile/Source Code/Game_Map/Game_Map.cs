@@ -17,6 +17,7 @@ using TactileVector2Extension;
 using TactileDictionaryExtension;
 using TactileListExtension;
 using TactileVersionExtension;
+using TactileColorExtension;
 
 namespace Tactile
 {
@@ -74,7 +75,7 @@ namespace Tactile
         private int Grid_Opacity = 32;
         private List<Light_Source>[] Light_Sources = new List<Light_Source>[0];
         private int Min_Alpha = 0;
-        private int Ally_Alpha;
+        private Color Ally_Alpha;
         private Dictionary<int, List<Rectangle>>[] Team_Defend_Areas;
         private Dictionary<int, Vector2> Unit_Seek_Locs;
         private Dictionary<int, Dictionary<int, Vector2>> Team_Seek_Locs;
@@ -154,7 +155,7 @@ namespace Tactile
             writer.Write(Grid_Opacity);
             Light_Sources.write(writer);
             writer.Write(Min_Alpha);
-            writer.Write(Ally_Alpha);
+            Ally_Alpha.write(writer);
             Team_Defend_Areas.write(writer);
             Unit_Seek_Locs.write(writer);
             Team_Seek_Locs.write(writer);
@@ -300,7 +301,7 @@ namespace Tactile
             Light_Sources = Light_Sources.read(reader);
             refresh_alpha();
             Min_Alpha = reader.ReadInt32();
-            Ally_Alpha = reader.ReadInt32();
+            Ally_Alpha.read(reader);
             Team_Defend_Areas = Team_Defend_Areas.read(reader);
             Unit_Seek_Locs.read(reader);
             Team_Seek_Locs.read(reader);
@@ -683,12 +684,13 @@ namespace Tactile
             }
         }
 
-        public int ally_alpha
+        public Color ally_alpha
         {
             get { return Ally_Alpha; }
             set
             {
-                Ally_Alpha = (int)MathHelper.Clamp(value, -1, Constants.Map.ALPHA_MAX - 1);
+                Ally_Alpha = value;
+                Ally_Alpha.A = (byte)MathHelper.Clamp(value.A, -1, Constants.Map.ALPHA_MAX - 1);
             }
         }
 
@@ -892,7 +894,7 @@ namespace Tactile
             for(int i = 0; i < Light_Sources.Length; i++)
                 Light_Sources[i] = new List<Light_Source>();
             Min_Alpha = 255;
-            Ally_Alpha = -1;
+            Ally_Alpha = Color.Black;
             refresh_alpha();
             
 #if DEBUG
@@ -1251,12 +1253,12 @@ namespace Tactile
                 sources_with_units[i] = new List<Light_Source>();
                 sources_with_units[i].AddRange(Light_Sources[i]);
             }
-            if (Ally_Alpha >= 0)
+            if (Ally_Alpha != Color.Black)
                 for (int y = 0; y < this.height; y++)
                     for (int x = 0; x < this.width; x++)
                         if (get_unit(new Vector2(x, y)) != null && get_unit(new Vector2(x, y)).is_ally) //Multi
                         {
-                            sources_with_units[Ally_Alpha].Add(new Light_Source(Color.White, new Vector2(x, y), Ally_Alpha));
+                            sources_with_units[Ally_Alpha.A].Add(new Light_Source(Ally_Alpha, new Vector2(x, y), Ally_Alpha.A));
                         }
 
             for (int i = 0; i < sources_with_units.Length; i++)

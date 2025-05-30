@@ -2272,8 +2272,17 @@ namespace Tactile
         {
             // Value[0] = multiplier
             // Value[1] = divisor
-            Global.game_map.ally_alpha = process_number(command.Value[0]) *
-                Constants.Map.ALPHA_MAX / process_number(command.Value[1]) - 1;
+            // Value[2] = r
+            // Value[3] = g
+            // Value[4] = b
+            byte r = (byte)process_number(command.Value[2]);
+            byte g = (byte)process_number(command.Value[3]);
+            byte b = (byte)process_number(command.Value[4]);
+            byte a = (byte)(process_number(command.Value[0]) *
+                Constants.Map.ALPHA_MAX / process_number(command.Value[1]) - 1);
+
+
+            Global.game_map.ally_alpha = new Color(r, g, b, a);
             Index++;
             return true;
         }
