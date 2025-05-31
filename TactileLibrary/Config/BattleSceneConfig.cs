@@ -47,12 +47,12 @@ namespace TactileLibrary.Config
             "How strongly the screen tone is applied\n" +
             "to the backtround during battle scenes.\n" +
             "Out of 255.")]
-        public int ActionBackgroundToneWeight = 192;
+        public int ActionBackgroundToneWeight = 172;
         [Category("Battle Scene Tone"), Description(
             "How strongly the screen tone is applied\n" +
             "to platforms during battle scenes.\n" +
             "Out of 255.")]
-        public int ActionPlatformToneWeight = 160;
+        public int ActionPlatformToneWeight = 140;
         [Category("Battle Scene Tone"), Description(
             "How strongly the screen tone is applied\n" +
             "to battlers during battle scenes.\n" +
