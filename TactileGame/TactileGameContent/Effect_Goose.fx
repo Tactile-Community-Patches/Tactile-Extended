@@ -295,10 +295,10 @@ technique Map_Lighting
 
 float4 unit_map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 {
-	float4 map_tint = float4(0, 0, 0.2, 0.90);
+
 	float4 flame_tint = float4(0.3, 0.12, 0, 0.2);
 	
-	float4 light_color = tone;
+	float4 light_color = light_tone;
 	flame_tint.rgb = light_color.rgb;
 	
 	float4 Color = tex2D(TextureSampler, uv);
@@ -308,7 +308,7 @@ float4 unit_map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 	float nominal_light_level = light_color.a;
 	float light_level = nominal_light_level;
 	
-	float4 adjusted_map_tint = map_tint;
+	float4 adjusted_map_tint = tone;
 	adjusted_map_tint.a *= (1-light_level*light_level);
 	
 	float4 adjusted_flame_tint = flame_tint*(light_level*light_level);

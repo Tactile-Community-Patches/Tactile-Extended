@@ -2022,7 +2022,8 @@ namespace Tactile
                         if (unit_shader != null)
                         {
                             unit_shader.CurrentTechnique = unit_shader.Techniques["Unit_Map_Lighting"];
-                            unit_shader.Parameters["tone"].SetValue(map_tint.ToVector4());
+                            unit_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                            unit_shader.Parameters["light_tone"].SetValue(map_tint.ToVector4());
                             unit_shader.Parameters["color_shift"].SetValue(Global.game_map.units[id].blink_color.ToVector4());
                         }
                     }
@@ -2407,7 +2408,8 @@ namespace Tactile
                         else if (map_tint != Color.White)
                         {
                             map_shader.CurrentTechnique = map_shader.Techniques["Unit_Map_Lighting"];
-                            map_shader.Parameters["tone"].SetValue(map_tint.ToVector4());
+                            map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                            map_shader.Parameters["light_tone"].SetValue(map_tint.ToVector4());
                         }
                         else
                             map_shader.CurrentTechnique = map_shader.Techniques["Technique1"];
