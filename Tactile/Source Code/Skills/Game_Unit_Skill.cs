@@ -766,6 +766,16 @@ namespace Tactile
             // for example, reducing the enemy stats
             // look into it? //Yeti
 
+            // Skills: Poison Knife
+            if (actor.has_skill("POISON_KNIFE"))
+            {
+                if (result.hit && actor.weapon.main_type().Name == "Sword")
+                {
+                    KeyValuePair<int, bool> poison = new KeyValuePair<int, bool>(1, true);
+                    result.state_change.Add(poison);
+                }
+            }
+
             // Activation skills
             // Skills: Nosferatu
             if (!nihil(target))
