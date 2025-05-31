@@ -289,6 +289,47 @@ technique Map_Lighting
 }
 
 //-----------------------------------------------------------------------------
+// Unit Map Lighting
+//-----------------------------------------------------------------------------
+
+float4 unit_map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
+{
+	float4 map_tint = float4(0, 0, 0.2, 0.90);
+	float4 flame_tint = float4(0.3, 0.12, 0, 0.2);
+	
+	float4 light_color = tone;
+	flame_tint.rgb = light_color.rgb;
+	
+	float4 Color = tex2D(TextureSampler, uv);
+	
+	Color.rgb += float3(0.1, 0.1, 0.1)*Color.a;
+	
+	float nominal_light_level = light_color.a;
+	float light_level = nominal_light_level;
+	
+	float4 adjusted_map_tint = map_tint;
+	adjusted_map_tint.a *= (1-light_level*light_level);
+	
+	float4 adjusted_flame_tint = flame_tint*(light_level*light_level);
+	
+	Color.rgb = adjusted_map_tint.rgb/2 + (Color.rgb * (1 - adjusted_map_tint.a/2));
+	Color.rgb = adjusted_flame_tint.rgb/2 + (Color.rgb * (1 - adjusted_flame_tint.a/2));
+	Color.rgb *= Color.a;
+	
+	
+	return Color * color;
+}
+
+technique Unit_Map_Lighting
+{
+	pass Pass1
+	{
+		VertexShader = compile vs_2_0 original_vs();
+		PixelShader = compile ps_2_0 unit_map_lighting();
+	}
+}
+
+//-----------------------------------------------------------------------------
 // Mask
 //-----------------------------------------------------------------------------
 

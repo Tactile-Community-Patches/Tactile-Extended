@@ -451,6 +451,19 @@ namespace Tactile
             if ((Global.game_map.min_alpha == 255 && Map_Alpha_Duration == 0) || Current_Map_Alpha == null || Map_Alpha_Data == null)
                 return Color.White;
             return Map_Alpha_Data[x + y * Current_Map_Alpha.Width];
+            /*
+            Vector4 light_color = Map_Alpha_Data[x + y * Current_Map_Alpha.Width].ToVector4();
+            float light_level = light_color.W*light_color.W;
+            Vector4 adjusted_map_tint = new Vector4(0, 0, 0.2f, 0.9f) * (1 - light_level);
+            Vector4 adjusted_light_tint = new Vector4(light_color.X, light_color.Y, light_color.Z, 0.2f * light_level);
+
+            Vector3 color = new Vector3(adjusted_light_tint.X + adjusted_map_tint.X*(1-adjusted_light_tint.W), adjusted_light_tint.Y + adjusted_map_tint.Y * (1 - adjusted_light_tint.W), adjusted_light_tint.Z + adjusted_map_tint.Z * (1 - adjusted_light_tint.W));
+
+            Color result = new Color(color);
+            result.A = 0;
+            result = new Color(0, 0, 51);
+
+            return result;*/
         }
         #endregion
 
@@ -1975,7 +1988,8 @@ namespace Tactile
                     if (!Global.game_map.units[id].visible_by())
                         continue;
                     // Adjusts unit brightness by map alpha
-                    Map_Sprites[id].tint = get_unit_tint(Global.game_map.units[id].loc);
+                    Color map_tint = get_unit_tint(Global.game_map.units[id].loc);
+                    Map_Sprites[id].tint = Color.White;
                     // Tints the unit red if it has its attack range marked
                     if (Global.game_map.range_enemies.Contains(id) &&
                         Constants.Team.PLAYABLE_TEAMS.Contains(Global.game_state.team_turn))
@@ -1998,6 +2012,16 @@ namespace Tactile
                                 Global.Map_Sprite_Colors.data[
                                 new Color(64, 56, 56, 255)][Global.game_map.units[id].ready ? Global.game_map.units[id].team : 0].ToVector4());
                             unit_shader.Parameters["color_shift"].SetValue(Global.game_map.units[id].blink_color.ToVector4());
+                        }
+                    }
+                    if (map_tint != Color.White)
+                    //if (false)
+                    {
+                        unit_shader = map_shader;
+                        if (unit_shader != null)
+                        {
+                            unit_shader.CurrentTechnique = unit_shader.Techniques["Unit_Map_Lighting"];
+                            unit_shader.Parameters["tone"].SetValue(map_tint.ToVector4());
                         }
                     }
                     sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, Unit_Transition_State, unit_shader);
