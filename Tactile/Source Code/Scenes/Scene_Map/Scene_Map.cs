@@ -1187,7 +1187,7 @@ namespace Tactile
                 if (map_shader != null)
                 {
                     map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
-                    map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                    map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(0.9f));
                 }
                 sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, map_shader);
                 sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);

@@ -363,7 +363,7 @@ namespace Tactile
 
         #region Conversation
         public const bool MOVE_SPEAKER_TO_FRONT = false; // If true, whenever a face sprite becomes the active speaker it moves in front of all others
-        public const float FACE_TONE_PERCENT = 0.6f;
+        public const float FACE_TONE_PERCENT = 0.5f;
 
         public const int FACE_SPRITE_MOVEMENT_BOB_TIME = 8; // Time in frames a face sprite ducks down at the end of a movement
 
