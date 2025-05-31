@@ -1310,7 +1310,7 @@ namespace Tactile
                 map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
                 map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(Config.UNIT_TONE_PERCENT));
             }
-            sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, map_shader);
+            sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
             sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);
             sprite_batch.End();
 
@@ -1875,7 +1875,7 @@ namespace Tactile
                 map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
                 map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(Config.UNIT_TONE_PERCENT));
             }
-            sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, map_shader);
+            sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
             sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);
             sprite_batch.End();
         }

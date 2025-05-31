@@ -169,7 +169,8 @@ float4 tone_effect(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 	// Converts original color to greyscale
 	float3 grey_color = dot(Color.rgb, float3(0.3, 0.59, 0.11));
 	//Color.rgb = (Color.rgb * (1.0f - tone.a)) + (grey_color.rgb * tone.a) + tone.rgb * Color.a; // Oh this is just a lerp, huh //Debug
-	Color.rgb = lerp(Color.rgb, grey_color.rgb, tone.a) + tone.rgb * Color.a;
+	//Color.rgb = lerp(Color.rgb, grey_color.rgb, tone.a) + tone.rgb * Color.a;
+	Color.rgb = tone.rgb*Color.a + (Color.rgb*(1-tone.a));
 
     return Color * color;
 }
