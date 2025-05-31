@@ -1321,6 +1321,7 @@ namespace Tactile
                 light_sources.Remove(alpha);
             }
 
+            // Blend Colors
             for (int col = 0; col < tile_alpha.GetLength(0); col++)
                 for (int row = 0; row < tile_alpha.GetLength(1); row++)
                 {
@@ -1332,7 +1333,7 @@ namespace Tactile
                         float b = (float)(Math.Pow(new_shade.ToVector4().W, 2));
                         float brightness = a + b;
                         Color blended_shade = new Color(base_shade.ToVector4()*a/brightness + new_shade.ToVector4()*b/brightness);
-                        blended_shade.A = Math.Max(base_shade.A, new_shade.A);
+                        blended_shade.A =(byte)(Math.Sqrt(brightness)*256);
                         tile_alpha[col, row] = blended_shade;
                     }
                 }
