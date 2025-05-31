@@ -2023,6 +2023,7 @@ namespace Tactile
                         {
                             unit_shader.CurrentTechnique = unit_shader.Techniques["Unit_Map_Lighting"];
                             unit_shader.Parameters["tone"].SetValue(map_tint.ToVector4());
+                            unit_shader.Parameters["color_shift"].SetValue(Global.game_map.units[id].blink_color.ToVector4());
                         }
                     }
                     sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, Unit_Transition_State, unit_shader);

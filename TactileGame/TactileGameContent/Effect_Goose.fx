@@ -315,6 +315,10 @@ float4 unit_map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 	
 	Color.rgb = adjusted_map_tint.rgb*0.6 + (Color.rgb * (1 - adjusted_map_tint.a*0.6));
 	Color.rgb = adjusted_flame_tint.rgb*0.6 + (Color.rgb * (1 - adjusted_flame_tint.a*0.6));
+	
+	Color.rgb *= 1.0f - color_shift.a;
+	Color.rgb += (color_shift.rgb * color_shift.a);
+	
 	Color.rgb *= Color.a;
 	
 	
