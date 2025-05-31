@@ -1267,6 +1267,20 @@ namespace Tactile
                         for (int ox = 0; ox < Constants.Map.ALPHA_GRANULARITY; ox++)
                             lighting_add(light_sources, i + 1,
                                 new Light_Source(source.color, source.loc * Constants.Map.ALPHA_GRANULARITY + new Vector2(ox, oy), source.brightness));
+
+            HashSet<Vector3> color_shades = new HashSet<Vector3> { };
+            foreach (List<Light_Source> light_source_list in light_sources.Values)
+                foreach(Light_Source light_source in light_source_list)
+                    color_shades.Add(light_source.color.ToVector3());
+
+            Dictionary<Vector3, Color[,]> tile_alpha_without_blending = new Dictionary<Vector3, Color[,]> { };
+            foreach(Vector3 color_shade in color_shades)
+            {
+                tile_alpha_without_blending[color_shade] = new Color[
+                this.width * Constants.Map.ALPHA_GRANULARITY,
+                this.height * Constants.Map.ALPHA_GRANULARITY];
+            }
+
             // Loop through light sources
             while (light_sources.Count > 0)
             {
@@ -1278,9 +1292,9 @@ namespace Tactile
                 {
                     if (is_off_map(source.loc / Constants.Map.ALPHA_GRANULARITY, false))
                         continue;
-                    if (tile_alpha[(int)source.loc.X, (int)source.loc.Y].A < alpha)
+                    if (tile_alpha_without_blending[source.color.ToVector3()][(int)source.loc.X, (int)source.loc.Y].A < alpha)
                     {
-                        tile_alpha[(int)source.loc.X, (int)source.loc.Y] = source.color;
+                        tile_alpha_without_blending[source.color.ToVector3()][(int)source.loc.X, (int)source.loc.Y] = source.color;
                         //foreach (Vector2 offset in new Vector2[] { //Debug
                         //    new Vector2(0, -1), new Vector2(-1, 0), new Vector2(1, 0), new Vector2(0, 1) })
                         for (int oy = -1; oy <= 1; oy++)
@@ -1306,6 +1320,23 @@ namespace Tactile
                 }
                 light_sources.Remove(alpha);
             }
+
+            for (int col = 0; col < tile_alpha.GetLength(0); col++)
+                for (int row = 0; row < tile_alpha.GetLength(1); row++)
+                {
+                    foreach(Vector3 color_shade in color_shades)
+                    {
+                        Color base_shade = tile_alpha[col, row];
+                        Color new_shade = tile_alpha_without_blending[color_shade][col, row];
+                        float a = (float)(Math.Pow(base_shade.ToVector4().W, 2));
+                        float b = (float)(Math.Pow(new_shade.ToVector4().W, 2));
+                        float brightness = a + b;
+                        Color blended_shade = new Color(base_shade.ToVector4()*a/brightness + new_shade.ToVector4()*b/brightness);
+                        blended_shade.A = Math.Max(base_shade.A, new_shade.A);
+                        tile_alpha[col, row] = blended_shade;
+                    }
+                }
+
             Tile_Alpha = tile_alpha;
         }
 
