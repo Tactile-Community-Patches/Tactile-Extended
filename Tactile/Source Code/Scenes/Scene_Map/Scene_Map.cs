@@ -1629,6 +1629,7 @@ namespace Tactile
                     alpha_shader.Parameters["Map_Alpha"].SetValue(Current_Map_Alpha);
 #else
                     sprite_batch.GraphicsDevice.Textures[1] = Current_Map_Alpha;
+                    alpha_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
 #endif
                 }
             }
@@ -2016,7 +2017,6 @@ namespace Tactile
                         }
                     }
                     if (map_tint != Color.White)
-                    //if (false)
                     {
                         unit_shader = map_shader;
                         if (unit_shader != null)

@@ -13,6 +13,7 @@ sampler  Palette         : register(s2);
 float4x4 MatrixTransform;
 
 uniform float4 tone;
+uniform float4 light_tone;
 uniform float4 color_shift;
 uniform float opacity;
 uniform float2 alpha_offset;
@@ -253,7 +254,6 @@ technique Normal
 
 float4 map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 {
-	float4 map_tint = float4(0, 0, 0.2, 0.90);
 	float4 flame_tint = float4(0.3, 0.12, 0, 0.2);
 	
 	float4 light_color = (tex2D(Map_Alpha, (uv * game_size + alpha_offset) / (16 * map_size)));
@@ -265,7 +265,7 @@ float4 map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 	//float light_level = min((nominal_light_level-0.4)*1.5, 0.5);
 	float light_level = nominal_light_level;
 	
-	float4 adjusted_map_tint = map_tint;
+	float4 adjusted_map_tint = tone;
 	adjusted_map_tint.a *= (1-light_level*light_level);
 	
 	float4 adjusted_flame_tint = flame_tint*(light_level*light_level);
