@@ -1955,6 +1955,7 @@ namespace Tactile
                             continue;
                     }
                     Map_Sprites[id].tint = get_unit_tint(siege.loc);
+                    Map_Sprites[id].tint = Color.White;
                     Map_Sprites[id].draw(sprite_batch, Global.game_map.display_loc, camera.matrix);
                 }
                 // Draw Light Runes
@@ -2391,7 +2392,8 @@ namespace Tactile
                 if (sprite_batch.GraphicsDevice.ScissorRectangle.Width > 0 && sprite_batch.GraphicsDevice.ScissorRectangle.Width > 0)
                 {
                     // Adjusts unit brightness by map alpha
-                    Map_Sprites[id].tint = get_unit_tint(unit.loc);
+                    Color map_tint = get_unit_tint(unit.loc);
+                    Map_Sprites[id].tint = Color.White;
                     if (Global.game_map.range_enemies.Contains(id) && Global.game_map.is_enemy_range_visible())
                     {
                         enemy_range_unit_tint(id);
@@ -2401,6 +2403,11 @@ namespace Tactile
                     {
                         if (Global.game_state.new_turn_unit_id == id && Status_Heal != null)
                             map_shader.CurrentTechnique = map_shader.Techniques["Outline_Glow"];
+                        else if (map_tint != Color.White)
+                        {
+                            map_shader.CurrentTechnique = map_shader.Techniques["Unit_Map_Lighting"];
+                            map_shader.Parameters["tone"].SetValue(map_tint.ToVector4());
+                        }
                         else
                             map_shader.CurrentTechnique = map_shader.Techniques["Technique1"];
                     }
