@@ -207,8 +207,8 @@ namespace Tactile.Windows.Map
                 // If Unit wasn't deployed and and wants to be, add them to the team
                 if (!Units_To_Deploy.Contains(index))
                 {
-                    // If too many units, buzz
-                    if (unit_count_maxed)
+                    // If too many units or banned, buzz
+                    if (unit_count_maxed || Global.game_map.banned_deployment.Contains(actor_id))
                         Global.game_system.play_se(System_Sounds.Buzzer);
                     else
                     {

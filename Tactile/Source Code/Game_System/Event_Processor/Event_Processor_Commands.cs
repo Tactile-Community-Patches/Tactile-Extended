@@ -2783,6 +2783,24 @@ namespace Tactile
                     }
                     break;
                 #endregion
+                case "Ban Deployment":
+                    #region Ban Deployments; prevents a specific unit from being deployed
+                    // Value[1+] = Actor ID
+                    for (int i = 1; i < command.Value.Length; i++)
+                    {
+                        // Value[0] = actor id
+                        int id = process_number(command.Value[i]);
+                        if (id == -1)
+                            if (Global.game_map.last_added_unit != null)
+                                id = Global.game_map.last_added_unit.actor.id;
+                        if (id != -1)
+                        {
+                            if (Global.battalion.actors.Contains(id))
+                                Global.game_map.add_banned_deployment(id);
+                        }
+                    }
+                    break;
+                #endregion
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);

@@ -515,6 +515,10 @@ namespace Tactile
         { 
             return Global.game_map.is_actor_deployed(Actors[index]);
         }
+        public bool is_actor_banned(int index)
+        {
+            return Global.game_map.banned_deployment.Contains(Actors[index]);
+        }
 
         public int undeployed_actor(int index, bool include_immobile = false)
         {

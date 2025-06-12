@@ -306,6 +306,9 @@ namespace Tactile
                 // Else if actor already deployed
                 else if (Global.battalion.is_actor_deployed(deployedCount))
                     deployedCount++;
+                // Else if actor is banned
+                else if (Global.battalion.is_actor_banned(deployedCount))
+                    deployedCount++;
                 // Else deploy unit
                 else
                 {

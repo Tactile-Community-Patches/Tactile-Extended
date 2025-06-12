@@ -44,6 +44,7 @@ namespace Tactile
         private Dictionary<int, int> Removed_Units = new Dictionary<int, int>();
         private Dictionary<int, int> EscapedUnits = new Dictionary<int, int>();
         private List<int> Forced_Deployment = new List<int>();
+        private List<int> Banned_Deployment = new List<int>();
         private List<Vector2> Deployment_Points = new List<Vector2>();
         private HashSet<Vector2> Move_Range = new HashSet<Vector2>(), Attack_Range = new HashSet<Vector2>(),
             Staff_Range = new HashSet<Vector2>(), Talk_Range = new HashSet<Vector2>();
@@ -124,6 +125,7 @@ namespace Tactile
             Removed_Units.write(writer);
             EscapedUnits.write(writer);
             Forced_Deployment.write(writer);
+            Banned_Deployment.write(writer);
             Deployment_Points.write(writer);
             Move_Range.write(writer);
             Attack_Range.write(writer);
@@ -207,6 +209,7 @@ namespace Tactile
                 EscapedUnits.read(reader);
             }
             Forced_Deployment.read(reader);
+            Banned_Deployment.read(reader);
             Deployment_Points.read(reader);
             Move_Range.read(reader);
             Attack_Range.read(reader);
@@ -464,6 +467,7 @@ namespace Tactile
         }
 
         public List<int> forced_deployment { get { return Forced_Deployment; } }
+        public List<int> banned_deployment { get { return Banned_Deployment; } }
 
         public List<Vector2> deployment_points { get { return Deployment_Points; } }
 
@@ -832,6 +836,7 @@ namespace Tactile
             Objects.reset();
             Deployment_Points.Clear();
             Forced_Deployment.Clear();
+            Banned_Deployment.Clear();
 
             if (Scene_Map.debug_chapter_options_blocked())
             {
@@ -3437,6 +3442,11 @@ namespace Tactile
         {
             if (!Forced_Deployment.Contains(actor_id))
                 Forced_Deployment.Add(actor_id);
+        }
+        public void add_banned_deployment(int actor_id)
+        {
+            if (!Banned_Deployment.Contains(actor_id))
+                Banned_Deployment.Add(actor_id);
         }
 
         public void change_tile(Vector2 loc, int new_tile_id)
