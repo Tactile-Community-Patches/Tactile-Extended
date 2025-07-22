@@ -2789,7 +2789,11 @@ namespace Tactile
                     // Value[2] Scroll Velocity X
                     // Value[3] Scroll Velocity Y
                     // Value[4] Parallax Factor
-                    Global.game_map.add_background();
+                    Global.game_map.add_background(
+                        command.Value[1],
+                        process_number(command.Value[2]),
+                        process_number(command.Value[3]),
+                        process_number(command.Value[4]));
                     break;
                 #endregion
 #if DEBUG

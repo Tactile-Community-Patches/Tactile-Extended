@@ -702,6 +702,8 @@ namespace Tactile
         public bool icons_visible { get { return rescue_anim_timer < Config.RESCUE_VISIBLE_TIME; } }
         public float icon_timer { get { return rescue_anim_timer / (float)Config.RESCUE_TIME ; } }
         public int icon_loops { get { return rescue_anim_loops; } }
+
+        public List<Map_Background> backgrounds { get { return Backgrounds; } }
         #endregion
 
         public Game_Map()
@@ -1356,9 +1358,9 @@ namespace Tactile
             return new Color(alpha, alpha, alpha, 255);
         }
         #endregion
-        public void add_background()
+        public void add_background(string filename, int X_velocity, int Y_velocity, int parallax_factor)
         {
-            Backgrounds.Add(new Map_Background());
+            Backgrounds.Add(new Map_Background(filename, X_velocity, Y_velocity, parallax_factor));
         }
         public int width
         {
