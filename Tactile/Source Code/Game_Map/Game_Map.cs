@@ -83,6 +83,7 @@ namespace Tactile
 
         private Map_Unit_Data Unit_Data;
         private Vector2 Map_Edge_Offset;
+        private List<Map_Background> Backgrounds = new List<Map_Background> { };
         private int[,] Siege_Locations = new int[,] { };
         private int[,] Destroyable_Locations = new int[,] { };
         private HashSet<int> Waiting_Unit_Skip = new HashSet<int>();
@@ -1355,7 +1356,10 @@ namespace Tactile
             return new Color(alpha, alpha, alpha, 255);
         }
         #endregion
-
+        public void add_background()
+        {
+            Backgrounds.Add(new Map_Background());
+        }
         public int width
         {
             get

@@ -2783,6 +2783,15 @@ namespace Tactile
                     }
                     break;
                 #endregion
+                case "Set Scrolling Background":
+                    #region Scrolling Background; floating islands my beloved
+                    // Value[1] Filename
+                    // Value[2] Scroll Velocity X
+                    // Value[3] Scroll Velocity Y
+                    // Value[4] Parallax Factor
+                    Global.game_map.add_background();
+                    break;
+                #endregion
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);
