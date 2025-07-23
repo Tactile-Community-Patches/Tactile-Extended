@@ -2795,6 +2795,9 @@ namespace Tactile
                         process_number(command.Value[3]),
                         process_number(command.Value[4]));
                     break;
+                case "Clear Scrolling Background":
+                    Global.game_map.clear_background();
+                    break;
                 #endregion
 #if DEBUG
                 default:

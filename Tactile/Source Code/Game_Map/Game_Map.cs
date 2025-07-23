@@ -1366,6 +1366,10 @@ namespace Tactile
         {
             Backgrounds.Add(new Map_Background(filename, X_velocity, Y_velocity, parallax_factor));
         }
+        public void clear_background()
+        {
+            Backgrounds.Clear();
+        }
         public int width
         {
             get
