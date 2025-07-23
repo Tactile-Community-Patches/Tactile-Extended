@@ -1319,6 +1319,7 @@ namespace Tactile
             draw_formation_change2(sprite_batch);
             Player_Sprite.draw(sprite_batch, Global.game_map.display_loc);
             draw_formation_change1(sprite_batch);
+
             sprite_batch.End();
 
             // Units hidden

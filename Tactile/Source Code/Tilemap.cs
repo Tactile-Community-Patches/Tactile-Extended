@@ -126,6 +126,13 @@ namespace Tactile
             int gran_size = TILE_SIZE / gran;
 
             Vector2 draw_vector = this.draw_vector() - Global.game_map.display_loc;
+            sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone);
+            foreach (Map_Background background in Global.game_map.backgrounds)
+            {
+                background.draw(sprite_batch);
+            }
+            sprite_batch.End();
+
             sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null);
             // Draw static tiles
             for (int y = start_y; y < height; y++)
