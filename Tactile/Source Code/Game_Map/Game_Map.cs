@@ -1365,10 +1365,20 @@ namespace Tactile
         public void add_background(string filename, int X_velocity, int Y_velocity, int parallax_factor)
         {
             Backgrounds.Add(new Map_Background(filename, X_velocity, Y_velocity, parallax_factor));
+            sort_backgrounds_by_depth();
         }
         public void clear_background()
         {
             Backgrounds.Clear();
+        }
+        public void sort_backgrounds_by_depth()
+        {
+            Backgrounds.Sort(delegate (Map_Background x, Map_Background y)
+            {
+                if (x.depth == y.depth) return 0;
+                else if (x.depth > y.depth) return 1;
+                else return -1;
+            });
         }
         public int width
         {
