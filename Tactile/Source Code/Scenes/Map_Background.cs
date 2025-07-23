@@ -16,8 +16,8 @@ namespace Tactile
         private double Parallax_Factor;
         private int X_velocity;
         private int Y_velocity;
-        private int X_displacement = 0;
-        private int Y_displacement = 0;
+        private double X_displacement = 0;
+        private double Y_displacement = 0;
         private int X_timer = 0;
         private int Y_timer = 0;
         private Rectangle Destination = new Rectangle(0, 0, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
@@ -66,31 +66,21 @@ namespace Tactile
 
         private void update_velocity()
         {
-            X_timer++;
-            Y_timer++;
-            if (X_timer == X_velocity)
+            X_displacement += X_velocity / 1000d;
+            Y_displacement += Y_velocity / 1000d;
+            if ((int)X_displacement % Texture.Width == 0 && (int)X_displacement != 0)
             {
-                X_timer = 0;
-                X_displacement += 1;
+                X_displacement = 0d;
             }
-            if (X_displacement % Texture.Width == 0)
+            if ((int)Y_displacement % Texture.Height == 0 && (int)Y_displacement != 0)
             {
-                X_displacement = 0;
-            }
-            if (Y_timer == Y_velocity)
-            {
-                Y_timer = 0;
-                Y_displacement += 1;
-            }
-            if (Y_displacement % Texture.Height == 0)
-            {
-                Y_displacement = 0;
+                Y_displacement = 0d;
             }
         }
         private void refresh_source()
         {
-            Source.X = (int)(Global.game_map.display_x / 2 * Parallax_Factor) + X_displacement;
-            Source.Y = (int)(Parallax_Factor * Global.game_map.display_y / 2 * Config.WINDOW_WIDTH / Config.WINDOW_HEIGHT) + Y_displacement;
+            Source.X = (int)(Global.game_map.display_x / 2 * Parallax_Factor) + (int)X_displacement;
+            Source.Y = (int)(Parallax_Factor * Global.game_map.display_y / 2 * Config.WINDOW_WIDTH / Config.WINDOW_HEIGHT) + (int)Y_displacement;
         }
         public void draw(SpriteBatch spriteBatch)
         {
