@@ -513,6 +513,26 @@ namespace TactileListExtension
                 list.Add(Tactile.Map.EscapePoint.read(reader));
         }
 
+        // List<Map_Background>
+        public static void write(this List<Tactile.Map_Background> list, BinaryWriter writer)
+        {
+            writer.Write(list.Count);
+            foreach (Tactile.Map_Background data in list)
+                data.write(writer);
+        }
+
+        public static void read(this List<Tactile.Map_Background> list, BinaryReader reader)
+        {
+            list.Clear();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                Tactile.Map_Background data = new Tactile.Map_Background(reader);
+                list.Add(data);
+            }
+        }
+
+
         // List<Tuple<int, bool>>
         public static void write(this List<Tuple<int, bool>> list, BinaryWriter writer)
         {

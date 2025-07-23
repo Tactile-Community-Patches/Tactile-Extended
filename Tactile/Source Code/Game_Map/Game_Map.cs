@@ -165,6 +165,8 @@ namespace Tactile
             writer.Write(Last_Added_Unit_Id);
 
             move_range_write(writer);
+
+            Backgrounds.write(writer);
         }
 
         public void read(BinaryReader reader)
@@ -317,6 +319,8 @@ namespace Tactile
             Last_Added_Unit_Id = reader.ReadInt32();
 
             move_range_read(reader);
+
+            Backgrounds.read(reader);
         }
 
         public void load_suspend()
@@ -2088,6 +2092,9 @@ namespace Tactile
                 if (move_sound_timers[i] > 0) move_sound_timers[i]--;
             // Move arrow update
             update_move_arrow();
+            // Scrolling backgrounds
+            foreach (Map_Background background in Backgrounds)
+                background.update();
             return true;
         }
 
