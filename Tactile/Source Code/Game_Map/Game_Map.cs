@@ -1362,9 +1362,9 @@ namespace Tactile
             return new Color(alpha, alpha, alpha, 255);
         }
         #endregion
-        public void add_background(string filename, int X_velocity, int Y_velocity, int parallax_factor)
+        public void add_background(string filename, int x, int y, int parallax_factor, Background_Mode mode)
         {
-            Backgrounds.Add(new Map_Background(filename, X_velocity, Y_velocity, parallax_factor));
+            Backgrounds.Add(new Map_Background(filename, x, y, parallax_factor, mode));
             sort_backgrounds_by_depth();
         }
         public void clear_background()

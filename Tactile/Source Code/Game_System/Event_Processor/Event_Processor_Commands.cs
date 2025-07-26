@@ -2793,9 +2793,24 @@ namespace Tactile
                         command.Value[1],
                         process_number(command.Value[2]),
                         process_number(command.Value[3]),
-                        process_number(command.Value[4]));
+                        process_number(command.Value[4]),
+                        Background_Mode.Scrolling);
                     break;
-                case "Clear Scrolling Background":
+                case "Set Static Background":
+                    #region Static Background
+                    // Value[1] Filename
+                    // Value[2] Position Offset X
+                    // Value[3] Position Offset Y
+                    // Value[4] Parallax Factor
+                    Global.game_map.add_background(
+                        command.Value[1],
+                        process_number(command.Value[2]),
+                        process_number(command.Value[3]),
+                        process_number(command.Value[4]),
+                        Background_Mode.Static);
+                    break;
+                #endregion
+                case "Clear Background":
                     Global.game_map.clear_background();
                     break;
                 #endregion
