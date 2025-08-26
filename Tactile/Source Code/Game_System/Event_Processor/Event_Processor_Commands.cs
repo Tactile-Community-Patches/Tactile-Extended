@@ -2783,6 +2783,13 @@ namespace Tactile
                     }
                     break;
                 #endregion
+                case "Change Turn Theme":
+                    #region Change Turn Theme
+                    // Value[1] = Phase (i.e. player, enemy, ally, intruder)
+                    // Value[2] = Song Name
+                    Global.game_state.turn_theme_override[process_number(command.Value[1])] = command.Value[2];
+                    break;
+                #endregion
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);
