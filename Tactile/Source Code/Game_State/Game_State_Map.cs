@@ -218,6 +218,7 @@ namespace Tactile
             Death_Quotes.Clear();
             Casual_Death_Quote_Blocked.Clear();
             Unit_Battle_Themes.Clear();
+            turn_theme_override.Clear();
 
             if (reset_events)
             {
