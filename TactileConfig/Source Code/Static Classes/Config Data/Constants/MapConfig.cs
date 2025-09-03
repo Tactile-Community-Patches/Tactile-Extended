@@ -15,7 +15,7 @@ namespace Tactile.Constants
 #else
         public const int ALPHA_GRANULARITY = 2;
 #endif
-        public const int ALPHA_MAX = 12 * ALPHA_GRANULARITY;
+        public const int ALPHA_MAX = 14 * ALPHA_GRANULARITY;
 
         public const bool FOW_TERRAIN_DATA = false; // Is terrain info data visible when moving the cursor on fog tiles, generally turn off only if doing Thracia fog
 
