@@ -2275,14 +2275,22 @@ namespace Tactile
             // Value[2] = r
             // Value[3] = g
             // Value[4] = b
+            // Value[5] = Class ID (optional)
             byte r = (byte)process_number(command.Value[2]);
             byte g = (byte)process_number(command.Value[3]);
             byte b = (byte)process_number(command.Value[4]);
             byte a = (byte)(process_number(command.Value[0]) *
                 Constants.Map.ALPHA_MAX / process_number(command.Value[1]) - 1);
 
+            if(command.Value.Length > 5)
+            {
+                int id = process_number(command.Value[5]);
+                Global.game_map.class_ally_alpha[id] = new Color(r, g, b, a);
+            }
+            else
+                Global.game_map.ally_alpha = new Color(r, g, b, a);
 
-            Global.game_map.ally_alpha = new Color(r, g, b, a);
+
             Index++;
             return true;
         }

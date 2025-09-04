@@ -76,6 +76,7 @@ namespace Tactile
         private List<Light_Source>[] Light_Sources = new List<Light_Source>[0];
         private int Min_Alpha = 0;
         private Color Ally_Alpha;
+        private Dictionary<int, Color> Class_Ally_Alpha = new Dictionary<int, Color> { };
         private Dictionary<int, List<Rectangle>>[] Team_Defend_Areas;
         private Dictionary<int, Vector2> Unit_Seek_Locs;
         private Dictionary<int, Dictionary<int, Vector2>> Team_Seek_Locs;
@@ -693,6 +694,10 @@ namespace Tactile
                 Ally_Alpha.A = (byte)MathHelper.Clamp(value.A, -1, Constants.Map.ALPHA_MAX - 1);
             }
         }
+        public Dictionary<int, Color> class_ally_alpha
+        {
+            get { return Class_Ally_Alpha; }
+        }
 
         internal Dictionary<int, Vector2> unit_seek_locs { get { return Unit_Seek_Locs; } }
         internal Dictionary<int, Dictionary<int, Vector2>> team_seek_locs { get { return Team_Seek_Locs; } }
@@ -1258,7 +1263,14 @@ namespace Tactile
                     for (int x = 0; x < this.width; x++)
                         if (get_unit(new Vector2(x, y)) != null && get_unit(new Vector2(x, y)).is_ally) //Multi
                         {
-                            sources_with_units[Ally_Alpha.A].Add(new Light_Source(Ally_Alpha, new Vector2(x, y), Ally_Alpha.A));
+                            int unit_class_id = get_unit(new Vector2(x, y)).actor.class_id;
+                            if (Class_Ally_Alpha.ContainsKey(unit_class_id))
+                            {
+                                Color Special_Ally_Alpha = Class_Ally_Alpha[unit_class_id];
+                                sources_with_units[Special_Ally_Alpha.A].Add(new Light_Source(Special_Ally_Alpha, new Vector2(x, y), Special_Ally_Alpha.A));
+                            }
+                            else
+                                sources_with_units[Ally_Alpha.A].Add(new Light_Source(Ally_Alpha, new Vector2(x, y), Ally_Alpha.A));
                         }
 
             for (int i = 0; i < sources_with_units.Length; i++)
