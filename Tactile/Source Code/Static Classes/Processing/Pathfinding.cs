@@ -852,6 +852,15 @@ namespace Tactile
             //result = result.Distinct().ToList(); //ListOrEquals //HashSet
             return result;
         }
+        public static HashSet<Vector2> fow_sight_from_brightness(double[,] Brightness_Map)
+        {
+            HashSet<Vector2> result = new HashSet<Vector2>();
+            for (int x = 0; x < Brightness_Map.GetLength(0); x++)
+                for (int y = 0; y < Brightness_Map.GetLength(1); y++)
+                    if (Brightness_Map[x, y] > 15)
+                        result.Add(new Vector2(x, y));
+            return result;
+        }
         #endregion
 
         protected static int distance(Vector2 loc, Vector2 target_loc, bool use_euclidean_distance = false)

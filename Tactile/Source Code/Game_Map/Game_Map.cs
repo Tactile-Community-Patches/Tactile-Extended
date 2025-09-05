@@ -93,6 +93,7 @@ namespace Tactile
         private int rescue_anim_loops = 0;
         public List<int> move_sound_timers = new List<int> { 0, 0, 0 };
         public Color[,] Tile_Alpha;
+        public double[,] Brightness_Map;
         private bool Controlled_Scroll = false;
         private Vector2 ScrollSpeed = Vector2.Zero;
 
@@ -1372,6 +1373,7 @@ namespace Tactile
                         }
                     tile_brightness[x, y] = subtile_brightness.Average();
                 }
+            Brightness_Map = tile_brightness;
         }
 
         void lighting_add(Dictionary<float, List<Light_Source>> dict, float key, Light_Source value)
@@ -2019,7 +2021,8 @@ namespace Tactile
                     viewers.AddRange(Torch_Staves);
                     viewers.AddRange(VisionPoints);
 
-                    HashSet<Vector2> visibility = Pathfind.fow_sight_area(viewers);
+                    //HashSet<Vector2> visibility = Pathfind.fow_sight_area(viewers);
+                    HashSet<Vector2> visibility = Pathfind.fow_sight_from_brightness(Brightness_Map);
                     foreach (int team_id in group)
                         Fow_Visibility[team_id] = visibility;
                 }
