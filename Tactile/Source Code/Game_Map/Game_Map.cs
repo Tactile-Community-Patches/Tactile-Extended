@@ -1354,6 +1354,24 @@ namespace Tactile
                 }
 
             Tile_Alpha = tile_alpha;
+            set_alpha_fow();
+        }
+        void set_alpha_fow()
+        {
+            double[,] tile_brightness = new double[this.width, this.height];
+            for (int x = 0; x < this.width; x++)
+                for (int y = 0; y < this.height; y++)
+                {
+                    int[] subtile_brightness = new int[Constants.Map.ALPHA_GRANULARITY * Constants.Map.ALPHA_GRANULARITY];
+                    int n = 0;
+                    for (int x_prime = 0; x_prime < Constants.Map.ALPHA_GRANULARITY; x_prime++)
+                        for (int y_prime = 0; y_prime < Constants.Map.ALPHA_GRANULARITY; y_prime++)
+                        {
+                            subtile_brightness[n] = Tile_Alpha[x + x_prime, y + y_prime].A;
+                            n++;
+                        }
+                    tile_brightness[x, y] = subtile_brightness.Average();
+                }
         }
 
         void lighting_add(Dictionary<float, List<Light_Source>> dict, float key, Light_Source value)
