@@ -157,6 +157,7 @@ namespace Tactile
             Light_Sources.write(writer);
             writer.Write(Min_Alpha);
             Ally_Alpha.write(writer);
+            Class_Ally_Alpha.write(writer);
             Team_Defend_Areas.write(writer);
             Unit_Seek_Locs.write(writer);
             Team_Seek_Locs.write(writer);
@@ -303,6 +304,7 @@ namespace Tactile
             refresh_alpha();
             Min_Alpha = reader.ReadInt32();
             Ally_Alpha.read(reader);
+            Class_Ally_Alpha.read(reader);
             Team_Defend_Areas = Team_Defend_Areas.read(reader);
             Unit_Seek_Locs.read(reader);
             Team_Seek_Locs.read(reader);
@@ -900,6 +902,7 @@ namespace Tactile
                 Light_Sources[i] = new List<Light_Source>();
             Min_Alpha = 255;
             Ally_Alpha = Color.Black;
+            Class_Ally_Alpha.Clear();
             refresh_alpha();
             
 #if DEBUG

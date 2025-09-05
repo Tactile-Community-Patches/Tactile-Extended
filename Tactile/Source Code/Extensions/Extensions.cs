@@ -276,6 +276,28 @@ namespace TactileColorExtension
             color.B = reader.ReadByte();
             color.A = reader.ReadByte();
         }
+
+        public static void write(this Dictionary<int, Color> dictionary, BinaryWriter writer)
+        {
+            writer.Write(dictionary.Count);
+            foreach(KeyValuePair<int, Color> pair in dictionary)
+            {
+                writer.Write(pair.Key);
+                pair.Value.write(writer);
+            }
+        }
+        public static void read(this Dictionary<int, Color> dictionary, BinaryReader reader)
+        {
+            dictionary.Clear();
+            int count = reader.ReadInt32();
+            for(int n = 0; n < count; n++)
+            {
+                int key = reader.ReadInt32();
+                Color value = new Color();
+                value.read(reader);
+                dictionary.Add(key, value);
+            }
+        }
     }
 }
 
