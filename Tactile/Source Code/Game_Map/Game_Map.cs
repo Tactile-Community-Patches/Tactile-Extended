@@ -1368,7 +1368,7 @@ namespace Tactile
                     for (int x_prime = 0; x_prime < Constants.Map.ALPHA_GRANULARITY; x_prime++)
                         for (int y_prime = 0; y_prime < Constants.Map.ALPHA_GRANULARITY; y_prime++)
                         {
-                            subtile_brightness[n] = Tile_Alpha[x + x_prime, y + y_prime].A;
+                            subtile_brightness[n] = Tile_Alpha[x*Constants.Map.ALPHA_GRANULARITY + x_prime, y * Constants.Map.ALPHA_GRANULARITY + y_prime].A;
                             n++;
                         }
                     tile_brightness[x, y] = subtile_brightness.Average();
