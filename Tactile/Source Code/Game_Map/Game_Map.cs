@@ -1371,7 +1371,7 @@ namespace Tactile
                             subtile_brightness[n] = Tile_Alpha[x*Constants.Map.ALPHA_GRANULARITY + x_prime, y * Constants.Map.ALPHA_GRANULARITY + y_prime].A;
                             n++;
                         }
-                    tile_brightness[x, y] = subtile_brightness.Average();
+                    tile_brightness[x, y] = subtile_brightness.Max();
                 }
             Brightness_Map = tile_brightness;
         }
@@ -2022,7 +2022,7 @@ namespace Tactile
                     viewers.AddRange(VisionPoints);
 
                     //HashSet<Vector2> visibility = Pathfind.fow_sight_area(viewers);
-                    refresh_alpha(30);
+                    set_map_alpha();
                     HashSet<Vector2> visibility = Pathfind.fow_sight_from_brightness(Brightness_Map);
                     foreach (int team_id in group)
                         Fow_Visibility[team_id] = visibility;
