@@ -2022,6 +2022,7 @@ namespace Tactile
                     viewers.AddRange(VisionPoints);
 
                     //HashSet<Vector2> visibility = Pathfind.fow_sight_area(viewers);
+                    refresh_alpha(30);
                     HashSet<Vector2> visibility = Pathfind.fow_sight_from_brightness(Brightness_Map);
                     foreach (int team_id in group)
                         Fow_Visibility[team_id] = visibility;
