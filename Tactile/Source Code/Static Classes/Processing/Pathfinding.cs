@@ -857,7 +857,7 @@ namespace Tactile
             HashSet<Vector2> result = new HashSet<Vector2>();
             for (int x = 0; x < Brightness_Map.GetLength(0); x++)
                 for (int y = 0; y < Brightness_Map.GetLength(1); y++)
-                    if (Brightness_Map[x, y] > 15)
+                    if (Brightness_Map[x, y] > 13)
                         result.Add(new Vector2(x, y));
             return result;
         }
