@@ -1389,7 +1389,7 @@ namespace Tactile
                 Map_Data.GetValue((int)loc.X, (int)loc.Y)]].alpha_cost;
             if (cost == -1)
                 return 4;
-            return Math.Min(4, cost);
+            return Math.Min(7, cost);
             return 1;
         }
 
