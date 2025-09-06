@@ -2804,6 +2804,12 @@ namespace Tactile
                     }
                     break;
                 #endregion
+                case "Alpha FoW":
+                    #region Alpha FoW; bases FoW off of map alpha
+                    Global.game_map.alpha_fow = process_bool(command.Value[1]);
+                    Global.game_map.update_fow();
+                    break;
+                #endregion
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);

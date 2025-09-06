@@ -76,6 +76,7 @@ namespace Tactile
         private List<Light_Source>[] Light_Sources = new List<Light_Source>[0];
         private int Min_Alpha = 0;
         private Color Ally_Alpha;
+        private bool Alpha_FoW;
         private Dictionary<int, Color> Class_Ally_Alpha = new Dictionary<int, Color> { };
         private Dictionary<int, List<Rectangle>>[] Team_Defend_Areas;
         private Dictionary<int, Vector2> Unit_Seek_Locs;
@@ -159,6 +160,7 @@ namespace Tactile
             writer.Write(Min_Alpha);
             Ally_Alpha.write(writer);
             Class_Ally_Alpha.write(writer);
+            writer.Write(Alpha_FoW);
             Team_Defend_Areas.write(writer);
             Unit_Seek_Locs.write(writer);
             Team_Seek_Locs.write(writer);
@@ -306,6 +308,7 @@ namespace Tactile
             Min_Alpha = reader.ReadInt32();
             Ally_Alpha.read(reader);
             Class_Ally_Alpha.read(reader);
+            Alpha_FoW = reader.ReadBoolean();
             Team_Defend_Areas = Team_Defend_Areas.read(reader);
             Unit_Seek_Locs.read(reader);
             Team_Seek_Locs.read(reader);
@@ -700,6 +703,11 @@ namespace Tactile
         public Dictionary<int, Color> class_ally_alpha
         {
             get { return Class_Ally_Alpha; }
+        }
+        public bool alpha_fow
+        {
+            get { return Alpha_FoW; }
+            set { Alpha_FoW = value; }
         }
 
         internal Dictionary<int, Vector2> unit_seek_locs { get { return Unit_Seek_Locs; } }
@@ -2021,9 +2029,16 @@ namespace Tactile
                     viewers.AddRange(Torch_Staves);
                     viewers.AddRange(VisionPoints);
 
-                    //HashSet<Vector2> visibility = Pathfind.fow_sight_area(viewers);
-                    set_map_alpha();
-                    HashSet<Vector2> visibility = Pathfind.fow_sight_from_brightness(Brightness_Map);
+                    HashSet<Vector2> visibility;
+                    if (alpha_fow && updating_team == Constants.Team.PLAYER_TEAM)
+                    {
+                        set_map_alpha();
+                        visibility = Pathfind.fow_sight_from_brightness(Brightness_Map);
+                    }
+                    else
+                    {
+                        visibility = Pathfind.fow_sight_area(viewers);
+                    }
                     foreach (int team_id in group)
                         Fow_Visibility[team_id] = visibility;
                 }
