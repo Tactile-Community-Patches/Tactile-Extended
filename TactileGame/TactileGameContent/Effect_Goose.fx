@@ -275,7 +275,7 @@ float4 map_lighting(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR
 	
 	Color.rgb = adjusted_map_tint.rgb + (Color.rgb * (1 - adjusted_map_tint.a));
 	Color.rgb = adjusted_flame_tint.rgb + (Color.rgb * (1 - adjusted_flame_tint.a));
-	
+	Color.a = 1;
 	
 	return Color * color;
 }
