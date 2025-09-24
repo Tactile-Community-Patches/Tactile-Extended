@@ -11,6 +11,7 @@ using TactileDictionaryExtension;
 using TactileListExtension;
 using TactileVector2Extension;
 using TactileVersionExtension;
+using TactileColorExtension;
 
 namespace Tactile
 {
@@ -44,6 +45,7 @@ namespace Tactile
         internal bool Update_Victory_Theme = false; //private //Yeti
         private Tone Screen_Tone = new Tone(0, 0, 0, 0), Source_Screen_Tone = new Tone(0, 0, 0, 0);
         private int Tone_Timer;
+        private Tone Ambient_Light = new Tone(0, 0, 0, 0);
         internal int Tone_Time_Max { get; private set; } //private //Yeti
         public Vector2? prev_player_loc = null;
 #if !MONOGAME && DEBUG
@@ -74,6 +76,7 @@ namespace Tactile
             writer.Write(Supports_Blocked);
             Blocked_Supports.write(writer);
             Target_Screen_Tone.write(writer);
+            Ambient_Light.write(writer);
             Battle_Convos.write(writer);
             Death_Quotes.write(writer);
             Casual_Death_Quote_Blocked.write(writer);
@@ -109,6 +112,7 @@ namespace Tactile
             Blocked_Supports.read(reader);
             Screen_Tone = Tone.read(reader);
             Target_Screen_Tone = Screen_Tone;
+            Ambient_Light = Tone.read(reader);
             Battle_Convos.read(reader);
             Death_Quotes.read(reader);
             if (!Global.LOADED_VERSION.older_than(0, 4, 7, 1))
@@ -173,6 +177,10 @@ namespace Tactile
             get { return Screen_Tone; }
             set { Screen_Tone = value; }
         }
+        public Tone ambient_light
+        {
+            get { return Ambient_Light; }
+        }
 
         public List<Battle_Convo> battle_convos { get { return Battle_Convos; } }
 
@@ -228,6 +236,7 @@ namespace Tactile
                 Target_Screen_Tone = new Tone(0, 0, 0, 0);
                 Tone_Timer = 0;
                 Tone_Time_Max = 0;
+                Ambient_Light = new Tone(0, 0, 0, 0);
                 prev_player_loc = null;
 #if !MONOGAME && DEBUG
                 Moving_Editor_Unit = false;
@@ -993,6 +1002,10 @@ namespace Tactile
             Target_Screen_Tone = new Tone(r, g, b, a);
             if (Tone_Timer == 0)
                 Screen_Tone = Target_Screen_Tone;
+        }
+        public void change_ambient_light(int r, int g, int b, int a)
+        {
+            Ambient_Light = new Tone(r, g, b, a);
         }
 
         protected void update_main_turn_change()

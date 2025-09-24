@@ -2810,6 +2810,16 @@ namespace Tactile
                     Global.game_map.update_fow();
                     break;
                 #endregion
+                case "Set Ambient Light":
+                    #region Set Ambient Light; like screen tone except not
+                    Global.game_state.change_ambient_light(
+                        process_number(command.Value[1]),   // R
+                        process_number(command.Value[2]),   // G
+                        process_number(command.Value[3]),   // B
+                        process_number(command.Value[4])    // A
+                        );
+                    break;
+                #endregion
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);

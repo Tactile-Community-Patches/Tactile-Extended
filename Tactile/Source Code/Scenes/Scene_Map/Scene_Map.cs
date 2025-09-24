@@ -1444,7 +1444,7 @@ namespace Tactile
             if (map_shader != null)
             {
                 map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
-                map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                map_shader.Parameters["tone"].SetValue(Global.game_state.ambient_light.to_vector_4(1.0f));
             }
             sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, map_shader);
             sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);
@@ -1482,7 +1482,7 @@ namespace Tactile
             if (map_shader != null)
             {
                 map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
-                map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(Config.UNIT_TONE_PERCENT));
+                map_shader.Parameters["tone"].SetValue(Global.game_state.ambient_light.to_vector_4(Config.UNIT_TONE_PERCENT));
             }
             sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, map_shader);
             sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);
@@ -1629,7 +1629,7 @@ namespace Tactile
                     alpha_shader.Parameters["Map_Alpha"].SetValue(Current_Map_Alpha);
 #else
                     sprite_batch.GraphicsDevice.Textures[1] = Current_Map_Alpha;
-                    alpha_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                    alpha_shader.Parameters["tone"].SetValue(Global.game_state.ambient_light.to_vector_4(1.0f));
 #endif
                 }
             }
@@ -1658,7 +1658,7 @@ namespace Tactile
             if (map_shader != null)
             {
                 map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
-                map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                map_shader.Parameters["tone"].SetValue(Global.game_state.ambient_light.to_vector_4(1.0f));
             }
             sprite_batch.Begin();
             sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);
@@ -1874,7 +1874,7 @@ namespace Tactile
             if (map_shader != null)
             {
                 map_shader.CurrentTechnique = map_shader.Techniques["Tone"];
-                map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(Config.UNIT_TONE_PERCENT));
+                map_shader.Parameters["tone"].SetValue(Global.game_state.ambient_light.to_vector_4(Config.UNIT_TONE_PERCENT));
             }
             sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null);
             sprite_batch.Draw(render_targets[1], Vector2.Zero, Color.White);
@@ -2022,7 +2022,7 @@ namespace Tactile
                         if (unit_shader != null)
                         {
                             unit_shader.CurrentTechnique = unit_shader.Techniques["Unit_Map_Lighting"];
-                            unit_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                            unit_shader.Parameters["tone"].SetValue(Global.game_state.ambient_light.to_vector_4(1.0f));
                             unit_shader.Parameters["light_tone"].SetValue(map_tint.ToVector4());
                             unit_shader.Parameters["color_shift"].SetValue(Global.game_map.units[id].blink_color.ToVector4());
                         }
@@ -2408,7 +2408,7 @@ namespace Tactile
                         else if (map_tint != Color.White)
                         {
                             map_shader.CurrentTechnique = map_shader.Techniques["Unit_Map_Lighting"];
-                            map_shader.Parameters["tone"].SetValue(Global.game_state.screen_tone.to_vector_4(1.0f));
+                            map_shader.Parameters["tone"].SetValue(Global.game_state.ambient_light.to_vector_4(1.0f));
                             map_shader.Parameters["light_tone"].SetValue(map_tint.ToVector4());
                         }
                         else
