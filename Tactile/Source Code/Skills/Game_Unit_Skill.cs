@@ -765,7 +765,14 @@ namespace Tactile
             // this seems to be called twice while setting up battles, making permanent changes here doubled
             // for example, reducing the enemy stats
             // look into it? //Yeti
-
+            if (actor.has_skill("TEST_SKILL"))
+            {
+                if (result.hit)
+                {
+                    target.set_stat_bonus(Buffs.Pow, -5);
+                    target.set_stat_bonus(Buffs.Def, -5);
+                }
+            }
             // Activation skills
             // Skills: Nosferatu
             if (!nihil(target))
