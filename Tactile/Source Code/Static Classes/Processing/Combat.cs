@@ -530,7 +530,7 @@ namespace Tactile
         public static Attack_Result set_attack(
             Game_Unit battler_1, Game_Unit battler_2, int distance, int actual_dmg, bool hit, bool crt, TactileLibrary.Data_Weapon weapon)
         {
-            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() };
+            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>(), buff_change = new List<KeyValuePair<TactileLibrary.Buffs, int>> { } };
 
             result.hit = hit;
             result.crt = crt;
@@ -593,7 +593,7 @@ namespace Tactile
         public static Attack_Result set_attack(
             Game_Unit battler_1, Game_Unit battler_2, int distance, TactileLibrary.Data_Weapon weapon, Scripted_Combat_Stats stats)
         {
-            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() };
+            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>(), buff_change = new List<KeyValuePair<TactileLibrary.Buffs, int>> { } };
 
             int actual_dmg = stats.Damage;
             result.hit = stats.Result != Attack_Results.Miss;
@@ -654,7 +654,7 @@ namespace Tactile
         public static Attack_Result set_attack(
             Game_Unit battler_1, Combat_Map_Object battler_2, int distance, int actual_dmg, bool hit, bool crt, TactileLibrary.Data_Weapon weapon)
         {
-            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() };
+            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>(), buff_change = new List<KeyValuePair<TactileLibrary.Buffs, int>> { } };
 
             result.hit = hit;
             result.crt = crt;
@@ -678,7 +678,7 @@ namespace Tactile
 
         public static Attack_Result set_heal(Game_Unit battler_1, Game_Unit battler_2, int distance, TactileLibrary.Data_Weapon weapon)
         {
-            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() };
+            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>(), buff_change = new List<KeyValuePair<TactileLibrary.Buffs, int>> { } };
 
             List<int?> ary = Combat.combat_stats(battler_1.id, battler_2.id, distance);
             int dmg = 0, actual_dmg = 0;
@@ -712,7 +712,7 @@ namespace Tactile
 
         public static Attack_Result set_status_staff(Game_Unit battler_1, Game_Unit battler_2, int distance, bool hit, TactileLibrary.Data_Weapon weapon)
         {
-            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() };
+            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>(), buff_change = new List<KeyValuePair<TactileLibrary.Buffs, int>> { } };
 
             result.hit = hit;
             result.crt = false;
@@ -730,7 +730,7 @@ namespace Tactile
 
         public static Attack_Result set_torch(Game_Unit battler_1, TactileLibrary.Data_Weapon weapon)
         {
-            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() };
+            Attack_Result result = new Attack_Result { state_change = new List<KeyValuePair<int, bool>>(), buff_change = new List<KeyValuePair<TactileLibrary.Buffs, int>> { } };
 
             result.hit = true;
             result.crt = false;

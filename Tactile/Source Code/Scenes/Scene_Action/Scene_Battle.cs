@@ -1713,9 +1713,15 @@ namespace Tactile
             }
             // Status effects
             if (!data.Result.backfire)
+            {
                 battler_2.state_change(data.Result.state_change);
+                battler_2.buff_change(data.Result.buff_change);
+            }
             else
+            {
                 battler_1.state_change(data.Result.state_change);
+                battler_1.buff_change(data.Result.buff_change);
+            }
         }
 
         protected void attack_dmg_delayed_life_steal(Game_Unit battler_1, Game_Unit battler_2, Combat_Round_Data data)

@@ -769,8 +769,8 @@ namespace Tactile
             {
                 if (result.hit)
                 {
-                    target.set_stat_bonus(Buffs.Pow, -5);
-                    target.set_stat_bonus(Buffs.Def, -5);
+                    result.buff_change.Add(new KeyValuePair<Buffs, int>(Buffs.Pow, -5));
+                    result.buff_change.Add(new KeyValuePair<Buffs, int>(Buffs.Def, -5));
                 }
             }
             // Activation skills

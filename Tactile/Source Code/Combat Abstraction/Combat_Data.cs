@@ -65,9 +65,9 @@ namespace Tactile
             Game_Unit battler_2 = Battler_2_Id == null ? null : Global.game_map.units[(int)Battler_2_Id];
             set_variables(battler_1, battler_2);
             List<int> attack_array = new List<int>();
-            //battler_1.store_state();
-            //if (battler_2 != null)
-                //battler_2.store_state();
+            battler_1.store_state();
+            if (battler_2 != null)
+                battler_2.store_state();
             process_attacks(battler_1, battler_2);
             // Set battle end stats
             if (Data.Count == 0)
@@ -76,9 +76,9 @@ namespace Tactile
             }
             end_battle();
             set_exp(battler_1, battler_2);
-            //battler_1.restore_state();
-            //if (battler_2 != null)
-                //battler_2.restore_state();
+            battler_1.restore_state();
+            if (battler_2 != null)
+                battler_2.restore_state();
         }
 
         protected virtual void set_exp(Game_Unit battler_1, Game_Unit battler_2)

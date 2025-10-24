@@ -1520,10 +1520,11 @@ namespace Tactile
             return false;
         }
 
-        public override void combat_damage(int dmg, Combat_Map_Object attacker, List<KeyValuePair<int, bool>> states, bool backfire, bool test)
+        public override void combat_damage(int dmg, Combat_Map_Object attacker, List<KeyValuePair<int, bool>> states, List<KeyValuePair<TactileLibrary.Buffs, int>> buffs, bool backfire, bool test)
         {
-            base.combat_damage(dmg, attacker, states, backfire, test);
+            base.combat_damage(dmg, attacker, states, buffs, backfire, test);
             state_change(states);
+            buff_change(buffs);
 
             if (is_player_team && dmg > 0 && !test)
                 if (Global.game_state.is_battle_map && !Global.game_system.In_Arena)
@@ -1537,6 +1538,11 @@ namespace Tactile
                     actor.add_state(state.Key);
                 else
                     actor.remove_state(state.Key);
+        }
+        public void buff_change(List<KeyValuePair<TactileLibrary.Buffs, int>> buffs)
+        {
+            foreach (KeyValuePair<TactileLibrary.Buffs, int> buff in buffs)
+                set_stat_bonus(buff.Key, buff.Value);
         }
 
         public bool can_double_attack(Combat_Map_Object target, int distance, int? item_index = null)

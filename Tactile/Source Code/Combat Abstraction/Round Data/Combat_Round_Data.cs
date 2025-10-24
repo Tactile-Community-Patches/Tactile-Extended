@@ -358,12 +358,12 @@ namespace Tactile
             // If the attack didn't backfire, cause damage as normal then apply on-hit healing here
             if (!Result.backfire)
             {
-                target.combat_damage(Result.dmg, attacker, Result.state_change, Result.backfire, test);
+                target.combat_damage(Result.dmg, attacker, Result.state_change, Result.buff_change, Result.backfire, test);
                 attacker.hp += Result.immediate_life_steal;
             }
             // Else it backfired, and damage is caused
             else
-                attacker.combat_damage(Result.dmg - Result.immediate_life_steal, target, Result.state_change, Result.backfire, test);
+                attacker.combat_damage(Result.dmg - Result.immediate_life_steal, target, Result.state_change, Result.buff_change, Result.backfire, test);
 
             // Then apply is delayed life gain, such as from Resire or Nosferatu
             if (Result.delayed_life_steal && !attacker.is_dead)
@@ -377,9 +377,13 @@ namespace Tactile
             if (!Result.backfire)
             {
                 this.TargetUnit.state_change(Result.state_change);
+                this.TargetUnit.buff_change(Result.buff_change);
             }
             else
+            {
                 this.AttackerUnit.state_change(Result.state_change);
+                this.AttackerUnit.buff_change(Result.buff_change);
+            }
         }
 
         public Game_Unit hit_unit()

@@ -42,7 +42,7 @@ namespace Tactile
             else if (StaffMode == Staff_Modes.Torch)
                 return Combat.set_torch(this.AttackerUnit, weapon);
             else
-                return new Attack_Result { state_change = new List<KeyValuePair<int, bool>>() }; // Additional results add on after here //Yeti
+                return new Attack_Result { state_change = new List<KeyValuePair<int, bool>>(), buff_change = new List<KeyValuePair<TactileLibrary.Buffs, int>> { } }; // Additional results add on after here //Yeti
         }
 
         public override bool is_successful_hit(TactileLibrary.Data_Weapon weapon)
@@ -51,7 +51,7 @@ namespace Tactile
                 return true;
             // If the attacker didn't hit themself (how does this happen with staves),
             // returns true when damage or status effects happened
-            return !Result.backfire && (Result.dmg != 0 || Result.state_change.Count > 0);
+            return !Result.backfire && (Result.dmg != 0 || Result.state_change.Count > 0 || Result.buff_change.Count > 0);
         }
     }
 }

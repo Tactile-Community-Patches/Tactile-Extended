@@ -13,6 +13,7 @@ namespace Tactile
         public int immediate_life_steal;
         public bool delayed_life_steal;
         public List<KeyValuePair<int, bool>> state_change;
+        public List<KeyValuePair<TactileLibrary.Buffs, int>> buff_change;
 
         public bool status_inflicted()
         {

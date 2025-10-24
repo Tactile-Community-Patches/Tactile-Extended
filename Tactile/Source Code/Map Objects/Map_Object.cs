@@ -188,7 +188,7 @@ namespace Tactile
             return false;
         }
 
-        public virtual void combat_damage(int dmg, Combat_Map_Object attacker, List<KeyValuePair<int, bool>> states, bool backfire, bool test)
+        public virtual void combat_damage(int dmg, Combat_Map_Object attacker, List<KeyValuePair<int, bool>> states, List<KeyValuePair<TactileLibrary.Buffs, int>> buffs, bool backfire, bool test)
         {
             hp -= dmg;
         }
