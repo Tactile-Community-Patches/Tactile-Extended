@@ -1716,12 +1716,21 @@ namespace Tactile
             {
                 battler_2.state_change(data.Result.state_change);
                 battler_2.buff_change(data.Result.buff_change);
+                interstitial_refresh_stats(battler_1.id, battler_2.id);
             }
             else
             {
                 battler_1.state_change(data.Result.state_change);
                 battler_1.buff_change(data.Result.buff_change);
+                interstitial_refresh_stats(battler_1.id, battler_2.id);
             }
+        }
+
+        protected void interstitial_refresh_stats(int id1, int id2)
+        {
+            List<int?> temp_stats = Combat.combat_stats(id1, id2, 1);
+            HUD.override_stats(new List<int?> { 100, 100, 100, null, 100, 100, 100, null });
+            //HUD.override_stats(temp_stats);
         }
 
         protected void attack_dmg_delayed_life_steal(Game_Unit battler_1, Game_Unit battler_2, Combat_Round_Data data)

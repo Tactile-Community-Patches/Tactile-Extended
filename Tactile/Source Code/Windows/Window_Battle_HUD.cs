@@ -453,6 +453,7 @@ namespace Tactile
         #region Stats
         protected bool stat_update_done()
         {
+
             if (Data != null)
                 for (int i = 0; i < Stats.Count; i++)
                     if (Stats[i] != stat(i))
@@ -474,10 +475,19 @@ namespace Tactile
 
         public void update_battle_stats()
         {
+            stats_overriden = false;
             for (int i = 0; i < Stats.Count; i++)
                 Stats[i] = stat(i);
             refresh_battle_stats();
         }
+        public void override_stats(List<int?> stats)
+        {
+            stat_overrides = stats;
+            stats_overriden = true;
+            //refresh_battle_stats(true);
+        }
+        public bool stats_overriden;
+        private List<int?> stat_overrides;
 
         protected void update_stats()
         {
@@ -493,24 +503,31 @@ namespace Tactile
 
         protected int? stat(int i)
         {
-            switch (i)
+            if (stats_overriden)
             {
-                case 0:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Hit1 : Data.Data[Attack_Id].Key.Stats[0];
-                case 1:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Dmg1 : Data.Data[Attack_Id].Key.Stats[1];
-                case 2:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Crt1 : Data.Data[Attack_Id].Key.Stats[2];
-                case 3:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Skl1 : Data.Data[Attack_Id].Key.Stats[3];
-                case 4:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Hit2 : Data.Data[Attack_Id].Key.Stats[4];
-                case 5:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Dmg2 : Data.Data[Attack_Id].Key.Stats[5];
-                case 6:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Crt2 : Data.Data[Attack_Id].Key.Stats[6];
-                case 7:
-                    return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Skl2 : Data.Data[Attack_Id].Key.Stats[7];
+                return stat_overrides[i];
+            }
+            else
+            {
+                switch (i)
+                {
+                    case 0:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Hit1 : Data.Data[Attack_Id].Key.Stats[0];
+                    case 1:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Dmg1 : Data.Data[Attack_Id].Key.Stats[1];
+                    case 2:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Crt1 : Data.Data[Attack_Id].Key.Stats[2];
+                    case 3:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Skl1 : Data.Data[Attack_Id].Key.Stats[3];
+                    case 4:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Hit2 : Data.Data[Attack_Id].Key.Stats[4];
+                    case 5:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Dmg2 : Data.Data[Attack_Id].Key.Stats[5];
+                    case 6:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Crt2 : Data.Data[Attack_Id].Key.Stats[6];
+                    case 7:
+                        return Action_Id > -1 ? Data.Data[Attack_Id].Value[Action_Id].Skl2 : Data.Data[Attack_Id].Key.Stats[7];
+                }
             }
             return null;
         }
