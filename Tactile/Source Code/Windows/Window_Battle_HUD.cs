@@ -52,6 +52,8 @@ namespace Tactile
         protected Vector2 Base_Loc, Name_Loc = Vector2.Zero;
         protected List<int> Y_Move = new List<int>();
         protected Texture2D HP_Gauge_Texture, Combat_Text_Texture, Combat_Num_Texture;
+        private bool Stats_Overriden;
+        private List<int?> Stat_Overrides;
 
         #region Accessors
         public Combat_Data combat_data { set { Data = value; } }
@@ -475,19 +477,16 @@ namespace Tactile
 
         public void update_battle_stats()
         {
-            stats_overriden = false;
+            Stats_Overriden = false;
             for (int i = 0; i < Stats.Count; i++)
                 Stats[i] = stat(i);
             refresh_battle_stats();
         }
         public void override_stats(List<int?> stats)
         {
-            stat_overrides = stats;
-            stats_overriden = true;
-            //refresh_battle_stats(true);
+            Stat_Overrides = stats;
+            Stats_Overriden = true;
         }
-        public bool stats_overriden;
-        private List<int?> stat_overrides;
 
         protected void update_stats()
         {
@@ -503,9 +502,9 @@ namespace Tactile
 
         protected int? stat(int i)
         {
-            if (stats_overriden)
+            if (Stats_Overriden)
             {
-                return stat_overrides[i];
+                return Stat_Overrides[i];
             }
             else
             {
