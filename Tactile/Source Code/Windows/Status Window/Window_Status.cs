@@ -1000,7 +1000,7 @@ namespace Tactile
                         Convert.ToInt32(help_label.Substring(5, 1)) - 1]].Description.Replace("|", "\n"));
                     break;
                 case "Item Skill":
-                    Help_Window.set_text(Global.data_skills[unit.actor.item_skills[
+                    Help_Window.set_text(Global.data_skills[unit.actor.visible_item_skills[
                         Convert.ToInt32(help_label.Substring(10, 1)) - 1]].Description.Replace("|", "\n"));
                     break;
                 case "Status":

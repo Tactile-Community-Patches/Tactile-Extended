@@ -1832,13 +1832,7 @@ namespace Tactile
                 return skills;
             }
         }
-        public List<int> visible_skills
-        {
-            get
-            {
-                return skills.Where(skill => !HIDDEN_SKILLS.Contains(skill)).ToList();
-            }
-        }
+        public List<int> visible_skills { get { return skills.Where(skill => !HIDDEN_SKILLS.Contains(skill)).ToList(); } }
         public List<int> item_skills
         {
             get
@@ -1863,6 +1857,7 @@ namespace Tactile
             }
         }
 
+        public List<int> visible_item_skills { get { return item_skills.Where(skill => !HIDDEN_SKILLS.Contains(skill)).ToList(); } }
         public List<int> all_skills
         {
             get

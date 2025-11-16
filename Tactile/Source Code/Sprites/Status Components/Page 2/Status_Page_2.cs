@@ -123,9 +123,9 @@ namespace Tactile
                     string.Format("Item Skill{0}", i + 1),
                     (Game_Unit unit) =>
                     {
-                        if (unit.actor.item_skills.Count <= j)
+                        if (unit.actor.visible_item_skills.Count <= j)
                             return new SkillState();
-                        var skill = Global.data_skills[unit.actor.item_skills[j]];
+                        var skill = Global.data_skills[unit.actor.visible_item_skills[j]];
 
                         float charge = -1f;
                         if (Game_Unit.MASTERIES.Contains(skill.Abstract))
