@@ -8,6 +8,13 @@ namespace Tactile
 {
     partial class Game_Actor
     {
+        static readonly int[] HIDDEN_SKILLS = {
+            /*
+            20, // Siege Training
+            23, // Steal
+            */
+        };
+
         protected List<int> Added_Attacks = new List<int>();
         protected bool Fatality = false;
         public bool skill_activated;

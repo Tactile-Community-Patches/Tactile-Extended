@@ -1832,6 +1832,13 @@ namespace Tactile
                 return skills;
             }
         }
+        public List<int> visible_skills
+        {
+            get
+            {
+                return skills.Where(skill => !HIDDEN_SKILLS.Contains(skill)).ToList();
+            }
+        }
         public List<int> item_skills
         {
             get
