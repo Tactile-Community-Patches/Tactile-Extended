@@ -28,6 +28,7 @@ namespace Tactile
         private int Level;
         private int Exp;
         private List<int> Stats = new List<int>();
+        private List<int> Stat_Growth_Points = new List<int>();
         private int Hp;
         private List<int> WLvl = new List<int>();
         private List<int> WLvl_Ups = new List<int>();
@@ -67,6 +68,7 @@ namespace Tactile
                 //@Debug: needs to serialize growths too
             }
             Stats.write(writer);
+            Stat_Growth_Points.write(writer);
             //writer.Write(MaxHp);
             writer.Write(Hp);
             WLvl.write(writer);
@@ -153,6 +155,7 @@ namespace Tactile
                     Data.BaseStats.read(reader);
                 }
                 Stats.read(reader);
+                Stat_Growth_Points.read(reader);
                 Hp = reader.ReadInt32();
             }
             else
@@ -661,7 +664,10 @@ namespace Tactile
             //ClassId = Data.ClassId;
             this.level = Data.Level;
             for (int i = 0; i < STATS; i++)
+            {
                 Stats.Add(0);
+                Stat_Growth_Points.Add(0);
+            }
             Hp = maxhp;
             WLvl = Enumerable.Range(0, Global.weapon_types.Count - 1)
                 .Select(x => x < Data.WLvl.Count ? Data.WLvl[x] : 0)
