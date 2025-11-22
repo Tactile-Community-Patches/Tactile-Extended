@@ -34,7 +34,7 @@ namespace Tactile.Calculations.LevelUp
                 }
                 else
 #endif
-                if (Global.ActorConfig.NoEmptyLevels)
+                if (Global.ActorConfig.NoEmptyLevels && !Actor.zero_growth)
                 {
                     var stats = new NoZeroLevelUpStats(growths, currentLevelStats, cappedStats);
                     return stats;
