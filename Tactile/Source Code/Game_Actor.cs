@@ -1373,11 +1373,20 @@ namespace Tactile
         private LevelUpProcessor level_up_stats(int level = 1, bool semiFixed = false)
         {
             LevelUpProcessor levelUp;
-            if (semiFixed)
-                levelUp = new SemifixedLevelUp(this, level);
-            else
-                levelUp = new StandardLevelUp(this, level);
-
+            switch (Global.game_system.Growth_Mode)
+            {
+                case Growth_Modes.Fixed:
+                    levelUp = new FixedLevelUp(this, level);
+                    levelUp.RecordLeftoverGrowths();
+                    break;
+                case Growth_Modes.Random:
+                default:
+                    if (semiFixed)
+                        levelUp = new SemifixedLevelUp(this, level);
+                    else
+                        levelUp = new StandardLevelUp(this, level);
+                    break;
+            }
             return levelUp;
         }
 

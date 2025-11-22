@@ -220,6 +220,10 @@ namespace Tactile.Calculations.LevelUp
         {
             for (int i = 0; i < LEVEL_UP_VIABLE_STATS; i++)
                 Apply((Stat_Labels)i);
+            RecordLeftoverGrowths();
+        }
+        public void RecordLeftoverGrowths()
+        {
             if (LevelUps.leftover_stats_points_exist)
             {
                 Actor.record_leftover_stat_points(LevelUps.leftover_stat_points);
