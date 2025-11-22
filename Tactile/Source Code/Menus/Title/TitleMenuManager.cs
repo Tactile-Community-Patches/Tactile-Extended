@@ -500,13 +500,27 @@ at any time from the options menu.");
         void difficultySelectionMenu_Selected(object sender, EventArgs e)
         {
             var difficultySelectionMenu = sender as DifficultySelectionMenu;
-            var styleSelectionMenu = (Menus.ElementAt(1) as StyleSelectionMenu);
+
             var startGameMenu = (Menus.ElementAt(2) as Window_Title_Start_Game);
+            difficultySelectionMenu.HideMenus();
+            var growthSelectionMenu = new GrowthModeSelectionMenu();
+            growthSelectionMenu.Selected += growthSelectionMenu_Selected;
+            growthSelectionMenu.Canceled += menu_Closed;
+            AddMenu(growthSelectionMenu);
+        }
+
+        void growthSelectionMenu_Selected(object sender, EventArgs e)
+        {
+            var growthSelectionMenu = sender as GrowthModeSelectionMenu;
+            var difficultySelectionMenu = (Menus.ElementAt(1) as DifficultySelectionMenu);
+            var styleSelectionMenu = (Menus.ElementAt(2) as StyleSelectionMenu);
+            var startGameMenu = (Menus.ElementAt(3) as Window_Title_Start_Game);
 
             MenuHandler.TitleNewGame(
                 startGameMenu.file_id,
                 styleSelectionMenu.SelectedStyle,
-                difficultySelectionMenu.SelectedDifficulty);
+                difficultySelectionMenu.SelectedDifficulty,
+                growthSelectionMenu.SelectedDifficulty);
         }
 
         void startGameMenu_MoveFile(object sender, EventArgs e)
@@ -664,7 +678,7 @@ at any time from the options menu.");
     {
         void TitleClassReel();
         void TitleResume();
-        void TitleNewGame(int fileId, Mode_Styles style, Difficulty_Modes difficulty);
+        void TitleNewGame(int fileId, Mode_Styles style, Difficulty_Modes difficulty, Growth_Modes growth_mode);
         void TitleStartGame(int fileId);
         void TitleLoadSuspend(int fileId);
         void TitleLoadCheckpoint(int fileId);

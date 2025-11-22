@@ -91,11 +91,12 @@ namespace Tactile
             Timer = 0;
         }
 
-        public void TitleNewGame(int fileId, Mode_Styles style, Difficulty_Modes difficulty)
+        public void TitleNewGame(int fileId, Mode_Styles style, Difficulty_Modes difficulty, Growth_Modes growth_mode)
         {
             Global.save_file = new Tactile.IO.Save_File();
             Global.save_file.Style = style;
             Global.save_file.Difficulty = difficulty;
+            Global.save_file.Growth_Mode = growth_mode;
 
             Global.game_options.reset_options();
             Global.start_game_file_id = fileId;

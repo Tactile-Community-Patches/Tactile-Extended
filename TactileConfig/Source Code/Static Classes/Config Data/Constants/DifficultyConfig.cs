@@ -17,6 +17,11 @@ namespace Tactile.Constants
             { Mode_Styles.Standard, Constants.Team.PLAYER_TEAM - 1 },
             { Mode_Styles.Classic, Constants.Team.ENEMY_TEAM - 1 },
         };
+        public readonly static Dictionary<Growth_Modes, int> GROWTH_COLOR_REDIRECT = new Dictionary<Growth_Modes, int>
+        {
+            { Growth_Modes.Fixed, Constants.Team.PLAYER_TEAM - 1 },
+            { Growth_Modes.Random, Constants.Team.ENEMY_TEAM - 1 },
+        };
         // Saves append these after the chapter id to mark the difficulty; Normal has no entry
         public readonly static Dictionary<Difficulty_Modes, char> DIFFICULTY_SAVE_APPEND = new Dictionary<Difficulty_Modes, char>
         {

@@ -14,6 +14,7 @@ namespace Tactile.IO
     {
         public Mode_Styles Style = Mode_Styles.Standard;
         public Difficulty_Modes Difficulty = Difficulty_Modes.Normal;
+        public Growth_Modes Growth_Mode = Growth_Modes.Random;
         public string Description { get; private set; }
         private Dictionary<string, Dictionary<string, Save_Data>> Data =
             new Dictionary<string, Dictionary<string, Save_Data>>();
@@ -23,6 +24,7 @@ namespace Tactile.IO
         {
             writer.Write((int)Style);
             writer.Write((int)Difficulty);
+            writer.Write((int)Growth_Mode);
             writer.Write(Description);
 
             writer.Write(Data.Count);
@@ -48,6 +50,7 @@ namespace Tactile.IO
             result.Style = (Mode_Styles)reader.ReadInt32();
             if (!Global.LOADED_VERSION.older_than(0, 4, 3, 4))
                  result.Difficulty = (Difficulty_Modes)reader.ReadInt32();
+            result.Growth_Mode = (Growth_Modes)reader.ReadInt32();
             if (!Global.LOADED_VERSION.older_than(0, 5, 7, 0))
                 result.Description = reader.ReadString();
 

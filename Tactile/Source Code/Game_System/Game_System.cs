@@ -64,6 +64,7 @@ namespace Tactile
         private List<int> Ally_Loss_On_Death;
         public Difficulty_Modes Difficulty_Mode;
         public Mode_Styles Style;
+        public Growth_Modes Growth_Mode;
         protected List<string> Previous_Chapters;
         protected string Chapter_Id;
         protected Dictionary<string, string> PreviousChapterIds = new Dictionary<string,string>();
@@ -136,6 +137,7 @@ namespace Tactile
             Ally_Loss_On_Death.write(writer);
             writer.Write((int)Difficulty_Mode);
             writer.Write((int)Style);
+            writer.Write((int)Growth_Mode);
             Previous_Chapters.write(writer);
             writer.Write(Chapter_Id);
             PreviousChapterIds.write(writer);
@@ -231,6 +233,7 @@ namespace Tactile
             else
                 Difficulty_Mode = (Difficulty_Modes)reader.ReadInt32();
             Style = (Mode_Styles)reader.ReadInt32();
+            Growth_Mode = (Growth_Modes)reader.ReadInt32();
             if (!loadedVersion.older_than(0, 4, 0, 4))
                 Previous_Chapters.read(reader);
             if (!loadedVersion.older_than(0, 4, 4, 0))
@@ -523,6 +526,7 @@ namespace Tactile
             Ally_Loss_On_Death = new List<int>();
             Difficulty_Mode = Difficulty_Modes.Normal;
             Style = Global.save_file == null ? Mode_Styles.Standard : Global.save_file.Style;
+            Growth_Mode = Global.save_file == null ? Growth_Modes.Random : Global.save_file.Growth_Mode;
             Previous_Chapters = new List<string>();
             Rankings = new PastRankings();
             Total_Play_Time = 0;

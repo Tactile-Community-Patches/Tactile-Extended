@@ -12,6 +12,7 @@ namespace Tactile.IO
         protected string Chapter_Id;
         protected Difficulty_Modes Difficulty;
         protected Mode_Styles Style;
+        protected Growth_Modes Growth_Mode;
         protected bool Map_Save_Exists;
         protected bool Suspend_Exists;
         protected List<string> AvailableChapters;
@@ -25,6 +26,7 @@ namespace Tactile.IO
         public string chapter_id { get { return Chapter_Id; } }
         public Difficulty_Modes difficulty { get { return Difficulty; } }
         public Mode_Styles style { get { return Style; } }
+        public Growth_Modes growth_mode { get { return Growth_Mode; } }
         internal bool map_save_exists { get { return Map_Save_Exists; } set { Map_Save_Exists = value; } }
         internal bool suspend_exists { get { return Suspend_Exists; } set { Suspend_Exists = value; } }
         #endregion
@@ -37,6 +39,7 @@ namespace Tactile.IO
             Chapter_Id = info.Chapter_Id;
             Difficulty = info.Difficulty;
             Style = info.Style;
+            Growth_Mode = info.Growth_Mode;
             Map_Save_Exists = info.Map_Save_Exists;
             Suspend_Exists = info.Suspend_Exists;
             AvailableChapters = new List<string>(info.AvailableChapters);
@@ -59,6 +62,7 @@ namespace Tactile.IO
                 result.Time = mostRecent.time;
 
             result.Style = file.Style;
+            result.Growth_Mode = file.Growth_Mode;
             result.Map_Save_Exists = false;
             result.Suspend_Exists = suspend;
 
@@ -117,6 +121,7 @@ namespace Tactile.IO
             result.File_Id = Global.start_game_file_id;
             result.Difficulty = Global.save_file.Difficulty;
             result.Style = Global.save_file.Style;
+            result.Growth_Mode = Global.save_file.Growth_Mode;
             result.Map_Save_Exists = false;
             result.Suspend_Exists = false;
             return result;

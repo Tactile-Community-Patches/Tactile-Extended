@@ -120,6 +120,7 @@
     <Compile Include="Source Code\Menus\Options\SettingsMenu.cs" />
     <Compile Include="Source Code\Menus\Options\SettingsTopMenu.cs" />
     <Compile Include="Source Code\Menus\Title\CommunityMenu.cs" />
+    <Compile Include="Source Code\Menus\Title\GrowthModeSelectionMenu.cs" />
     <Compile Include="Source Code\Options\Settings Data\NullSettingsData.cs" />
     <Compile Include="Source Code\Options\Settings\KeyboardSettings.cs" />
     <Compile Include="Source Code\Options\Settings\GamepadSettings.cs" />
@@ -728,7 +729,11 @@
       <Name>TactileLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Source Code\Windows\User Interface\Title\Growth_Mode_Info_Panel.cs">
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <PropertyGroup>
