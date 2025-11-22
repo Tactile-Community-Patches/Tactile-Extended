@@ -33,7 +33,7 @@ namespace Tactile.Calculations.LevelUp
             // Add definite gains
             var definiteStats = new FixedLevelUpStats(gainedStats);
             levelUps.AddLevel(definiteStats);
-            if (true)
+            if (!Actor.is_generic_actor) // Maybe think about changing this
             {
                 // Save leftover growths for the next level
                 levelUps.leftover_stat_points = growths;
