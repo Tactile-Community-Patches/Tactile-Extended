@@ -54,6 +54,13 @@ namespace Tactile.Calculations.LevelUp
             return levelUps;
         }
 
+        protected int[] GetStatPoints()
+        {
+            int[] StatPoints = new int[LEVEL_UP_VIABLE_STATS];
+            for (int i = 0; i < StatPoints.Length; i++)
+                StatPoints[i] = Actor.get_stat_points(i);
+            return StatPoints;
+        }
         protected int[] GetRawGrowths()
         {
             // This should have a parameter for simulating the current level of the

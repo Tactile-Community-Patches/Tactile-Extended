@@ -43,7 +43,7 @@ namespace Tactile.Calculations.LevelUp
         private int[] GetGrowthPoints(int levelCount)
         {
             // Growth points gained in each stat; divide this by 100 for how many points to add
-            int[] statPoints = new int[GetRawGrowths().Length];
+            int[] statPoints = GetStatPoints();
 
             for (int level = 1; level <= levelCount; level++)
             {

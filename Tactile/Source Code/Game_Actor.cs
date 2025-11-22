@@ -1392,6 +1392,10 @@ namespace Tactile
         {
             return Data.Growths[i] + Growth_Bonuses[i] + growth_bonus_skill((Stat_Labels)i);
         }
+        public int get_stat_points(int i)
+        {
+            return Stat_Growth_Points[i];
+        }
 
         private int base_stat(Stat_Labels i)
         {
