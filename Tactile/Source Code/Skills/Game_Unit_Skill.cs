@@ -2404,6 +2404,34 @@ namespace Tactile
                 return true;
             return false;
         }
+
+        public KeyValuePair<bool, double> reflected_dmg(Data_Weapon attacker_weapon, int distance, Combat_Map_Object target)
+        {
+            /*
+            // Skills: Counter
+            if (actor.has_skill("COUNTER"))
+                if (!attacker_weapon.is_magic() && distance < 2 && !is_active_team)
+                {
+                    return new KeyValuePair<bool, double>(true, 0.5);
+                }
+            // Skills: Counterspell
+            if (actor.has_skill("COUNTERSPELL") && !is_active_team)
+                if (attacker_weapon.is_magic())
+                {
+                    return new KeyValuePair<bool, double>(true, 0.5);
+                }
+            */
+            // Skills: Live to Serve
+            if (target.is_unit())
+            {
+                Game_Unit staffer = (target as Game_Unit);
+                if (staffer.actor.has_skill("LIVE_TO_SERVE") && staffer.actor.weapon.is_staff() && staffer.actor.weapon.Heals() && !is_attackable_team(staffer))
+                    return new KeyValuePair<bool, double>(true, 1);
+            }
+
+
+            return new KeyValuePair<bool, double>(false, -1); ;
+        }
     }
 
     struct UnitAura

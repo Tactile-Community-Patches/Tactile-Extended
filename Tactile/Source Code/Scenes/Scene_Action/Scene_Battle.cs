@@ -1687,6 +1687,10 @@ namespace Tactile
                 {
                     Combat_Data.Hp2 -= data.Result.dmg;
                     Combat_Data.Hp1 = Math.Min(Combat_Data.Hp1 + data.Result.immediate_life_steal, Combat_Data.MaxHp1);
+                    if (data.Result.reflect.Key)
+                    {
+                        Combat_Data.Hp1 -= data.Result.reflected_dmg;
+                    }
                 }
                 else
                 {
@@ -1702,6 +1706,10 @@ namespace Tactile
                 {
                     Combat_Data.Hp1 -= data.Result.dmg;
                     Combat_Data.Hp2 = Math.Min(Combat_Data.Hp2 + data.Result.immediate_life_steal, Combat_Data.MaxHp2);
+                    if (data.Result.reflect.Key)
+                    {
+                        Combat_Data.Hp2 -= data.Result.reflected_dmg;
+                    }
                 }
                 else
                 {

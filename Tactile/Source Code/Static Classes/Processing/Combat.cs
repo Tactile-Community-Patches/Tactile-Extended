@@ -568,6 +568,20 @@ namespace Tactile
                     result.kill = dmg >= hp;
                     state_change(weapon, ref result);
                     result.delayed_life_steal = weapon.Drains_HP() && dmg > 0;
+
+                    // Skills: Counter
+                    // Skills: Counterspell
+                    result.reflect = battler_2.reflected_dmg(weapon, distance, battler_1);
+                    if (result.reflect.Key)
+                    {
+                        int attacker_hp = battler_1.actor.hp + result.immediate_life_steal;
+                        result.reflected_actual_dmg = (int)(dmg * result.reflect.Value);
+                        result.reflected_dmg = Math.Max(Math.Min(result.reflected_dmg, attacker_hp), 0);
+                        result.reflected_kill = result.reflected_dmg >= attacker_hp;
+                        // Can't delayed heal after dying to counter
+                        if (result.reflected_kill)
+                            result.delayed_life_steal = false;
+                    }
                 }
                 result.dmg = dmg;
                 result.actual_dmg = actual_dmg;
@@ -695,6 +709,16 @@ namespace Tactile
                 {
                     actual_dmg = Math.Max((int)ary[1], -battler_2.actor.maxhp);
                     dmg = Math.Max(actual_dmg, -(battler_2.actor.maxhp - battler_2.actor.hp));
+
+                    // Skills: Live to Serve
+                    result.reflect = battler_2.reflected_dmg(weapon, distance, battler_1);
+                    if (result.reflect.Key)
+                    {
+                        int staffer_hp = battler_1.actor.hp;
+                        int staffer_maxhp = battler_1.actor.maxhp;
+                        result.reflected_actual_dmg = (int)(dmg * result.reflect.Value);
+                        result.reflected_dmg = Math.Max(result.reflected_actual_dmg, -(staffer_maxhp - staffer_hp));
+                    }
                 }
             }
             result.hit = true;

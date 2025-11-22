@@ -1405,6 +1405,8 @@ namespace Tactile.State
                 {
                     Map_Combat_Data.Hp2 -= data.Result.dmg;
                     Map_Combat_Data.Hp1 = Math.Min(Map_Combat_Data.Hp1 + data.Result.immediate_life_steal, Map_Combat_Data.MaxHp1);
+                    if (data.Result.reflect.Key)
+                        Map_Combat_Data.Hp1 -= data.Result.reflected_dmg;
                 }
                 else
                     Map_Combat_Data.Hp1 = Math.Min(Map_Combat_Data.Hp1 - (data.Result.dmg - data.Result.immediate_life_steal), Map_Combat_Data.MaxHp1);
@@ -1419,6 +1421,8 @@ namespace Tactile.State
                 {
                     Map_Combat_Data.Hp1 -= data.Result.dmg;
                     Map_Combat_Data.Hp2 = Math.Min(Map_Combat_Data.Hp2 + data.Result.immediate_life_steal, Map_Combat_Data.MaxHp2);
+                    if (data.Result.reflect.Key)
+                        Map_Combat_Data.Hp2 -= data.Result.reflected_dmg;
                 }
                 else
                     Map_Combat_Data.Hp2 = Math.Min(Map_Combat_Data.Hp2 - (data.Result.dmg - data.Result.immediate_life_steal), Map_Combat_Data.MaxHp2);

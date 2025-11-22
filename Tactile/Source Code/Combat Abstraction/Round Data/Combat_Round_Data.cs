@@ -360,6 +360,13 @@ namespace Tactile
             {
                 target.combat_damage(Result.dmg, attacker, Result.state_change, Result.backfire, test);
                 attacker.hp += Result.immediate_life_steal;
+
+                // Skills: Counter
+                // Skills: Counterspell
+                if (Result.reflect.Key)
+                {
+                    attacker.combat_damage(Result.reflected_dmg, target, new List<KeyValuePair<int, bool>> { }, Result.backfire, test);
+                }
             }
             // Else it backfired, and damage is caused
             else

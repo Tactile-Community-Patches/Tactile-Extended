@@ -5,11 +5,14 @@ namespace Tactile
     struct Attack_Result
     {
         public int dmg, actual_dmg;
+        public int reflected_dmg, reflected_actual_dmg;
         public bool hit;
         public bool crt;
         public int wexp;
         public bool backfire;
+        public KeyValuePair<bool, double> reflect;
         public bool kill;
+        public bool reflected_kill;
         public int immediate_life_steal;
         public bool delayed_life_steal;
         public List<KeyValuePair<int, bool>> state_change;
