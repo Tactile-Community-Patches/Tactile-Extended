@@ -1518,6 +1518,11 @@ namespace Tactile
                 }
             }
         }
+        public void record_leftover_stat_points(int[] leftover_stat_points)
+        {
+            for (int i = 0; i < leftover_stat_points.Length; i++)
+                Stat_Growth_Points[i] = leftover_stat_points[i];
+        }
 
         internal void transfer_blessing(Game_Actor sourceActor)
         {

@@ -6,7 +6,19 @@ namespace Tactile.Calculations.LevelUp.Stats
     class LevelUpStatSet
     {
         private List<LevelUpStats> Levels = new List<LevelUpStats>();
+        private bool Leftover_Stat_Points_Exist;
+        private int[] Leftover_Stat_Points;
 
+        public bool leftover_stats_points_exist { get { return Leftover_Stat_Points_Exist; } }
+        public int[] leftover_stat_points
+        {
+            get { return Leftover_Stat_Points; }
+            set
+            {
+                Leftover_Stat_Points_Exist = true;
+                Leftover_Stat_Points = value;
+            }
+        }
         public int LevelCount { get { return Levels.Count; } }
 
         public void AddLevel(LevelUpStats level)

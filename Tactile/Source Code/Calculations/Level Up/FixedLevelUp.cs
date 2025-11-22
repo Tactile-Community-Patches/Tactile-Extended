@@ -33,9 +33,18 @@ namespace Tactile.Calculations.LevelUp
             // Add definite gains
             var definiteStats = new FixedLevelUpStats(gainedStats);
             levelUps.AddLevel(definiteStats);
-            // Add leftover random gains
-            var randomStats = GetLevel(growths, gainedStats, zeros, false);
-            levelUps.AddLevel(randomStats);
+            if (true)
+            {
+                // Save leftover growths for the next level
+                levelUps.leftover_stat_points = growths;
+            }
+            else
+            {
+                // Add leftover random gains
+                var randomStats = GetLevel(growths, gainedStats, zeros, false);
+                levelUps.AddLevel(randomStats);
+            }
+
 
             return levelUps;
         }
