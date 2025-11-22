@@ -520,7 +520,7 @@ at any time from the options menu.");
                 startGameMenu.file_id,
                 styleSelectionMenu.SelectedStyle,
                 difficultySelectionMenu.SelectedDifficulty,
-                growthSelectionMenu.SelectedDifficulty);
+                growthSelectionMenu.SelectedGrowthMode);
         }
 
         void startGameMenu_MoveFile(object sender, EventArgs e)

@@ -33,7 +33,7 @@ namespace Tactile.Menus.Title
             }
 
             MenuLoc = new Vector2(
-                (Config.WINDOW_WIDTH - Difficulty_Info_Panel.WIDTH) / 2,
+                (Config.WINDOW_WIDTH - Growth_Mode_Info_Panel.WIDTH) / 2,
                 (Config.WINDOW_HEIGHT - 16) / 2);
             MenuLoc -= new Vector2(0, (offset / 2) / 8 * 8);
 
@@ -47,7 +47,7 @@ namespace Tactile.Menus.Title
             CancelButton.stereoscopic = Config.TITLE_MENU_DEPTH;
         }
 
-        public Growth_Modes SelectedDifficulty
+        public Growth_Modes SelectedGrowthMode
         {
             get { return (Growth_Modes)GrowthModeNodes.ActiveNodeIndex; }
         }
