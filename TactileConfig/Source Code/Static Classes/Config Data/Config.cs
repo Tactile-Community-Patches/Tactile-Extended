@@ -6,7 +6,7 @@ namespace Tactile
 {
     public enum Mode_Styles { Casual, Standard, Classic }
     public enum Difficulty_Modes { Normal, Hard }// , Lunatic } // Lunatic_Plus? //Debug
-    public enum Growth_Modes { Random, Fixed }
+    public enum Growth_Modes { Random, Fixed, Zero }
     public enum Stat_Labels { Hp, Pow, Skl, Spd, Lck, Def, Res, Con, Mov }
     public enum Combat_Stat_Labels { Dmg, Def, Hit, Avo, Crt, Dod }
     public enum Convoy_Stack_Types { None, Use, Full }

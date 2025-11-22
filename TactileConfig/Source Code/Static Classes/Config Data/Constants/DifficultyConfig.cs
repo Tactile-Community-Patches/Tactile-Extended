@@ -20,7 +20,12 @@ namespace Tactile.Constants
         public readonly static Dictionary<Growth_Modes, int> GROWTH_COLOR_REDIRECT = new Dictionary<Growth_Modes, int>
         {
             { Growth_Modes.Fixed, Constants.Team.PLAYER_TEAM - 1 },
-            { Growth_Modes.Random, Constants.Team.ENEMY_TEAM - 1 },
+            { Growth_Modes.Random, Constants.Team.CITIZEN_TEAM - 1 },
+            { Growth_Modes.Zero, Constants.Team.ENEMY_TEAM - 1 },
+        };
+        public static List<int> ZERO_PERCENT_GROWTH_ACTORS = new List<int>
+        {
+
         };
         // Saves append these after the chapter id to mark the difficulty; Normal has no entry
         public readonly static Dictionary<Difficulty_Modes, char> DIFFICULTY_SAVE_APPEND = new Dictionary<Difficulty_Modes, char>

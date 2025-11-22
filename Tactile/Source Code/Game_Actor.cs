@@ -1399,6 +1399,9 @@ namespace Tactile
 
         public int get_growths(int i)
         {
+            if (Global.game_system.Growth_Mode == Growth_Modes.Zero)
+                if (Constants.Difficulty.ZERO_PERCENT_GROWTH_ACTORS.Contains(id))
+                    return 0;
             return Data.Growths[i] + Growth_Bonuses[i] + growth_bonus_skill((Stat_Labels)i);
         }
         public int get_stat_points(int i)
