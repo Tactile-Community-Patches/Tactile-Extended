@@ -666,7 +666,7 @@ namespace Tactile
             {
                 sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
                 Black_Backing.draw(sprite_batch);
-                Background.draw(sprite_batch);
+                Background.draw(sprite_batch, Pan_Vector);
                 sprite_batch.End();
             }
             if (Black_Fill != null && !level_up_layer_resort())
