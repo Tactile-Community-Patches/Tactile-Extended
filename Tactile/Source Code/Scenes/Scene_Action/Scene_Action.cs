@@ -664,9 +664,13 @@ namespace Tactile
         {
             if (Background != null)
             {
+                Vector2 centering_vector = Vector2.Zero;
+                if (Background.texture.Width > Config.WINDOW_WIDTH)
+                    centering_vector = new Vector2((Background.texture.Width - Config.WINDOW_WIDTH) / 2, 0);
+
                 sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
                 Black_Backing.draw(sprite_batch);
-                Background.draw(sprite_batch, Pan_Vector);
+                Background.draw(sprite_batch, Pan_Vector + centering_vector);
                 sprite_batch.End();
             }
             if (Black_Fill != null && !level_up_layer_resort())
