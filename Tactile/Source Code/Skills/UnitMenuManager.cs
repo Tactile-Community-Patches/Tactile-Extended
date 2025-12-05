@@ -34,6 +34,9 @@ namespace Tactile.Menus.Map.Unit
             // Skills: Sacrifice
             TargetCommands.Add(UnitCommandMenu.SkillCommandId(SkillMenuIds.Sacrifice),
                 (Game_Unit unit, UnitCommandMenu menu) => Sacrifice(unit, menu));
+            // EXAMPLE SKILL
+            TargetCommands.Add(UnitCommandMenu.SkillCommandId(SkillMenuIds.Example_Skill),
+                (Game_Unit unit, UnitCommandMenu menu) => Example_Skill(unit, menu));
             // Skills: Old Swoop //@Debug
             SimpleCommands.Add(UnitCommandMenu.SkillCommandId(SkillMenuIds.OldSwoop),
                 (Game_Unit unit) => OldSwoop(unit));
@@ -183,6 +186,23 @@ namespace Tactile.Menus.Map.Unit
             MenuHandler.UnitMenuSacrifice(unit, targetMenu.SelectedUnitId);
         }
         #endregion
+        private void Example_Skill(Game_Unit unit, UnitCommandMenu unitMenu)
+        {
+            /// This section handles any menuing that needs to happen after pressing
+            /// the command skill. In this case, we just close the play the "confirm"
+            /// sound and close the menus, before calling the function that has the real
+            /// function of the skill. In other cases, you may imagine needing to open a
+            /// submenu in this section. For example, sacrifice opens a targeting menu
+            /// that allows the player to specify a target, or maybe your skill allows 
+            /// you to choose an effect from a series of options.
+            
+            Global.game_system.play_se(System_Sounds.Confirm);
+
+            Global.game_temp.menuing = false;
+            CloseCommandMenu(true);
+
+            unit.activate_example_skill();
+        }
 
         // Skills: Old Swoop //@Debug
         private void OldSwoop(Game_Unit unit)

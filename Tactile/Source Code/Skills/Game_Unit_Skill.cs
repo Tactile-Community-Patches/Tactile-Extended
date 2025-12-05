@@ -1323,6 +1323,16 @@ namespace Tactile
         }
         #endregion
 
+        public void activate_example_skill()
+        {
+            /// Real function of the example skill goes here. If you want to attach some
+            /// kind of animation to the skill, take a look at how sacrifice does that
+            /// through (Game_Sacrifice_State). Basically, it's a component of the Game_State
+            /// class that is responsible for handling how sacrifice proceeds when called.
+            
+            wait(true); // Something has to tell the unit to wait, otherwise... well, you can comment this line out and see for yourself
+        }
+
         readonly static Dictionary<int, Vector2> COMMAND_DIRS = new Dictionary<int, Vector2> {
             { 2, new Vector2(0, 1) }, { 4, new Vector2(-1, 0) }, { 6, new Vector2(1, 0) }, { 8, new Vector2(0, -1) } };
 

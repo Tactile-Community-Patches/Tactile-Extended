@@ -13,6 +13,7 @@ namespace Tactile.Menus.Map.Unit
         Trample = 3,
         Sacrifice = 4,
         Refuge = 5,
+        Example_Skill = 6,
         OldSwoop = 20
     }
 
@@ -162,6 +163,16 @@ namespace Tactile.Menus.Map.Unit
                             commands.Insert(index + 1, "Sacrifice");
                             AddSkillIndex(index, SkillMenuIds.Sacrifice);
                         }
+                    }
+                }
+                // EXAMPLE SKILL
+                if (unit.actor.has_skill("EXAMPLE_SKILL"))
+                {
+                    if (true) // Logic to decide whether the command should show up in the menu goes here
+                    {
+                        int index = commands.IndexOf("Attack"); // Find wherever in the menu the attack command should go, and place this command under that
+                        commands.Insert(index + 1, "Example Skill"); // The text of the command's menu option is set here
+                        AddSkillIndex(index, SkillMenuIds.Example_Skill);
                     }
                 }
                 // Skills: Old Swoop //@Debug
