@@ -48,6 +48,13 @@ namespace Tactile.Services.Audio
 
             PlayCuedTracks();
         }
+        public void TryPlay(List<string> bgmNames, List<string> trackNames, bool fadeIn = false, bool resume = false)
+        {
+            // Wait for any fading tracks to finish
+            CuedTracks.Add(new MusicCue(bgmNames, trackNames, fadeIn, resume));
+
+            PlayCuedTracks();
+        }
         public void Play(MusicCue track)
         {
             // Set volume immediately if starting a song from silence
@@ -155,6 +162,19 @@ namespace Tactile.Services.Audio
             else
             {
                 TryPlay(bgmName, trackName, false);
+            }
+        }
+        public void Resume(List<string> bgmNames, List<string> trackNames)
+        {
+            // Resume and fade in if track exists
+            if (CueAlreadyExists(trackNames[0], bgmNames[0]))
+            {
+                TryPlay(bgmNames, trackNames, true, true);
+            }
+            // Play new track
+            else
+            {
+                TryPlay(bgmNames, trackNames, false);
             }
         }
 
