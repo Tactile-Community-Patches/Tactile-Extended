@@ -236,6 +236,13 @@ namespace Tactile.Services.Audio
         }
         #endregion
 
+        public bool containsCue(string cue)
+        {
+            foreach (MusicInstanceChannel channel in Channels)
+                if (channel.BgmName == cue)
+                    return true;
+            return false;
+        }
         public MusicInstance(SoundEffectInstance instance, string bgmName, float musicVolume)
         {
             Channels = new List<MusicInstanceChannel> { new MusicInstanceChannel(instance, bgmName, musicVolume, true) };
@@ -261,6 +268,12 @@ namespace Tactile.Services.Audio
             ActiveChannel.FadeOut(time);
             ActiveChannelIndex = index;
             ActiveChannel.FadeIn(time);
+        }
+        public void switch_channel(string cue, int time)
+        {
+            for (int n = 0; n < Channels.Count; n++)
+                if (Channels[n].BgmName == cue)
+                    switch_channel(n, time);
         }
         public void Dispose()
         {
