@@ -241,6 +241,15 @@ namespace Tactile.Services.Audio
             Channels = new List<MusicInstanceChannel> { new MusicInstanceChannel(instance, bgmName, musicVolume) };
             ActiveChannelIndex = 0;
         }
+        public MusicInstance(List<SoundEffectInstance> instances, List<string> bgmNames, float musicVolume)
+        {
+            Channels = new List<MusicInstanceChannel> { };
+            ActiveChannelIndex = 0;
+
+            for (int n = 0; n < instances.Count; n++)
+                Channels.Add(new MusicInstanceChannel(instances[n], bgmNames[n],
+                    (n == ActiveChannelIndex) ? musicVolume : 0f));
+        }
         public void next_channel(int time)
         {
             ActiveChannel.FadeOut(time);
