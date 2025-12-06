@@ -22,6 +22,7 @@ namespace Tactile
         private bool Changing_Turn = false;
         private bool Turn_End_Prompt = false;
         private string Turn_Theme = "";
+        private string Battle_Theme = "";
         private bool Near_Victory = false;
         private int Skipped_Turn_Action = 0;
         private List<int> Skipped_Turns = new List<int>();
@@ -62,6 +63,7 @@ namespace Tactile
             writer.Write(Changing_Turn);
             writer.Write(Turn_End_Prompt);
             writer.Write(Turn_Theme);
+            writer.Write(Battle_Theme);
             writer.Write(Near_Victory);
             writer.Write(Skipped_Turn_Action);
             Skipped_Turns.write(writer);
@@ -95,6 +97,7 @@ namespace Tactile
             Changing_Turn = reader.ReadBoolean();
             Turn_End_Prompt = reader.ReadBoolean();
             Turn_Theme = reader.ReadString();
+            Battle_Theme = reader.ReadString();
             Near_Victory = reader.ReadBoolean();
             Skipped_Turn_Action = reader.ReadInt32();
             Skipped_Turns.read(reader);
@@ -1442,21 +1445,28 @@ namespace Tactile
             if (teamTurn == -1)
                 teamTurn = Team_Turn;
             Turn_Theme = this.chapter.Turn_Themes[teamTurn];
+            Battle_Theme = this.chapter.Battle_Themes[teamTurn];
             if (teamTurn == Constants.Team.PLAYER_TEAM && near_victory())
                 Turn_Theme = Global.BgmConfig.VictoryTheme;
             Near_Victory = near_victory();
-            play_turn_theme(Turn_Theme);
+            play_turn_theme(new List<string> { Turn_Theme, Battle_Theme });
         }
-        public void play_turn_theme(string name, bool force_restart_theme = false)
+        public void play_turn_theme(List<string> names, bool force_restart_theme = false)
         {
-            Turn_Theme = name;
-            if (string.IsNullOrEmpty(Turn_Theme))
+            Turn_Theme = names[0];
+            if (names.Count > 1)
+                Battle_Theme = names[1];
+            if (string.IsNullOrEmpty(Turn_Theme)) // Maybe check the battle theme here too // gooseish
                 return;
 
             if (force_restart_theme)
-                Global.Audio.PlayMapTheme(name);
+                Global.Audio.PlayCalmStormMapTheme(names);
             else
-                Global.Audio.ResumeMapTheme(name);
+                Global.Audio.ResumeCalmStormMapTheme(names);
+        }
+        public void play_turn_theme(string name, bool force_restart_theme = false)
+        {
+            play_turn_theme(new List<string> { name }, force_restart_theme);
         }
 
         protected bool near_victory()
@@ -1506,7 +1516,7 @@ namespace Tactile
             if (Global.game_system.preparations)
                 Global.Audio.ResumeMapTheme(Global.BgmConfig.PreparationsTheme);
             else if (!Global.game_system.is_victory()) //Yeti
-                Global.Audio.ResumeMapTheme(Turn_Theme);
+                Global.Audio.ResumeCalmStormMapTheme(new List<string> { Turn_Theme, Battle_Theme });
         }
 
         public string battle_theme()
