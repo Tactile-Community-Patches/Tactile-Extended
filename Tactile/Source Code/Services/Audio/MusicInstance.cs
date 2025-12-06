@@ -238,7 +238,7 @@ namespace Tactile.Services.Audio
 
         public MusicInstance(SoundEffectInstance instance, string bgmName, float musicVolume)
         {
-            Channels = new List<MusicInstanceChannel> { new MusicInstanceChannel(instance, bgmName, musicVolume) };
+            Channels = new List<MusicInstanceChannel> { new MusicInstanceChannel(instance, bgmName, musicVolume, true) };
             ActiveChannelIndex = 0;
         }
         public MusicInstance(List<SoundEffectInstance> instances, List<string> bgmNames, float musicVolume)
@@ -247,8 +247,8 @@ namespace Tactile.Services.Audio
             ActiveChannelIndex = 0;
 
             for (int n = 0; n < instances.Count; n++)
-                Channels.Add(new MusicInstanceChannel(instances[n], bgmNames[n],
-                    (n == ActiveChannelIndex) ? musicVolume : 0f));
+                Channels.Add(new MusicInstanceChannel(instances[n], bgmNames[n], musicVolume,
+                    (n == ActiveChannelIndex)));
         }
         public void next_channel(int time)
         {
@@ -313,10 +313,11 @@ namespace Tactile.Services.Audio
         }
         public bool IsPlaying { get { return Music.State == SoundState.Playing; } }
 
-        public MusicInstanceChannel(SoundEffectInstance instance, string bgmName, float musicVolume)
+        public MusicInstanceChannel(SoundEffectInstance instance, string bgmName, float musicVolume, bool Active)
         {
             Music = instance;
             BgmName = bgmName;
+            Volume = Active ? 1f : 0f;
 
             RefreshVolume(musicVolume);
         }
