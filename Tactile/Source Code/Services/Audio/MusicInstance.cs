@@ -207,6 +207,9 @@ namespace Tactile.Services.Audio
 
             if (!ActiveChannel.IsLooped && ActiveChannel.State == SoundState.Stopped)
                 Finished = true;
+
+            foreach (MusicInstanceChannel channel in Channels)
+                channel.Update(musicVolume);
         }
         private void UpdateFade()
         {
