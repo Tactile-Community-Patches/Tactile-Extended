@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -94,6 +95,10 @@ namespace Tactile.Services.Audio
         public bool Finished { get; private set; }
         #endregion
         #region Properties
+        private List<MusicInstanceChannel> InactiveChannels
+        {
+            get { return Channels.Where(channel => channel != ActiveChannel).ToList(); }
+        }
         public string BgmName { get { return ActiveChannel.BgmName; } }
         private MusicInstanceChannel ActiveChannel
         {
@@ -236,10 +241,17 @@ namespace Tactile.Services.Audio
             Channels = new List<MusicInstanceChannel> { new MusicInstanceChannel(instance, bgmName, musicVolume) };
             ActiveChannelIndex = 0;
         }
-        public void next_channel()
+        public void next_channel(int time)
         {
+            ActiveChannel.FadeOut(time);
             ActiveChannelIndex = (ActiveChannelIndex + 1) % Channels.Count;
-            // TODO: Fix volume here
+            ActiveChannel.FadeIn(time);
+        }
+        public void switch_channel(int index, int time)
+        {
+            ActiveChannel.FadeOut(time);
+            ActiveChannelIndex = index;
+            ActiveChannel.FadeIn(time);
         }
         public void Dispose()
         {
