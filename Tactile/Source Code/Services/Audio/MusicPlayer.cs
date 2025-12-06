@@ -70,10 +70,11 @@ namespace Tactile.Services.Audio
 
             StopPlayingTrack(track.TrackName);
 
-            SoundEffectInstance instance = null;
+            List<SoundEffectInstance> instances = new List<SoundEffectInstance> { };
             try
             {
-                instance = get_music(track.CueName);
+                foreach (string CueName in track.CueNames)
+                    instances.Add(get_music(CueName));
             }
             catch (FileNotFoundException e)
             {
@@ -93,10 +94,10 @@ namespace Tactile.Services.Audio
             }
 #endif
 
-            if (instance != null)
+            if (instances.Count > 0)
             {
                 Music.Add(track.TrackName,
-                    new MusicInstance(instance, track.CueName, this.BgmVolume));
+                    new MusicInstance(instances, track.CueNames, this.BgmVolume));
                 if (track.FadeIn)
                     Music[track.TrackName].FadeIn(this.DefaultFadeInTime);
                 Music[track.TrackName].RefreshVolume(this.BgmVolume);
@@ -577,18 +578,30 @@ namespace Tactile.Services.Audio
 #endif
     }
 
-    struct MusicCue
+    class MusicCue
     {
-        public string CueName { get; private set; }
-        public string TrackName { get; private set; }
+        public List<string> CueNames { get; private set; }
+        public List<string> TrackNames { get; private set; }
+        public string CueName { get { return CueNames[ActiveChannel]; } }
+        public string TrackName { get { return TrackNames[ActiveChannel]; } }
         public bool FadeIn { get; private set; }
         public bool Resume { get; private set; }
 
+        private int ActiveChannel = 0;
+        public int NumberOfChannels { get { return CueNames.Count(); } }
+
         public MusicCue(string cueName, string trackName, bool fadeIn, bool resume)
-            : this()
         {
-            CueName = cueName;
-            TrackName = trackName;
+            CueNames = new List<string> { cueName };
+            TrackNames = new List<string> { trackName };
+            FadeIn = fadeIn;
+            Resume = resume;
+        }
+
+        public MusicCue(List<string> cueNames, List<string> trackNames, bool fadeIn, bool resume)
+        {
+            CueNames = cueNames;
+            TrackNames = trackNames;
             FadeIn = fadeIn;
             Resume = resume;
         }
