@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 #if MONOGAME
@@ -80,7 +81,20 @@ namespace Tactile.Services.Audio
 {
     enum MusicFadeStates { None, FadingOut, FadedOut, FadingIn, FadedIn }
 
-    class MusicInstance : IDisposable
+    class MusicInstance: IDisposable
+    {
+        private List<MusicInstanceChannel> Channels;
+        protected virtual void Dispose(bool disposing)
+        {
+
+        }
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
+    }
+    class MusicInstanceChannel : IDisposable
     {
         public string BgmName { get; private set; }
         private SoundEffectInstance Music;
@@ -123,7 +137,7 @@ namespace Tactile.Services.Audio
         }
         public bool IsPlaying { get { return Music.State == SoundState.Playing; } }
 
-        public MusicInstance(SoundEffectInstance instance, string bgmName, float musicVolume)
+        public MusicInstanceChannel(SoundEffectInstance instance, string bgmName, float musicVolume)
         {
             Music = instance;
             BgmName = bgmName;
