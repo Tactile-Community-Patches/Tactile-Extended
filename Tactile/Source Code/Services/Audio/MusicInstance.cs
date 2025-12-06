@@ -83,15 +83,168 @@ namespace Tactile.Services.Audio
 
     class MusicInstance: IDisposable
     {
+        #region Fields
         private List<MusicInstanceChannel> Channels;
-        protected virtual void Dispose(bool disposing)
-        {
+        private int ActiveChannelIndex;
 
+        private MusicFadeStates FadeState;
+        private int FadeTime, FadeRemaining;
+        private float BgmVolumeLevel;
+        private float Volume = 1f;
+        public bool Finished { get; private set; }
+        #endregion
+        #region Properties
+        public string BgmName { get { return ActiveChannel.BgmName; } }
+        private MusicInstanceChannel ActiveChannel
+        {
+            get { return Channels[ActiveChannelIndex]; }
+        }
+        public bool IsFadeOut
+        {
+            get
+            {
+                return FadeState == MusicFadeStates.FadingOut ||
+                    FadeState == MusicFadeStates.FadedOut;
+            }
+        }
+        public bool IsFadeIn
+        {
+            get
+            {
+                return FadeState == MusicFadeStates.FadingIn ||
+                    FadeState == MusicFadeStates.FadedIn;
+            }
+        }
+        public bool FadedOut { get { return FadeState == MusicFadeStates.None; } }
+        public float FadeVolume
+        {
+            get
+            {
+                if (FadeTime == 0)
+                    return 1f;
+
+                if (this.IsFadeOut)
+                    return FadeRemaining / (float)FadeTime;
+                else
+                    return (FadeTime - FadeRemaining) / (float)FadeTime;
+            }
+        }
+        public bool IsPlaying { get { return ActiveChannel.IsPlaying; } }
+        #endregion
+
+        #region "inherited" methods
+        public void FadeOut(int time)
+        {
+            // If already fading out, adjust fadeout time to keep the
+            // current volume the same
+            if (this.IsFadeOut)
+                FadeRemaining = (FadeRemaining * time) / FadeTime;
+            else if (this.IsFadeIn)
+                FadeRemaining = time - ((FadeRemaining * time) / FadeTime);
+            else
+                FadeRemaining = time;
+            FadeTime = time;
+
+            FadeState = MusicFadeStates.FadingOut;
+            Volume = this.FadeVolume;
+            RefreshVolume();
+        }
+        public void FadeIn(int time)
+        {
+            // If already fading out, adjust fadeout time to keep the
+            // current volume the same
+            if (this.IsFadeOut)
+                FadeRemaining = time - ((FadeRemaining * time) / FadeTime);
+            else if (this.IsFadeIn)
+                FadeRemaining = (FadeRemaining * time) / FadeTime;
+            else
+                FadeRemaining = time;
+            FadeTime = time;
+
+            FadeState = MusicFadeStates.FadingIn;
+            Volume = this.FadeVolume;
+            RefreshVolume();
+        }
+
+        private void EndFade()
+        {
+            FadeRemaining = 0;
+            FadeState = MusicFadeStates.None;
+            Volume = this.FadeVolume;
+        }
+
+        public void RefreshVolume(float musicVolume)
+        {
+            BgmVolumeLevel = musicVolume;
+            RefreshVolume();
+        }
+        private void RefreshVolume()
+        {
+            foreach (MusicInstanceChannel channel in Channels)
+                channel.RefreshVolume(BgmVolumeLevel * Volume);
+        }
+
+        public void Play()
+        {
+            foreach (MusicInstanceChannel channel in Channels)
+                channel.Play();
+        }
+        public void Pause()
+        {
+            foreach (MusicInstanceChannel channel in Channels)
+                channel.Pause();
+        }
+        public void Update(float musicVolume)
+        {
+            UpdateFade();
+
+            RefreshVolume(musicVolume);
+
+            if (!ActiveChannel.IsLooped && ActiveChannel.State == SoundState.Stopped)
+                Finished = true;
+        }
+        private void UpdateFade()
+        {
+            switch (FadeState)
+            {
+                case MusicFadeStates.FadingOut:
+                case MusicFadeStates.FadingIn:
+                    if (FadeRemaining > 0)
+                        FadeRemaining--;
+                    Volume = this.FadeVolume;
+                    if (FadeRemaining == 0)
+                    {
+                        if (FadeState == MusicFadeStates.FadingOut)
+                            FadeState = MusicFadeStates.FadedOut;
+                        else
+                            FadeState = MusicFadeStates.FadedIn;
+                    }
+                    break;
+                case MusicFadeStates.FadedOut:
+                case MusicFadeStates.FadedIn:
+                    if (FadeState == MusicFadeStates.FadedOut)
+                        Pause();
+
+                    EndFade();
+                    break;
+            }
+        }
+        #endregion
+
+        public MusicInstance(SoundEffectInstance instance, string bgmName, float musicVolume)
+        {
+            Channels = new List<MusicInstanceChannel> { new MusicInstanceChannel(instance, bgmName, musicVolume) };
+            ActiveChannelIndex = 0;
+        }
+        public void next_channel()
+        {
+            ActiveChannelIndex = (ActiveChannelIndex + 1) % Channels.Count;
+            // TODO: Fix volume here
         }
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
+            foreach (MusicInstanceChannel channel in Channels)
+                channel.Dispose();
         }
     }
     class MusicInstanceChannel : IDisposable
@@ -104,6 +257,8 @@ namespace Tactile.Services.Audio
         private float Volume = 1f;
         public bool Finished { get; private set; }
 
+        public bool IsLooped { get { return Music.IsLooped; } }
+        public SoundState State { get { return Music.State; } }
         public bool IsFadeOut
         {
             get
