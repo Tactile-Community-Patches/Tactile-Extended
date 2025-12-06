@@ -357,8 +357,8 @@ namespace Tactile.Services.Audio
                     break;
                 case MusicFadeStates.FadedOut:
                 case MusicFadeStates.FadedIn:
-                    if (FadeState == MusicFadeStates.FadedOut)
-                        Pause();
+                    //if (FadeState == MusicFadeStates.FadedOut)
+                        //Pause();
 
                     EndFade();
                     break;
@@ -436,7 +436,7 @@ namespace Tactile.Services.Audio
         {
             FadeRemaining = 0;
             FadeState = MusicFadeStates.None;
-            Volume = this.FadeVolume;
+            //Volume = this.FadeVolume;
         }
         #endregion
 
