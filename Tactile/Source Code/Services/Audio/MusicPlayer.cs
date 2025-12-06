@@ -116,6 +116,10 @@ namespace Tactile.Services.Audio
                 throw new Exception();
             }
         }
+        public void Switch_Channels(MusicCue track, int channel)
+        {
+            Music[track.TrackName].switch_channel(channel, this.DefaultFadeInTime);
+        }
 
         public void Restore(string bgmName, string trackName = "", bool fadeIn = false, bool forceRestart = false)
         {
