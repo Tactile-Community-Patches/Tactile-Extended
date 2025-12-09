@@ -363,7 +363,7 @@ namespace Tactile.Services.Audio
         }
         private void play_calm_storm_bgm(List<string> cueNames, bool fadeIn = false)
         {
-            BgmManager.TryPlay(cueNames, new List<string> { "MapBgm, BattleBgm" });
+            BgmManager.TryPlay(cueNames, "CalmStormBgm");
         }
         private void resume_map_bgm(string cueName)
         {
@@ -371,7 +371,7 @@ namespace Tactile.Services.Audio
         }
         private void resume_calm_storm_bgm(List<string> cueNames)
         {
-            BgmManager.Resume(cueNames, new List<string> { "MapBgm", "BattleBgm" });
+            BgmManager.Resume(cueNames, "CalmStormBgm");
         }
 
         private void play_battle_bgm(string cueName, bool fadeIn = false)

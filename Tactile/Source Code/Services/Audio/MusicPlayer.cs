@@ -48,10 +48,10 @@ namespace Tactile.Services.Audio
 
             PlayCuedTracks();
         }
-        public void TryPlay(List<string> bgmNames, List<string> trackNames, bool fadeIn = false, bool resume = false)
+        public void TryPlay(List<string> bgmNames, string trackName, bool fadeIn = false, bool resume = false)
         {
             // Wait for any fading tracks to finish
-            CuedTracks.Add(new MusicCue(bgmNames, trackNames, fadeIn, resume));
+            CuedTracks.Add(new MusicCue(bgmNames, trackName, fadeIn, resume));
 
             PlayCuedTracks();
         }
@@ -168,17 +168,17 @@ namespace Tactile.Services.Audio
                 TryPlay(bgmName, trackName, false);
             }
         }
-        public void Resume(List<string> bgmNames, List<string> trackNames)
+        public void Resume(List<string> bgmNames, string trackName)
         {
             // Resume and fade in if track exists
-            if (CueAlreadyExists(trackNames[0], bgmNames[0]))
+            if (CueAlreadyExists(trackName, bgmNames[0]))
             {
-                TryPlay(bgmNames, trackNames, true, true);
+                TryPlay(bgmNames, trackName, true, true);
             }
             // Play new track
             else
             {
-                TryPlay(bgmNames, trackNames, false);
+                TryPlay(bgmNames, trackName, false);
             }
         }
 
@@ -605,9 +605,8 @@ namespace Tactile.Services.Audio
     class MusicCue
     {
         public List<string> CueNames { get; private set; }
-        public List<string> TrackNames { get; private set; }
         public string CueName { get { return CueNames[ActiveChannel]; } }
-        public string TrackName { get { return TrackNames[ActiveChannel]; } }
+        public string TrackName { get; private set; }
         public bool FadeIn { get; private set; }
         public bool Resume { get; private set; }
 
@@ -617,15 +616,15 @@ namespace Tactile.Services.Audio
         public MusicCue(string cueName, string trackName, bool fadeIn, bool resume)
         {
             CueNames = new List<string> { cueName };
-            TrackNames = new List<string> { trackName };
+            TrackName = trackName;
             FadeIn = fadeIn;
             Resume = resume;
         }
 
-        public MusicCue(List<string> cueNames, List<string> trackNames, bool fadeIn, bool resume)
+        public MusicCue(List<string> cueNames, string trackName, bool fadeIn, bool resume)
         {
             CueNames = cueNames;
-            TrackNames = trackNames;
+            TrackName = trackName;
             FadeIn = fadeIn;
             Resume = resume;
         }
