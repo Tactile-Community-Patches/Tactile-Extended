@@ -48,10 +48,10 @@ namespace Tactile.Services.Audio
 
             PlayCuedTracks();
         }
-        public void TryPlay(List<string> bgmNames, string trackName, bool fadeIn = false, bool resume = false)
+        public void TryPlay(List<string> bgmNames, string trackName, int activeChannel, bool fadeIn = false, bool resume = false)
         {
             // Wait for any fading tracks to finish
-            CuedTracks.Add(new MusicCue(bgmNames, trackName, fadeIn, resume));
+            CuedTracks.Add(new MusicCue(bgmNames, trackName, fadeIn, resume, activeChannel));
 
             PlayCuedTracks();
         }
@@ -104,7 +104,7 @@ namespace Tactile.Services.Audio
             if (instances.Count > 0)
             {
                 Music.Add(track.TrackName,
-                    new MusicInstance(instances, track.CueNames, this.BgmVolume));
+                    new MusicInstance(instances, track.CueNames, this.BgmVolume, track.activeChannel));
                 if (track.FadeIn)
                     Music[track.TrackName].FadeIn(this.DefaultFadeInTime);
                 Music[track.TrackName].RefreshVolume(this.BgmVolume);
@@ -168,17 +168,17 @@ namespace Tactile.Services.Audio
                 TryPlay(bgmName, trackName, false);
             }
         }
-        public void Resume(List<string> bgmNames, string trackName)
+        public void Resume(List<string> bgmNames, string trackName, int activeChannel)
         {
             // Resume and fade in if track exists
             if (CueAlreadyExists(trackName, bgmNames[0]))
             {
-                TryPlay(bgmNames, trackName, true, true);
+                TryPlay(bgmNames, trackName, activeChannel, true, true);
             }
             // Play new track
             else
             {
-                TryPlay(bgmNames, trackName, false);
+                TryPlay(bgmNames, trackName, activeChannel, false);
             }
         }
 
@@ -612,7 +612,7 @@ namespace Tactile.Services.Audio
 
         private int ActiveChannel = 0;
         public int NumberOfChannels { get { return CueNames.Count(); } }
-
+        public int activeChannel { get { return ActiveChannel; } }
         public MusicCue(string cueName, string trackName, bool fadeIn, bool resume)
         {
             CueNames = new List<string> { cueName };
@@ -621,12 +621,13 @@ namespace Tactile.Services.Audio
             Resume = resume;
         }
 
-        public MusicCue(List<string> cueNames, string trackName, bool fadeIn, bool resume)
+        public MusicCue(List<string> cueNames, string trackName, bool fadeIn, bool resume, int activeChannel)
         {
             CueNames = cueNames;
             TrackName = trackName;
             FadeIn = fadeIn;
             Resume = resume;
+            ActiveChannel = activeChannel;
         }
     }
 }

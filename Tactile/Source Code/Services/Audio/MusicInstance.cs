@@ -246,15 +246,10 @@ namespace Tactile.Services.Audio
                     return true;
             return false;
         }
-        public MusicInstance(SoundEffectInstance instance, string bgmName, float musicVolume)
-        {
-            Channels = new List<MusicInstanceChannel> { new MusicInstanceChannel(instance, bgmName, musicVolume, true) };
-            ActiveChannelIndex = 0;
-        }
-        public MusicInstance(List<SoundEffectInstance> instances, List<string> bgmNames, float musicVolume)
+        public MusicInstance(List<SoundEffectInstance> instances, List<string> bgmNames, float musicVolume, int activeChannel)
         {
             Channels = new List<MusicInstanceChannel> { };
-            ActiveChannelIndex = 0;
+            ActiveChannelIndex = activeChannel;
 
             for (int n = 0; n < instances.Count; n++)
                 Channels.Add(new MusicInstanceChannel(instances[n], bgmNames[n], musicVolume,
