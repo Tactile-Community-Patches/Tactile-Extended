@@ -1459,7 +1459,7 @@ namespace Tactile
                 return;
 
             if (force_restart_theme)
-                Global.Audio.PlayCalmTheme(names);
+                Global.Audio.PlayCalmTheme(names); // This never gets called
             else
                 Global.Audio.ResumeCalmTheme(names);
         }
@@ -1528,6 +1528,10 @@ namespace Tactile
         public string battle_theme()
         {
             return CombatState.battle_theme;
+        }
+        public List<string> calm_storm_theme()
+        {
+            return new List<string> { Turn_Theme, CombatState.battle_theme };
         }
 
         public void play_staff_theme()

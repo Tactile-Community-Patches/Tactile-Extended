@@ -671,17 +671,22 @@ namespace Tactile
                         break;
                     case 36:
                         battle_start_text();
-                        if (!Music_Started && (!test_battle_theme() || !Global.game_temp.boss_theme))
-                            Global.Audio.BgmFadeOut(60);
-                        Global.game_temp.boss_theme = false;
-                        Timer++;
-                        break;
-                    case 72:
                         if (!Music_Started)
                         {
                             play_battle_theme();
                             Music_Started = true;
                         }
+                        //if (!Music_Started && (!test_battle_theme() || !Global.game_temp.boss_theme))
+                        //Global.Audio.BgmFadeOut(60);
+                        Global.game_temp.boss_theme = false;
+                        Timer++;
+                        break;
+                    case 72:
+                        //if (!Music_Started)
+                        //{
+                        //    play_battle_theme();
+                        //    Music_Started = true;
+                        //}
                         Battler_1_Sprite.start_battle();
                         if (Battler_2_Sprite != null)
                             Battler_2_Sprite.start_battle();
@@ -719,7 +724,7 @@ namespace Tactile
                 if (Timer == 0)
                     if (!Global.game_temp.boss_theme || Combat_Data.kill)
                     {
-                        Global.Audio.BgmFadeOut(45);
+                        //Global.Audio.BgmFadeOut(45);
                         Global.game_temp.boss_theme = false;
                     }
                 if (Timer == 34)

@@ -64,18 +64,22 @@ namespace Tactile.Services.Audio
             // Resume the existing track
             if (track.Resume && CueAlreadyExists(track))
             {
-                // If this track is already playing normally or
-                // fading back in, do nothing
-                if (!(Music[track.TrackName].IsPlaying &&
-                        !Music[track.TrackName].IsFadeOut))
-                    Restore(track.TrackName, track.FadeIn, track.activeChannel);
                 // If the track is already playing but we need
                 // to change channels, do so
                 if (Music[track.TrackName].IsPlaying &&
                         Music[track.TrackName].ActiveChannelIndex != track.activeChannel)
+                {
                     Switch_Channels(track.TrackName, track.activeChannel, track.FadeIn);
-
-                return;
+                    return;
+                }
+                // If this track is already playing normally or
+                // fading back in, do nothing
+                if (!(Music[track.TrackName].IsPlaying &&
+                        !Music[track.TrackName].IsFadeOut))
+                {
+                    Restore(track.TrackName, track.FadeIn, track.activeChannel);
+                    return;
+                }
             }
 
             // Pause any other playing tracks
@@ -124,7 +128,7 @@ namespace Tactile.Services.Audio
         }
         public void Switch_Channels(string track, int channel, bool fadeIn)
         {
-            int fade_time = 0;
+            int fade_time = this.DefaultFadeInTime;
             if (fadeIn)
                 fade_time = this.DefaultFadeInTime;
 
@@ -162,7 +166,7 @@ namespace Tactile.Services.Audio
 
             if (fadeIn)
                 Music[trackName].FadeIn(this.DefaultFadeInTime);
-            Music[trackName].switch_channel(activeChannel, 0);
+            Music[trackName].switch_channel(activeChannel, this.DefaultFadeInTime);
             Music[trackName].Play();
         }
 
@@ -182,7 +186,7 @@ namespace Tactile.Services.Audio
         public void Resume(List<string> bgmNames, string trackName, int activeChannel)
         {
             // Resume and fade in if track exists
-            if (CueAlreadyExists(trackName, bgmNames[0]))
+            if (CueAlreadyExists(trackName, bgmNames))
             {
                 TryPlay(bgmNames, trackName, activeChannel, true, true);
             }
@@ -402,6 +406,13 @@ namespace Tactile.Services.Audio
         private bool CueAlreadyExists(string trackName, string cueName)
         {
             return Music.ContainsKey(trackName) && Music[trackName].containsCue(cueName);
+        }
+        private bool CueAlreadyExists(string trackName, List<string> cueNames)
+        {
+            foreach (string cueName in cueNames)
+                if (Music.ContainsKey(trackName) && Music[trackName].containsCue(cueName))
+                    return true;
+            return false;
         }
 
         #region Sound Effect Source

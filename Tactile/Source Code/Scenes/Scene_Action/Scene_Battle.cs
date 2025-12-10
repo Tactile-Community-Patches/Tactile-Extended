@@ -200,7 +200,7 @@ namespace Tactile
 
         protected override void play_battle_theme()
         {
-            Global.Audio.PlayBattleTheme(Global.game_state.battle_theme());
+            Global.Audio.ResumeStormTheme(Global.game_state.calm_storm_theme());
         }
 
         protected override bool test_battle_theme()
