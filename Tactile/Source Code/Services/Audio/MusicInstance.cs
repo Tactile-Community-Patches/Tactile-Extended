@@ -86,7 +86,7 @@ namespace Tactile.Services.Audio
     {
         #region Fields
         private List<MusicInstanceChannel> Channels;
-        private int ActiveChannelIndex;
+        public  int ActiveChannelIndex { get; private set; }
 
         private MusicFadeStates FadeState;
         private int FadeTime, FadeRemaining;
@@ -263,9 +263,14 @@ namespace Tactile.Services.Audio
         }
         public void switch_channel(int index, int time)
         {
-            ActiveChannel.FadeOut(time);
-            ActiveChannelIndex = index;
-            ActiveChannel.FadeIn(time);
+            if (time > 0)
+            {
+                ActiveChannel.FadeOut(time);
+                ActiveChannelIndex = index;
+                ActiveChannel.FadeIn(time);
+            }
+            else
+                ActiveChannelIndex = index;
         }
         public void switch_channel(string cue, int time)
         {

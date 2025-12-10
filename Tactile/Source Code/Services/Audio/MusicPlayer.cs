@@ -68,7 +68,13 @@ namespace Tactile.Services.Audio
                 // fading back in, do nothing
                 if (!(Music[track.TrackName].IsPlaying &&
                         !Music[track.TrackName].IsFadeOut))
-                    Restore(track.TrackName, track.FadeIn);
+                    Restore(track.TrackName, track.FadeIn, track.activeChannel);
+                // If the track is already playing but we need
+                // to change channels, do so
+                if (Music[track.TrackName].IsPlaying &&
+                        Music[track.TrackName].ActiveChannelIndex != track.activeChannel)
+                    Switch_Channels(track.TrackName, track.activeChannel, track.FadeIn);
+
                 return;
             }
 
@@ -116,9 +122,13 @@ namespace Tactile.Services.Audio
                 throw new Exception();
             }
         }
-        public void Switch_Channels(string track, int channel)
+        public void Switch_Channels(string track, int channel, bool fadeIn)
         {
-            Music[track].switch_channel(channel, this.DefaultFadeInTime);
+            int fade_time = 0;
+            if (fadeIn)
+                fade_time = this.DefaultFadeInTime;
+
+            Music[track].switch_channel(channel, fade_time);
         }
 
         public void Restore(string bgmName, string trackName = "", bool fadeIn = false, bool forceRestart = false)
@@ -132,7 +142,7 @@ namespace Tactile.Services.Audio
                 // Resume if track playing
                 if (TrackPlayingCue(trackName, bgmName))
                 {
-                    Restore(trackName, fadeIn);
+                    Restore(trackName, fadeIn, 0);
                 }
                 else
                 {
@@ -145,13 +155,14 @@ namespace Tactile.Services.Audio
             else
                 TryPlay(bgmName, trackName, fadeIn, !forceRestart);
         }
-        private void Restore(string trackName, bool fadeIn)
+        private void Restore(string trackName, bool fadeIn, int activeChannel)
         {
             // Also pause any other tracks
             PauseOther(trackName);
 
             if (fadeIn)
                 Music[trackName].FadeIn(this.DefaultFadeInTime);
+            Music[trackName].switch_channel(activeChannel, 0);
             Music[trackName].Play();
         }
 
@@ -390,7 +401,7 @@ namespace Tactile.Services.Audio
         }
         private bool CueAlreadyExists(string trackName, string cueName)
         {
-            return Music.ContainsKey(trackName) && Music[trackName].BgmName == cueName;
+            return Music.ContainsKey(trackName) && Music[trackName].containsCue(cueName);
         }
 
         #region Sound Effect Source
