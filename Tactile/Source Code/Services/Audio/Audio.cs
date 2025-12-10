@@ -56,7 +56,7 @@ namespace Tactile.Services.Audio
             }
             public void PlayCalmTheme(List<string> cueNames, bool fadeIn = false)
             {
-                _audio.play_calm_bgm(cueNames, fadeIn);
+                _audio.play_calm_bgm(cueNames, fadeIn); // This never gets called
             }
             public void ResumeMapTheme(string cueName)
             {
@@ -363,7 +363,7 @@ namespace Tactile.Services.Audio
         }
         private void play_calm_bgm(List<string> cueNames, bool fadeIn = false)
         {
-            BgmManager.TryPlay(cueNames, "CalmStormBgm", 0);
+            BgmManager.TryPlay(cueNames, "CalmStormBgm", 0); // This never gets called
         }
         private void resume_map_bgm(string cueName)
         {
