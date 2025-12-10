@@ -1449,13 +1449,12 @@ namespace Tactile
             if (teamTurn == Constants.Team.PLAYER_TEAM && near_victory())
                 Turn_Theme = Global.BgmConfig.VictoryTheme;
             Near_Victory = near_victory();
-            play_turn_theme(new List<string> { Turn_Theme, Battle_Theme });
+            play_calm_theme(new List<string> { Turn_Theme, Battle_Theme });
         }
-        public void play_turn_theme(List<string> names, bool force_restart_theme = false)
+        public void play_calm_theme(List<string> names, bool force_restart_theme = false)
         {
             Turn_Theme = names[0];
-            if (names.Count > 1)
-                Battle_Theme = names[1];
+            Battle_Theme = names[1];
             if (string.IsNullOrEmpty(Turn_Theme)) // Maybe check the battle theme here too // gooseish
                 return;
 
@@ -1466,7 +1465,14 @@ namespace Tactile
         }
         public void play_turn_theme(string name, bool force_restart_theme = false)
         {
-            play_turn_theme(new List<string> { name }, force_restart_theme);
+            Turn_Theme = name;
+            if (string.IsNullOrEmpty(Turn_Theme)) // Maybe check the battle theme here too // gooseish
+                return;
+
+            if (force_restart_theme)
+                Global.Audio.PlayMapTheme(name);
+            else
+                Global.Audio.ResumeMapTheme(name);
         }
 
         protected bool near_victory()
