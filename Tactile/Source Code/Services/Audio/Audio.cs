@@ -54,17 +54,17 @@ namespace Tactile.Services.Audio
             {
                 _audio.play_map_bgm(cueName, fadeIn);
             }
-            public void PlayCalmStormMapTheme(List<string> cueNames, bool fadeIn = false)
+            public void PlayCalmTheme(List<string> cueNames, bool fadeIn = false)
             {
-                _audio.play_calm_storm_bgm(cueNames, fadeIn);
+                _audio.play_calm_bgm(cueNames, fadeIn);
             }
             public void ResumeMapTheme(string cueName)
             {
                 _audio.resume_map_bgm(cueName);
             }
-            public void ResumeCalmStormMapTheme(List<string> cueNames)
+            public void ResumeCalmTheme(List<string> cueNames)
             {
-                _audio.resume_calm_storm_bgm(cueNames);
+                _audio.resume_calm_bgm(cueNames);
             }
 
             public void PlayBattleTheme(string cueName, bool fadeIn = false)
@@ -361,7 +361,7 @@ namespace Tactile.Services.Audio
         {
             BgmManager.TryPlay(cueName, "MapBgm");
         }
-        private void play_calm_storm_bgm(List<string> cueNames, bool fadeIn = false)
+        private void play_calm_bgm(List<string> cueNames, bool fadeIn = false)
         {
             BgmManager.TryPlay(cueNames, "CalmStormBgm");
         }
@@ -369,7 +369,7 @@ namespace Tactile.Services.Audio
         {
             BgmManager.Resume(cueName, "MapBgm");
         }
-        private void resume_calm_storm_bgm(List<string> cueNames)
+        private void resume_calm_bgm(List<string> cueNames)
         {
             BgmManager.Resume(cueNames, "CalmStormBgm");
         }

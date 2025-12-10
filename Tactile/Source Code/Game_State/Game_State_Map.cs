@@ -1460,9 +1460,9 @@ namespace Tactile
                 return;
 
             if (force_restart_theme)
-                Global.Audio.PlayCalmStormMapTheme(names);
+                Global.Audio.PlayCalmTheme(names);
             else
-                Global.Audio.ResumeCalmStormMapTheme(names);
+                Global.Audio.ResumeCalmTheme(names);
         }
         public void play_turn_theme(string name, bool force_restart_theme = false)
         {
@@ -1516,7 +1516,7 @@ namespace Tactile
             if (Global.game_system.preparations)
                 Global.Audio.ResumeMapTheme(Global.BgmConfig.PreparationsTheme);
             else if (!Global.game_system.is_victory()) //Yeti
-                Global.Audio.ResumeCalmStormMapTheme(new List<string> { Turn_Theme, Battle_Theme });
+                Global.Audio.ResumeCalmTheme(new List<string> { Turn_Theme, Battle_Theme });
         }
 
         public string battle_theme()
