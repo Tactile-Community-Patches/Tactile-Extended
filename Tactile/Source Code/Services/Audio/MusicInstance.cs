@@ -170,14 +170,12 @@ namespace Tactile.Services.Audio
             Volume = this.FadeVolume;
             RefreshVolume();
         }
-
         private void EndFade()
         {
             FadeRemaining = 0;
             FadeState = MusicFadeStates.None;
             Volume = this.FadeVolume;
         }
-
         public void RefreshVolume(float musicVolume)
         {
             BgmVolumeLevel = musicVolume;
@@ -188,7 +186,6 @@ namespace Tactile.Services.Audio
             foreach (MusicInstanceChannel channel in Channels)
                 channel.RefreshVolume(BgmVolumeLevel * Volume);
         }
-
         public void Play()
         {
             foreach (MusicInstanceChannel channel in Channels)
@@ -237,15 +234,12 @@ namespace Tactile.Services.Audio
                     break;
             }
         }
-        #endregion
-
-        public bool containsCue(string cue)
+        public void Dispose()
         {
             foreach (MusicInstanceChannel channel in Channels)
-                if (channel.BgmName == cue)
-                    return true;
-            return false;
+                channel.Dispose();
         }
+        #endregion
         public MusicInstance(List<SoundEffectInstance> instances, List<string> bgmNames, float musicVolume, int activeChannel)
         {
             Channels = new List<MusicInstanceChannel> { };
@@ -254,6 +248,13 @@ namespace Tactile.Services.Audio
             for (int n = 0; n < instances.Count; n++)
                 Channels.Add(new MusicInstanceChannel(instances[n], bgmNames[n], musicVolume,
                     (n == ActiveChannelIndex)));
+        }
+        public bool containsCue(string cue)
+        {
+            foreach (MusicInstanceChannel channel in Channels)
+                if (channel.BgmName == cue)
+                    return true;
+            return false;
         }
         public void next_channel(int time)
         {
@@ -277,11 +278,6 @@ namespace Tactile.Services.Audio
             for (int n = 0; n < Channels.Count; n++)
                 if (Channels[n].BgmName == cue)
                     switch_channel(n, time);
-        }
-        public void Dispose()
-        {
-            foreach (MusicInstanceChannel channel in Channels)
-                channel.Dispose();
         }
     }
     class MusicInstanceChannel : IDisposable
