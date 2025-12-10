@@ -41,7 +41,9 @@ namespace Tactile.Services.Audio
             public void ResumeCalmTheme(List<string> cueNames) { }
 
             public void PlayBattleTheme(string cueName, bool fadeIn = false) { }
+            public void PlayStormTheme(List<string> cueNames, bool fadeIn = false) { }
             public void ResumeBattleTheme(string cueName) { }
+            public void ResumeStormTheme(List<string> cueNames) { }
 
             public bool BgmIsPlaying(string cueName) { return false; }
             public bool IsTrackPlaying(string trackName) { return false; }

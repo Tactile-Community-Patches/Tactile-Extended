@@ -71,9 +71,17 @@ namespace Tactile.Services.Audio
             {
                 _audio.play_battle_bgm(cueName, fadeIn);
             }
+            public void PlayStormTheme(List<string> cueNames, bool fadeIn = false)
+            {
+                _audio.play_storm_bgm(cueNames, fadeIn);
+            }
             public void ResumeBattleTheme(string cueName)
             {
                 _audio.resume_battle_bgm(cueName);
+            }
+            public void ResumeStormTheme(List<string> cueNames)
+            {
+                _audio.resume_storm_bgm(cueNames);
             }
 
             public bool BgmIsPlaying(string cueName)
@@ -378,11 +386,19 @@ namespace Tactile.Services.Audio
         {
             BgmManager.TryPlay(cueName, "BattleBgm");
         }
+        private void play_storm_bgm(List<string> cueNames, bool fadeIn = false)
+        {
+            BgmManager.TryPlay(cueNames, "CalmStormBgm", 1);
+        }
         private void resume_battle_bgm(string cueName)
         {
             BgmManager.Resume(cueName, "BattleBgm");
         }
-        
+        private void resume_storm_bgm(List<string> cueNames)
+        {
+            BgmManager.Resume(cueNames, "CalmStormBgm", 1);
+        }
+
         private static SoundEffectInstance get_music(string cue_name)
         {
 			SoundEffect song = null;
