@@ -897,7 +897,12 @@ namespace Tactile
                 if (Global.game_map.last_added_unit != null)
                     id = Global.game_map.last_added_unit.id;
             if (id != -1 && id != 0)
-                Global.game_state.add_battle_theme(id, command.Value[1]);
+            {
+                if (command.Value.Count() > 2)
+                    Global.game_state.add_boss_theme(id, command.Value[1], command.Value[2]);
+                else
+                    Global.game_state.add_battle_theme(id, command.Value[1]);
+            }
             Index++;
             return true;
         }

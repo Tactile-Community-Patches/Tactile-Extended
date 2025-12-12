@@ -39,6 +39,7 @@ namespace Tactile
         private Dictionary<int, string> Death_Quotes = new Dictionary<int, string>();
         private Dictionary<int, bool> Casual_Death_Quote_Blocked = new Dictionary<int, bool>();
         internal Dictionary<int, string> Unit_Battle_Themes = new Dictionary<int, string>(); //private //Yeti
+        internal Dictionary<int, List<string>> Boss_Themes = new Dictionary<int, List<string>>();
         private List<Home_Base_Event_Data> Home_Base_Events = new List<Home_Base_Event_Data>();
         private Gameplay_Metrics Metrics;
 
@@ -80,6 +81,7 @@ namespace Tactile
             Death_Quotes.write(writer);
             Casual_Death_Quote_Blocked.write(writer);
             Unit_Battle_Themes.write(writer);
+            Boss_Themes.write(writer);
             Home_Base_Events.write(writer);
             Metrics.write(writer);
         }
@@ -117,6 +119,7 @@ namespace Tactile
             if (!Global.LOADED_VERSION.older_than(0, 4, 7, 1))
                 Casual_Death_Quote_Blocked.read(reader);
             Unit_Battle_Themes.read(reader);
+            Boss_Themes.read(reader);
             Home_Base_Events.read(reader);
             Metrics = Gameplay_Metrics.read(reader);
             if (Global.LOADED_VERSION.older_than(0, 5, 5, 0))
@@ -1387,6 +1390,10 @@ namespace Tactile
         public void add_battle_theme(int id, string value)
         {
             Unit_Battle_Themes[id] = value;
+        }
+        public void add_boss_theme(int id, string calm, string storm)
+        {
+            Boss_Themes[id] = new List<string> { calm, storm };
         }
 
         // Metrics
