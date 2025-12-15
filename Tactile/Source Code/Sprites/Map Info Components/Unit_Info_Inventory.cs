@@ -52,20 +52,20 @@ namespace Tactile
                     if (siege.is_weapon)
                     {
                         add_icon(siege, Siege_Engine.SiegeInventoryIndex,
-                            actor.num_items, false);
+                            actor.dropped_item, false);
                     }
                 }
 
                 if (equipped_first() && actor.equipped != 0)
                 {
                     equipped = actor.equipped - 1;
-                    add_icon(actor.items[equipped], equipped, actor.num_items, drops_item);
+                    add_icon(actor.items[equipped], equipped, actor.dropped_item, drops_item);
                 }
                 for (int i = 0; i < actor.items.Count; i++)
                 {
                     if (i == equipped)
                         continue;
-                    add_icon(actor.items[i], i, actor.num_items, drops_item);
+                    add_icon(actor.items[i], i, actor.dropped_item, drops_item);
                 }
             }
             else
@@ -100,7 +100,7 @@ namespace Tactile
             }
         }
 
-        protected void add_icon(Item_Data item_data, int index, int numItems, bool drops_item)
+        protected void add_icon(Item_Data item_data, int index, int dropped_item, bool drops_item)
         {
             if (item_data.Id > 0)
             {
@@ -113,7 +113,7 @@ namespace Tactile
                 Icons[Icons.Count - 1].flash_color = new Color(72, 232, 32, 255);
                 Icons[Icons.Count - 1].flash_time_max = 120;
                 //Icons[Icons.Count - 1].flash = (unit.drops_item && i == unit.actor.num_items - 1); //Debug
-                Icons[Icons.Count - 1].flash = (drops_item && index == numItems - 1);
+                Icons[Icons.Count - 1].flash = (drops_item && index == dropped_item);
                 Icons[Icons.Count - 1].scissor = scissor();
             }
         }
