@@ -41,6 +41,7 @@ namespace Tactile
         private Dictionary<int, int> Support_Progress = new Dictionary<int, int>();
         private Dictionary<int, int> Supports = new Dictionary<int, int>();
         private int Bond = -1;
+        private bool Drops_Item = false;
 
         private List<int[]> Temp_States;
         private int Needed_Levels = 0;
@@ -86,6 +87,7 @@ namespace Tactile
             Support_Progress.write(writer);
             Supports.write(writer);
             writer.Write(Bond);
+            writer.Write(Drops_Item);
         }
 
         public void read(BinaryReader reader) // Make this static, maybe? //Yeti
@@ -218,6 +220,7 @@ namespace Tactile
                     Support_Progress[pair.Key] = pair.Value;
             Supports.read(reader);
             Bond = reader.ReadInt32();
+            Drops_Item = reader.ReadBoolean();
 
             skill_list_update();
         }
@@ -524,6 +527,7 @@ namespace Tactile
 
         public List<Item_Data> items { get { return Items.GetRange(0, Global.ActorConfig.NumItems); } }
         public List<Item_Data> whole_inventory { get { return Items; } }
+        public bool drops_item { get { return Drops_Item; } set { Drops_Item = value; } }
 
         public List<ClassTypes> class_types { get { return actor_class.Class_Types; } }
 
@@ -2340,6 +2344,8 @@ namespace Tactile
         /// <param name="index">Index of the item to remove</param>
         public void discard_item(int index)
         {
+            if (index == dropped_item)
+                Drops_Item = false;
             if (index < 0)
                 return;
             if (too_many_items)

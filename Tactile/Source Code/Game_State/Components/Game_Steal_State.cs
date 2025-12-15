@@ -186,8 +186,8 @@ namespace Tactile.State
                                     else
                                     {
                                         // If the stolen item is the green drop, cancels green drop status
-                                        if (Stolen_Item == steal_target.actor.num_items - 1)
-                                            steal_target.drops_item = false;
+                                        if (Stolen_Item == steal_target.actor.dropped_item)
+                                            steal_target.drops_item = false; // This is redundant now //gooseish
                                     }
                                     TactileLibrary.Item_Data stolen_item = steal_target.actor.drop_item(Stolen_Item);
                                     stealer.actor.gain_item(stolen_item);

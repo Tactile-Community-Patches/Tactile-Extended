@@ -40,7 +40,7 @@ namespace Tactile
         protected List<Vector2> Move_Route = new List<Vector2>();
         protected int Mission = 0, Ai_Mission = 2;
         protected bool Dead = false;
-        protected bool Boss = false, Drops_Item = false;
+        protected bool Boss = false;
         protected int Priority = 0;
         protected bool Gladiator = false;
         protected int Vision_Bonus = 0;
@@ -106,7 +106,6 @@ namespace Tactile
             writer.Write(Ai_Mission);
             writer.Write(Dead);
             writer.Write(Boss);
-            writer.Write(Drops_Item);
             writer.Write(Priority);
             writer.Write(Gladiator);
             writer.Write(Vision_Bonus);
@@ -159,7 +158,6 @@ namespace Tactile
             Ai_Mission = reader.ReadInt32();
             Dead = reader.ReadBoolean();
             Boss = reader.ReadBoolean();
-            Drops_Item = reader.ReadBoolean();
             Priority = reader.ReadInt32();
             Gladiator = reader.ReadBoolean();
             Vision_Bonus = reader.ReadInt32();
@@ -380,8 +378,8 @@ namespace Tactile
 
         public bool drops_item
         {
-            get { return Drops_Item && actor.has_items; }
-            set { Drops_Item = value; }
+            get { return actor.drops_item && actor.has_items; }
+            set { actor.drops_item = value; }
         }
         public void set_dropped_item(Item_Data_Type type, int id)
         {
@@ -480,6 +478,7 @@ namespace Tactile
         protected void initialize(int id, Vector2 loc, int team)
         {
             //actor.setup_items(false); //Debug
+            actor.drops_item = false; // I think this is necessary to prevent the game from "remembering" item drops from previous chapters //gooseish
             Id = id;
             Turn_Start_Loc = Prev_Loc = Move_Loc = Loc = loc;
             refresh_real_loc();
@@ -488,6 +487,7 @@ namespace Tactile
         protected void initialize(int id, Vector2 loc, int team, int priority)
         {
             //actor.setup_items(false); // Doing this once in the Game_Actor constructor instead //Debug
+            actor.drops_item = false; // I think this is necessary to prevent the game from "remembering" item drops from previous chapters //gooseish
             Id = id;
             Turn_Start_Loc = Prev_Loc = Move_Loc = Loc = loc;
             refresh_real_loc();
@@ -508,7 +508,7 @@ namespace Tactile
             Team = team;
             // Clear item drop flag if switching to an allied team
             if (!is_attackable_team(Constants.Team.PLAYER_TEAM))
-                Drops_Item = false;
+                drops_item = false;
 
             if (!Global.scene.is_test_battle)
             {
@@ -1210,7 +1210,7 @@ namespace Tactile
                 if (this.berserk)
                     return true;
 
-                if (Drops_Item || this.boss || !actor.is_generic_actor)
+                if (drops_item || this.boss || !actor.is_generic_actor)
                     return true;
                 return false;
             }
