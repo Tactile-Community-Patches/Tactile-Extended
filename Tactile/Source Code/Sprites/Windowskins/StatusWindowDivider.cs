@@ -22,7 +22,7 @@ namespace Tactile
             if (texture != null)
                 if (visible && Width >= 16)
                 {
-                    int srcY = 64 + Global.game_options.window_color * 8;
+                    int srcY = 64 + 2 * 8;
                     int x = 0;
                     // Left
                     sprite_batch.Draw(texture, (loc + new Vector2(x, 0) + draw_vector()) - draw_offset,

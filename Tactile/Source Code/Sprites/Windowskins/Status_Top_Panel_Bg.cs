@@ -30,7 +30,7 @@ namespace Tactile
                     sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(0, 76), new Rectangle(0, 76, 96, 7), tint);
                     // Portrait Emblem
                     sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(0, 61), new Rectangle(
-                        Global.game_options.window_color * 24, 83, 24, 24), tint);
+                        2 * 24, 83, 24, 24), tint);
                     // Panel Frame
                     for (int i = 0; i < 221; i++)
                         sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(96 + i, 0), new Rectangle(93, 114, 1, 3), tint);
@@ -44,10 +44,10 @@ namespace Tactile
                     sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(96 + 192, 76), new Rectangle(0, 107, 29, 7), tint);
                     // Battle Stats BG
                     sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(196, 8),
-                        new Rectangle(96, 0 + 64 * Global.game_options.window_color, 120, 64), tint);
+                        new Rectangle(96, 0 + 64 * 2, 120, 64), tint);
                     // Name Banner
                     sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(100, 0),
-                        new Rectangle(0, 114 + 25 * Global.game_options.window_color, 93, 25), tint);
+                        new Rectangle(0, 114 + 25 * 2, 93, 25), tint);
                 }
         }
     }
