@@ -54,7 +54,7 @@ namespace Tactile
             WLvls_Window.color_override = color_override;
 
             // Skill Bg
-            Skill_Bg = new Status_Support_Background();
+            Skill_Bg = new Status_Support_Background(color_override);
             Skill_Bg.loc = Skills_Window.loc + new Vector2(8, 8 + ACTOR_SKILLS * 16);
             Skill_Bg.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;
             

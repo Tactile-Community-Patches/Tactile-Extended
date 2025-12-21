@@ -185,7 +185,7 @@ namespace Tactile
             Items_Window.color_override = color_override;
 
             // Skill Bg
-            SiegeBg = new Status_Support_Background();
+            SiegeBg = new Status_Support_Background(color_override);
             SiegeBg.loc = Items_Window.loc + new Vector2(
                 8, 8 + (Global.ActorConfig.NumItems - 1) * 16);
             SiegeBg.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;

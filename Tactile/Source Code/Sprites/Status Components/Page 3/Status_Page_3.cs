@@ -141,7 +141,7 @@ namespace Tactile
                 nodes.Last().stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
             }
             // Bonus Bg
-            Bonus_Bg = new Status_Bonus_Background();
+            Bonus_Bg = new Status_Bonus_Background(color_override);
             Bonus_Bg.loc = Bonuses_Window.loc + new Vector2(8, 24);
             Bonus_Bg.stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
 
@@ -161,7 +161,7 @@ namespace Tactile
             Supports.loc = Supports_Window.loc + new Vector2(32, 24);
             Supports.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;
             // Support Bg
-            Support_Bg = new Status_Support_Background();
+            Support_Bg = new Status_Support_Background(color_override);
             Support_Bg.loc = Supports_Window.loc + new Vector2(8, 24);
             Support_Bg.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;
             // Supports Window Size
