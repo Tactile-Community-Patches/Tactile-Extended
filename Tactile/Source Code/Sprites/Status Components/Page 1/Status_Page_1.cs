@@ -17,7 +17,7 @@ namespace Tactile
         protected StatusStatUINode PowNode;
         private Status_Support_Background SiegeBg;
 
-        public Status_Page_1()
+        public Status_Page_1(int color_override)
         {
             var nodes = new List<StatusUINode>();
 
@@ -27,7 +27,7 @@ namespace Tactile
             Stats_Window.width = 144;
             Stats_Window.height = 112;
             Stats_Window.stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
-            Stats_Window.color_override = 2;
+            Stats_Window.color_override = color_override;
             // Stats
             for (int i = 0; i < 6; i++)
             {
@@ -182,7 +182,7 @@ namespace Tactile
             Items_Window.width = 144;
             Items_Window.height = Global.ActorConfig.NumItems * 16 + 16;
             Items_Window.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;
-            Items_Window.color_override = 2;
+            Items_Window.color_override = color_override;
 
             // Skill Bg
             SiegeBg = new Status_Support_Background();

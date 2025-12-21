@@ -361,9 +361,9 @@ namespace Tactile
             Rescue_Icon.loc = new Vector2(103, -5);
             Rescue_Icon.stereoscopic = Config.STATUS_TOP_PANEL_DEPTH;
             // Pages //
-            Pages.Add(new Status_Page_1());
-            Pages.Add(new Status_Page_2());
-            Pages.Add(new Status_Page_3());
+            Pages.Add(new Status_Page_1(team_color));
+            Pages.Add(new Status_Page_2(team_color));
+            Pages.Add(new Status_Page_3(team_color));
             // Page Arrows
             Left_Page_Arrow = new Page_Arrow();
             Left_Page_Arrow.loc = new Vector2(4, 84);

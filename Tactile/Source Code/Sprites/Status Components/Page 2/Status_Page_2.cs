@@ -22,7 +22,7 @@ namespace Tactile
 
         private List<StatusUINode> TemporaryWLvls = new List<StatusUINode>();
 
-        public Status_Page_2()
+        public Status_Page_2(int color_override)
         {
             var nodes = new List<StatusUINode>();
 
@@ -32,7 +32,7 @@ namespace Tactile
             Skills_Window.width = 144;
             Skills_Window.height = 96;
             Skills_Window.stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
-            Skills_Window.color_override = 2;
+            Skills_Window.color_override = color_override;
 
             // WLvls Window
             int max_wlvl_index = 0;
@@ -51,7 +51,7 @@ namespace Tactile
             WLvls_Window.width = 144;
             WLvls_Window.height = (wlvl_rows + 1) * 16; // 96; //Debug
             WLvls_Window.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;
-            WLvls_Window.color_override = 2;
+            WLvls_Window.color_override = color_override;
 
             // Skill Bg
             Skill_Bg = new Status_Support_Background();
