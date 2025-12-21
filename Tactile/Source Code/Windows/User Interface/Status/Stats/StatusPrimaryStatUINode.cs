@@ -22,7 +22,8 @@ namespace Tactile.Windows.UserInterface.Status
             string label,
             Func<Game_Unit, PrimaryStatState> statFormula,
             Func<Game_Unit, Color> labelHueFormula,
-            int textOffset = 48)
+            int textOffset = 48,
+            int team_color = -1)
                 : base(helpLabel, label, null, textOffset)
         {
             StatFormula = statFormula;
@@ -38,6 +39,8 @@ namespace Tactile.Windows.UserInterface.Status
             Bar = new Stat_Bar();
             Bar.draw_offset = new Vector2(16, 8);
             Bar.offset = new Vector2(-2, 0);
+            if (team_color > -1)
+                Bar.color_override = team_color;
 
             PenaltyArrow = new Weapon_Triangle_Arrow();
             PenaltyArrow.draw_offset = new Vector2(16, 0) + new Vector2(-12, 1);

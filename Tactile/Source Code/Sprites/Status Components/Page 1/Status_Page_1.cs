@@ -56,7 +56,7 @@ namespace Tactile
                 }
 
                 nodes.Add(new StatusPrimaryStatUINode(
-                    help_label, label, stat_formula, label_color, 40));
+                    help_label, label, stat_formula, label_color, 40, color_override));
                 nodes.Last().loc = loc;
                 nodes.Last().stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
 #if DEBUG
@@ -87,7 +87,7 @@ namespace Tactile
                         Bonus = unit.mov - unit.base_mov,
                         Cap = unit.stat_cap(Stat_Labels.Mov),
                     };
-                }, null, 40));
+                }, null, 40, color_override));
             nodes.Last().loc = Stats_Window.loc + new Vector2(72, 0 * 16 + 8);
             nodes.Last().stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
 #if DEBUG
@@ -107,7 +107,7 @@ namespace Tactile
                         Cap = unit.stat_cap(Stat_Labels.Con),
                         IsCapped = unit.actor.get_capped(Stat_Labels.Con)
                     };
-                }, null, 40));
+                }, null, 40, color_override));
             nodes.Last().loc = Stats_Window.loc + new Vector2(72, 1 * 16 + 8);
             nodes.Last().stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
 #if DEBUG
