@@ -3473,6 +3473,18 @@ namespace Tactile
                 clear_updated_move_ranges();
             }
         }
+        
+        public void import_units(string unit_data_name)
+        {
+            if (get_scene_map() != null)
+            {
+                Map_Unit_Data loaded_unit_data = get_scene_map().get_unit_data(unit_data_name);
+                foreach (var data in loaded_unit_data.Units)
+                {
+                    add_unit(data.Key, data.Value);
+                }
+            }
+        }
 
         public void add_area_back(string back, int x1, int y1, int x2, int y2)
         {

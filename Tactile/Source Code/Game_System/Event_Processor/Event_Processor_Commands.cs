@@ -2783,6 +2783,13 @@ namespace Tactile
                     }
                     break;
                 #endregion
+                case "Import Units":
+                #region import units
+                    // Value[1] = filename
+                    Global.game_map.import_units(command.Value[1]);
+                    break;
+                #endregion
+
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);
