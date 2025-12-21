@@ -12,13 +12,13 @@ namespace Tactile
         protected UINodeSet<StatusUINode>StatusPageNodes;
         // BG Design
         protected Sprite Window_Design;
-
+        protected int Team_Color;
         public void init_design()
         {
             // Window Design
             Window_Design = new Sprite(Global.Content.Load<Texture2D>(@"Graphics/Pictures/Status_Window_Design"));
             Window_Design.loc = new Vector2(14, 90);
-            Window_Design.src_rect = new Rectangle(0, 96 * 1, 292, 96); // Does this do anything?
+            Window_Design.src_rect = new Rectangle(0, 96 * Team_Color, 292, 96);
             Window_Design.stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH; //Yeti
         }
 

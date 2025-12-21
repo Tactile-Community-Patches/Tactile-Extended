@@ -19,6 +19,7 @@ namespace Tactile
 
         public Status_Page_1(int color_override)
         {
+            Team_Color = color_override;
             var nodes = new List<StatusUINode>();
 
             // Stats Window
