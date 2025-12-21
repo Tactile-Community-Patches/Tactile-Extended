@@ -6,6 +6,7 @@ namespace Tactile
     class StatusWindowDivider : Sprite
     {
         private int Width;
+        protected int Team_Color = Global.game_options.window_color;
 
         public StatusWindowDivider()
         {
@@ -22,7 +23,8 @@ namespace Tactile
             if (texture != null)
                 if (visible && Width >= 16)
                 {
-                    int srcY = 64 + 2 * 8;
+                    // Why is this calculated at draw time? //gooseish
+                    int srcY = 64 + Team_Color * 8;
                     int x = 0;
                     // Left
                     sprite_batch.Draw(texture, (loc + new Vector2(x, 0) + draw_vector()) - draw_offset,

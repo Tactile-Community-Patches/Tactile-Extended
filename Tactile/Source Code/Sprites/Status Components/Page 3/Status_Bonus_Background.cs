@@ -7,15 +7,12 @@ namespace Tactile
     class Status_Bonus_Background : StatusWindowDivider
     {
         private Texture2D BonusPanelTexture;
-        private int Team_Color;
 
         public Status_Bonus_Background(int team_color = -1)
         {
             SetWidth(128);
             BonusPanelTexture = Global.Content.Load<Texture2D>(@"Graphics/Pictures/Portrait_bg");
-            if (team_color == -1)
-                Team_Color = Global.game_options.window_color;
-            else
+            if (team_color != -1)
                 Team_Color = team_color;
 
         }
@@ -43,13 +40,10 @@ namespace Tactile
 
     class Status_Support_Background : StatusWindowDivider
     {
-        private int Team_Color;
         public Status_Support_Background(int team_color = -1)
         {
             SetWidth(128);
-            if (team_color == -1)
-                Team_Color = Global.game_options.window_color;
-            else
+            if (team_color != -1)
                 Team_Color = team_color;
         }
 
