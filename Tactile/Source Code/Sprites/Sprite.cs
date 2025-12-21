@@ -218,6 +218,11 @@ namespace Tactile
                 frame = animation_data[animation_frame][0];
         }
 
+        public virtual void draw(SpriteBatch sprite_batch, int team_color, Vector2 draw_offset = default(Vector2))
+        {
+            draw(sprite_batch, this.texture, draw_offset);
+        }
+
         public virtual void draw(SpriteBatch sprite_batch, Vector2 draw_offset = default(Vector2))
         {
             draw(sprite_batch, this.texture, draw_offset);

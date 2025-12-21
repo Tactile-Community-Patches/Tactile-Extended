@@ -61,6 +61,12 @@ namespace Tactile
         }
 
         protected Game_Unit unit { get { return Global.game_map.units[Actors ? Unit_Id : Team[Unit_Id]]; } }
+        private int team_color { get
+            {
+                if (unit == null)
+                    return 0;
+                return unit.team - 1;
+            } }
 
         internal bool closed { get { return Black_Screen_Timer <= 0 && Closing; } }
 
@@ -1055,7 +1061,7 @@ namespace Tactile
             Face.draw(sprite_batch, offset);
 
             sprite_batch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            Top_Panel.draw(sprite_batch, offset);
+            Top_Panel.draw(sprite_batch, team_color, offset);
             Platform.draw(sprite_batch, offset);
             //LvLabel.draw(sprite_batch, offset);
             //HpLabel.draw(sprite_batch, offset);

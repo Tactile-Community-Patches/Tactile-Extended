@@ -18,7 +18,7 @@ namespace Tactile
             // Window Design
             Window_Design = new Sprite(Global.Content.Load<Texture2D>(@"Graphics/Pictures/Status_Window_Design"));
             Window_Design.loc = new Vector2(14, 90);
-            Window_Design.src_rect = new Rectangle(0, 96 * Global.game_options.window_color, 292, 96);
+            Window_Design.src_rect = new Rectangle(0, 96 * 1, 292, 96); // Does this do anything?
             Window_Design.stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH; //Yeti
         }
 

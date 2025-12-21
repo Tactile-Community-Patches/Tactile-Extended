@@ -11,7 +11,7 @@ namespace Tactile
             this.textures = textures;
         }
 
-        public override void draw(SpriteBatch sprite_batch, Vector2 draw_offset = default(Vector2))
+        public override void draw(SpriteBatch sprite_batch, int team_color, Vector2 draw_offset = default(Vector2))
         {
             if (textures.Count == 2)
                 if (visible)
@@ -22,7 +22,7 @@ namespace Tactile
                     for (int y = 0; y < 80; y+=8)
                         for (int x = 0; x < 224; x += 8)
                             sprite_batch.Draw(textures[1], loc - draw_offset + new Vector2(96 + x, 0 + y),
-                                new Rectangle(8, 8 + 24 * Global.game_options.window_color, 8, 8), tint);
+                                new Rectangle(8, 8 + 24 * team_color, 8, 8), tint);
                     // Portrait frame
                     sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(0, 0), new Rectangle(0, 0, 96, 4), tint);
                     sprite_batch.Draw(textures[0], loc - draw_offset + new Vector2(0, 4), new Rectangle(0, 4, 8, 72), tint);
