@@ -32,6 +32,7 @@ namespace Tactile
             Bonuses_Window.width = 144;
             Bonuses_Window.height = 112;
             Bonuses_Window.stereoscopic = Config.STATUS_LEFT_WINDOW_DEPTH;
+            Bonuses_Window.color_override = 2;
             // Status Label
             nodes.Add(new StatusTextUINode(
                 "Cond",
@@ -148,6 +149,7 @@ namespace Tactile
             Supports_Window = new System_Color_Window();
             Supports_Window.loc = new Vector2(168, 80);
             Supports_Window.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;
+            Supports_Window.color_override = 2;
             // Affinity
             nodes.Add(new StatusAffinityUINode(
                 "Affin",
