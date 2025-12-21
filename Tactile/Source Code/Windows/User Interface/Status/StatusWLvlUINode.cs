@@ -16,13 +16,15 @@ namespace Tactile.Windows.UserInterface.Status
         internal StatusWLvlUINode(
                 string helpLabel,
                 WeaponType type,
-                Func<Game_Unit, WLvlState> wlvlFormula)
+                Func<Game_Unit, WLvlState> wlvlFormula, int team_color)
             : base(helpLabel)
         {
             WLvlFormula = wlvlFormula;
 
             WLvl = new Weapon_Level_Gauge(type.Key);
             WLvl.draw_offset = new Vector2(-8, -8);
+            if (team_color != -1)
+                WLvl.color_override = team_color;
 
             Size = new Vector2(56, 16);
         }

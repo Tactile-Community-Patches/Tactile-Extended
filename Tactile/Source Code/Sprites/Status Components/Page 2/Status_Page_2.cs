@@ -149,7 +149,7 @@ namespace Tactile
                 if (!weapon_type.DisplayedInStatus)
                     continue;
 
-                nodes.Add(weapon_type_icon(weapon_type, weapon_type.StatusIndex));
+                nodes.Add(weapon_type_icon(weapon_type, weapon_type.StatusIndex, color_override));
             }
 
             StatusPageNodes = new UINodeSet<StatusUINode>(nodes);
@@ -157,7 +157,7 @@ namespace Tactile
             init_design();
         }
 
-        private StatusUINode weapon_type_icon(WeaponType weapon_type, int statusIndex)
+        private StatusUINode weapon_type_icon(WeaponType weapon_type, int statusIndex, int color_override = -1)
         {
             Vector2 loc = WLvls_Window.loc + new Vector2(
                 (statusIndex % WLVL_COLUMNS) * 64 + 8,
@@ -175,7 +175,7 @@ namespace Tactile
                         IsCapped = unit.actor.weapon_level_letter(weapon_type) ==
                             Data_Weapon.WLVL_LETTERS[Data_Weapon.WLVL_LETTERS.Length - 1]
                     };
-                });
+                }, color_override);
             node.loc = loc;
             node.stereoscopic = Config.STATUS_RIGHT_WINDOW_DEPTH;
 #if DEBUG
