@@ -40,6 +40,7 @@ namespace Tactile
         private Dictionary<int, bool> Casual_Death_Quote_Blocked = new Dictionary<int, bool>();
         internal Dictionary<int, string> Unit_Battle_Themes = new Dictionary<int, string>(); //private //Yeti
         internal Dictionary<int, List<string>> Boss_Themes = new Dictionary<int, List<string>>();
+        internal int? Current_Boss_Theme;
         private List<Home_Base_Event_Data> Home_Base_Events = new List<Home_Base_Event_Data>();
         private Gameplay_Metrics Metrics;
 
@@ -217,6 +218,7 @@ namespace Tactile
             Death_Quotes.Clear();
             Casual_Death_Quote_Blocked.Clear();
             Unit_Battle_Themes.Clear();
+            Boss_Themes.Clear();
 
             if (reset_events)
             {
@@ -1538,7 +1540,15 @@ namespace Tactile
         }
         public List<string> calm_storm_theme()
         {
-            return new List<string> { Turn_Theme, CombatState.battle_theme };
+            if (Current_Boss_Theme == null)
+                return new List<string> { Turn_Theme, CombatState.battle_theme };
+            else
+                return Boss_Themes[(int)Current_Boss_Theme];
+        }
+        public void check_boss_theme(int id)
+        {
+            if (Boss_Themes.ContainsKey(id))
+                Current_Boss_Theme = id;
         }
 
         public void play_staff_theme()

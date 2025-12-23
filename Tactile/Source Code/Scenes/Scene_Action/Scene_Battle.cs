@@ -200,6 +200,10 @@ namespace Tactile
 
         protected override void play_battle_theme()
         {
+            if (Battler_1 != null)
+                Global.game_state.check_boss_theme(Battler_1.id);
+            if (Battler_2 != null)
+                Global.game_state.check_boss_theme(Battler_2.id);
             Global.Audio.ResumeStormTheme(Global.game_state.calm_storm_theme());
         }
 
