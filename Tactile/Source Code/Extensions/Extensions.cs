@@ -651,6 +651,29 @@ namespace TactileDictionaryExtension
             }
         }
 
+        // Dictionary<int, List<string>>
+        public static void write(this Dictionary<int, List<string>> dictionary, BinaryWriter writer)
+        {
+            writer.Write(dictionary.Count);
+            foreach (KeyValuePair<int, List<string>> pair in dictionary)
+            {
+                writer.Write(pair.Key);
+                pair.Value.write(writer);
+            }
+        }
+        public static void read(this Dictionary<int, List<string>> dictionary, BinaryReader reader)
+        {
+            dictionary.Clear();
+            int count = reader.ReadInt32();
+            for (int i = 0; i < count; i++)
+            {
+                int key = reader.ReadInt32();
+                List<string> value = new List<string> { };
+                value.read(reader);
+                dictionary.Add(key, value);
+            }
+        }
+
         // Dictionary<int, Vector2>
         public static void write(this Dictionary<int, Vector2> dictionary, BinaryWriter writer)
         {
