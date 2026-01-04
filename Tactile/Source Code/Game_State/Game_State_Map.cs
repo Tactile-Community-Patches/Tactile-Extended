@@ -48,6 +48,7 @@ namespace Tactile
         public Vector2? prev_player_loc = null;
 
         public Dictionary<int, string> turn_theme_override = new Dictionary<int, string>();
+        public string preparations_theme_override = "";
 #if !MONOGAME && DEBUG
         internal bool Moving_Editor_Unit = false; //private //Yeti
 #endif
@@ -84,6 +85,7 @@ namespace Tactile
             Metrics.write(writer);
 
             turn_theme_override.write(writer);
+            writer.Write(preparations_theme_override);
         }
 
         public void read_map_stuff(BinaryReader reader)
@@ -122,6 +124,7 @@ namespace Tactile
             Metrics = Gameplay_Metrics.read(reader);
 
             turn_theme_override.read(reader);
+            preparations_theme_override = reader.ReadString();
 
             if (Global.LOADED_VERSION.older_than(0, 5, 5, 0))
             {
@@ -219,6 +222,7 @@ namespace Tactile
             Casual_Death_Quote_Blocked.Clear();
             Unit_Battle_Themes.Clear();
             turn_theme_override.Clear();
+            preparations_theme_override = "";
 
             if (reset_events)
             {
@@ -1551,7 +1555,10 @@ namespace Tactile
 
         public void play_preparations_theme()
         {
-            Global.Audio.PlayMapTheme(Global.BgmConfig.PreparationsTheme);
+            if (preparations_theme_override != "")
+                Global.Audio.PlayMapTheme(Global.BgmConfig.PreparationsTheme);
+            else
+                Global.Audio.PlayBattleTheme(preparations_theme_override);
             //Global.Audio.PlayBgm(Global.BgmConfig.PreparationsTheme, forceRestart: true); //@Debug
         }
         #endregion
