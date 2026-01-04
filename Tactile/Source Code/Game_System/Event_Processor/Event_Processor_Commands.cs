@@ -2790,6 +2790,12 @@ namespace Tactile
                     Global.game_state.turn_theme_override[process_number(command.Value[1])] = command.Value[2];
                     break;
                 #endregion
+                case "Change Preparations Theme":
+                    #region Change Preparations Theme
+                    // Value[1] = Song Name
+                    Global.game_state.preparations_theme_override = command.Value[1];
+                    break;
+                #endregion
 #if DEBUG
                 default:
                     throw event_case_missing_exception(command.Value[0], command.Key);
