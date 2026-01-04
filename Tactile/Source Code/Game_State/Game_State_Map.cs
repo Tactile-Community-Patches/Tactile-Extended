@@ -1555,7 +1555,7 @@ namespace Tactile
 
         public void play_preparations_theme()
         {
-            if (preparations_theme_override != "")
+            if (preparations_theme_override == "")
                 Global.Audio.PlayMapTheme(Global.BgmConfig.PreparationsTheme);
             else
                 Global.Audio.PlayBattleTheme(preparations_theme_override);
