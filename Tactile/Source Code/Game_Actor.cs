@@ -2457,7 +2457,33 @@ namespace Tactile
 
             return true;
         }
+        /// <summary>
+        /// Returns true if any item in the actor's inventory can be repaired
+        /// </summary>
+        public bool CanRepair()
+        {
+            bool result = false;
+            for (int i = 0; i < Global.ActorConfig.NumItems; i++)
+                result |= CanRepair(i);
+            return result;
+        }
+        /// <summary>
+        /// Returns true if the item at the given index can be repaired
+        /// </summary>
+        /// <param name="index">Index of the item to test</param>
+        public bool CanRepair(int index)
+        {
+            // If there is no item at this index, return
+            if (Items[index].non_equipment)
+                return false;
 
+            int maxUses = Items[index].max_uses;
+            // If the item is already fully repaired, return
+            if (Items[index].Uses == maxUses)
+                return false;
+
+            return true;
+        }
         /// <summary>
         /// Returns true if any item in the actor's inventory can be restocked
         /// </summary>
