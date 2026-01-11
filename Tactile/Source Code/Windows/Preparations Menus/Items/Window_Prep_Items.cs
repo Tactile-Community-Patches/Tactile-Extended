@@ -16,7 +16,7 @@ using TactileLibrary;
 
 namespace Tactile
 {
-    enum PrepItemsInputResults { None, OpenTrade, Status, List, Supply, Shop, Closing }
+    enum PrepItemsInputResults { None, OpenTrade, Status, List, Supply, Shop, Repair, Closing }
 
     internal class Window_Prep_Items : PreparationsBaseMenu
     {
@@ -164,6 +164,7 @@ namespace Tactile
         public event EventHandler<EventArgs> Use;
         public event EventHandler<EventArgs> List;
         public event EventHandler<EventArgs> Shop;
+        public event EventHandler<EventArgs> Repair;
 
         protected void OnTradeSelected(EventArgs e)
         {
@@ -343,6 +344,11 @@ namespace Tactile
                 case 7:
                     if (Shop != null)
                         Shop(this, new EventArgs());
+                    break;
+                // Repair
+                case 8:
+                    if (Repair != null)
+                        Repair(this, new EventArgs());
                     break;
             }
         }
