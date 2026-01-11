@@ -2359,6 +2359,10 @@ namespace Tactile
                 // Value[1] = choice offsets
                 // Value[2] = face (optional)
                 // Value[3] = music (optional)
+                int[] offsets = command.Value[1].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(x => process_number(x)).ToArray();
+                string face = command.Value.Length <= 2 ? "" : command.Value[2];
+                string music = command.Value.Length <= 3 ? "" : command.Value[3];
                 switch (command.Value[0])
                 {
                     case "Base":
@@ -2367,22 +2371,12 @@ namespace Tactile
                             Index++;
                             return true;
                         }
-                        base_shop = true;
-                        int[] offsets = command.Value[1].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
-                            .Select(x => process_number(x)).ToArray();
-
-                        string face = command.Value.Length <= 2 ? "" : command.Value[2];
-                        string music = command.Value.Length <= 3 ? "" : command.Value[3];
+                        base_shop = true;                   
                         shop = new Shop_Data(face, music, offsets, false, false, false);
                         break;
                     case "Repair":
                         base_repair = true;
-                        int[] offsets2 = command.Value[1].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
-                            .Select(x => process_number(x)).ToArray();
-
-                        string face2 = command.Value.Length <= 2 ? "" : command.Value[2];
-                        string music2 = command.Value.Length <= 3 ? "" : command.Value[3];
-                        shop = new Shop_Data(face2, music2, offsets2, false, false, true);
+                        shop = new Shop_Data(face, music, offsets, false, false, true);
                         break;
                     default:
 #if DEBUG
