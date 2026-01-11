@@ -23,7 +23,7 @@ namespace Tactile.Menus.Preparations
 
         protected virtual Window_Command NewWindow()
         {
-            List<string> strs = new List<string> { "Trade", "List", "Convoy", "Give All", "Use", "Restock", "Optimize" };
+            List<string> strs = new List<string> { "Trade", "List", "Convoy", "Give All", "Use", "Repair", "Optimize" };
             if (Global.game_system.home_base ||
                     (Global.battalion.has_convoy && Global.game_battalions.active_convoy_shop != null))
                 strs.Add("Shop");
@@ -94,8 +94,8 @@ namespace Tactile.Menus.Preparations
             else
                 Window.set_text_color(3, "Grey");
 
-            // Restock
-            if (Global.battalion.has_convoy && this.actor.CanRestock())
+            // Repair
+            if (Global.game_battalions.active_repair_shop != null && this.actor.CanRepair())
                 Window.set_text_color(5, "White");
             else
                 Window.set_text_color(5, "Grey");
