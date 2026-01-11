@@ -2350,11 +2350,12 @@ namespace Tactile
         private bool command_add_shop()
         {
             bool base_shop = false;
+            bool base_repair = false;
             Shop_Data shop;
             Vector2 loc = Vector2.Zero;
             if (command.Value.Length <= 4)
             {
-                // Value[0] = Store type (Base)
+                // Value[0] = Store type (Base) or Repair
                 // Value[1] = choice offsets
                 // Value[2] = face (optional)
                 // Value[3] = music (optional)
@@ -2372,7 +2373,16 @@ namespace Tactile
 
                         string face = command.Value.Length <= 2 ? "" : command.Value[2];
                         string music = command.Value.Length <= 3 ? "" : command.Value[3];
-                        shop = new Shop_Data(face, music, offsets, false, false);
+                        shop = new Shop_Data(face, music, offsets, false, false, false);
+                        break;
+                    case "Repair":
+                        base_repair = true;
+                        int[] offsets2 = command.Value[1].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries)
+                            .Select(x => process_number(x)).ToArray();
+
+                        string face2 = command.Value.Length <= 2 ? "" : command.Value[2];
+                        string music2 = command.Value.Length <= 3 ? "" : command.Value[3];
+                        shop = new Shop_Data(face2, music2, offsets2, false, false, true);
                         break;
                     default:
 #if DEBUG
@@ -2398,11 +2408,20 @@ namespace Tactile
                 string[] offsets_str = command.Value[4].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
                 for (int i = 0; i < offsets.Length; i++)
                     offsets[i] = process_number(offsets_str[i]);*/
-                shop = new Shop_Data(command.Value[2], command.Value[3], offsets, process_bool(command.Value[5]), false);
+                shop = new Shop_Data(command.Value[2], command.Value[3], offsets, process_bool(command.Value[5]), false, false);
             }
-            command_shop_text(shop);
-            command_shop_inventory(shop);
-            Global.game_map.add_shop(loc, shop, base_shop);
+            if (command.Value[0] == "Repair")
+            {
+                command_shop_text(shop);
+                Global.game_map.add_shop(loc, shop, false, base_repair);
+
+            }
+            else
+            {
+                command_shop_text(shop);
+                command_shop_inventory(shop);
+                Global.game_map.add_shop(loc, shop, base_shop);
+            }
             Index++;
             return true;
         }
@@ -2420,7 +2439,7 @@ namespace Tactile
             string[] offsets_str = command.Value[4].Split(new string[] { ", " }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < offsets.Length; i++)
                 offsets[i] = process_number(offsets_str[i]);
-            Shop_Data shop = new Shop_Data(command.Value[2], command.Value[3], offsets, false, true);
+            Shop_Data shop = new Shop_Data(command.Value[2], command.Value[3], offsets, false, true, false);
             command_shop_text(shop);
             Global.game_map.add_shop(loc, shop);
             Index++;
