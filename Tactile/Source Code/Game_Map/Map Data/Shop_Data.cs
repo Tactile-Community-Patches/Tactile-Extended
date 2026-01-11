@@ -13,6 +13,7 @@ namespace Tactile.Map
         int[] Offsets;
         bool Secret;
         bool Arena;
+        bool Blacksmith;
         List<string> Text = new List<string>();
         List<ShopItemData> Items = new List<ShopItemData>();
 
@@ -24,18 +25,20 @@ namespace Tactile.Map
             Offsets.write(writer);
             writer.Write(Secret);
             writer.Write(Arena);
+            writer.Write(Blacksmith);
             Text.write(writer);
             Items.write(writer);
         }
 
         public static Shop_Data read(BinaryReader reader)
         {
-            Shop_Data result = new Shop_Data("", "", new int[0], false, false);
+            Shop_Data result = new Shop_Data("", "", new int[0], false, false, false);
             result.Face = reader.ReadString();
             result.Song = reader.ReadString();
             result.Offsets = result.Offsets.read(reader);
             result.Secret = reader.ReadBoolean();
             result.Arena = reader.ReadBoolean();
+            result.Blacksmith = reader.ReadBoolean();
             result.Text.read(reader);
             result.Items.read(reader);
             return result;
@@ -52,17 +55,19 @@ namespace Tactile.Map
         public bool secret { get { return Secret; } }
 
         public bool arena { get { return Arena; } }
+        public bool blacksmith {  get { return Blacksmith; } }
 
         public List<ShopItemData> items { get { return Items; } }
         #endregion
 
-        public Shop_Data(string face, string song, int[] offsets, bool secret, bool arena)
+        public Shop_Data(string face, string song, int[] offsets, bool secret, bool arena, bool blacksmith)
         {
             Face = face;
             Song = song;
             Offsets = offsets;
             Secret = secret;
             Arena = arena;
+            Blacksmith = blacksmith;
         }
 
         public void add_text(string str)
