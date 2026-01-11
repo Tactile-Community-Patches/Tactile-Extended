@@ -94,6 +94,9 @@ namespace Tactile
 
         public List<Item_Data> active_convoy_data { get { return Convoys[battalion.convoy_id].Data; } }
         internal Shop_Data active_convoy_shop { get { return contains_convoy(battalion.convoy_id) ? Convoys[battalion.convoy_id].Shop : null; } }
+        internal Shop_Data active_repair_shop { get { return Convoys[battalion.convoy_id].Repair; } }
+
+        //internal Shop_Data arena_opponent_exists { get { return null; } }
 
         public int active_convoy_size { get { return Convoys[battalion.convoy_id].convoy_size; } }
         public bool active_convoy_is_full { get { return Convoys[battalion.convoy_id].is_full; } }
@@ -215,6 +218,18 @@ namespace Tactile
         internal void optimize_inventory(int id, Game_Actor actor)
         {
             Convoys[id].optimize_inventory(actor);
+        }
+        #endregion
+
+        #region Base Repair
+        internal void set_repair_shop(Shop_Data repair)
+        {
+            Convoys[battalion.convoy_id].Repair = repair;
+        }
+
+        public void clear_repair_shop()
+        {
+            Convoys[battalion.convoy_id].Repair = null;
         }
         #endregion
 
@@ -665,6 +680,7 @@ namespace Tactile
         {
             if (this.has_convoy)
                 Global.game_battalions.clear_convoy_shop();
+            Global.game_battalions.clear_repair_shop();
         }
     }
 
@@ -679,6 +695,7 @@ namespace Tactile
 
         public List<Item_Data> Data = new List<Item_Data>();
         internal Shop_Data Shop = null;
+        internal Shop_Data Repair = null;
         public List<Item_Data> Sold_Items = new List<Item_Data>();
 
         #region Serialization
@@ -688,6 +705,9 @@ namespace Tactile
             writer.Write(Shop != null);
             if (Shop != null)
                 Shop.write(writer);
+            writer.Write(Repair != null);
+            if (Repair != null)
+                Repair.write(writer);
             Sold_Items.write(writer);
         }
 
@@ -699,6 +719,9 @@ namespace Tactile
             bool shop_exists = reader.ReadBoolean();
             if (shop_exists)
                 result.Shop = Shop_Data.read(reader);
+            bool repair_exists = reader.ReadBoolean();
+            if (repair_exists)
+                result.Repair = Shop_Data.read(reader);
             result.Sold_Items.read(reader);
 
             return result;
