@@ -134,6 +134,7 @@ namespace Tactile.Menus.Preparations
             itemsMenu.Use += ItemsMenu_Use;
             itemsMenu.List += itemsMenu_List;
             itemsMenu.Shop += itemsMenu_Shop;
+            itemsMenu.Repair += itemsMenu_Repair;
             itemsMenu.Closed += menu_Closed;
             AddMenu(itemsMenu);
 
@@ -585,6 +586,26 @@ namespace Tactile.Menus.Preparations
                 listMenu.Closing += convoyMenu_Closing;
                 listMenu.Closed += menu_Closed;
                 AddMenu(listMenu);
+            }
+            else
+                Global.game_system.play_se(System_Sounds.Buzzer);
+        }
+
+        // Open repair menu
+        protected void itemsMenu_Repair(object sender, EventArgs e)
+        {
+            var itemsMenu = (sender as Window_Prep_Items);
+
+            if (Global.game_battalions.active_repair_shop != null)
+            {
+                Global.game_system.play_se(System_Sounds.Confirm);
+                Global.game_system.Shopper_Id = itemsMenu.ActorId;
+                var shopMenu = new Window_Blacksmith(
+                    Global.game_system.Shopper_Id,
+                    Global.game_battalions.active_repair_shop);
+                shopMenu.Shop_Close += shopMenu_Shop_Close;
+                shopMenu.Closed += menu_Closed;
+                AddMenu(shopMenu);
             }
             else
                 Global.game_system.play_se(System_Sounds.Buzzer);
