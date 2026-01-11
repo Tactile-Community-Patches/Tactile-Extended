@@ -354,6 +354,7 @@
     <Compile Include="Source Code\Windows\Options\SettingsWindow.cs" />
     <Compile Include="Source Code\Windows\Preparations Menus\WindowPrepActorList.cs" />
     <Compile Include="Source Code\Windows\ScrollComponent.cs" />
+    <Compile Include="Source Code\Windows\Shop\Window_Blacksmith.cs" />
     <Compile Include="Source Code\Windows\Target Windows\Window_Target_Placeable.cs" />
     <Compile Include="Source Code\Windows\Title\WindowSupportViewerActorList.cs" />
     <Compile Include="Source Code\Windows\User Interface\Command\Config\ConfigLabeledUINode.cs" />
