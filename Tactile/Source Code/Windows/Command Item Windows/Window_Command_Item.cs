@@ -231,7 +231,7 @@ namespace Tactile.Windows.Command.Items
 
         protected void refresh()
         {
-            equip_actor();
+            //equip_actor();
             if (should_refresh_info())
             {
                 int[] stat_values = new int[4];
