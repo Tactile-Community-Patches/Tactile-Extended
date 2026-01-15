@@ -327,7 +327,7 @@ namespace Tactile
                         Global.game_system.play_se(System_Sounds.Buzzer);
                     break;
                 // Restock
-                case 5:
+                case 8:
                     if (Global.battalion.has_convoy)
                         restock();
                     else
@@ -346,7 +346,7 @@ namespace Tactile
                         Shop(this, new EventArgs());
                     break;
                 // Repair
-                case 8:
+                case 5:
                     if (Repair != null)
                         Repair(this, new EventArgs());
                     break;
