@@ -103,6 +103,8 @@ namespace Tactile
             Darkened_Bar.dest_rect = new Rectangle(0, 8, Config.WINDOW_WIDTH, 48);
             Darkened_Bar.tint = new Color(0, 0, 0, 128);
 
+            // Data
+            refresh_repair();
             // Portrait BG
             Portrait_Bg = new Sprite();
             if (Global.game_system.preparations && string.IsNullOrEmpty(Shop.face))
