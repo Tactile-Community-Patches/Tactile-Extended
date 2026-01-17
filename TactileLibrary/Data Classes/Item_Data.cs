@@ -66,27 +66,18 @@ namespace TactileLibrary
         #endregion
 
         #region Serialization
-        public static Item_Data read(BinaryReader reader)
+        public void read(BinaryReader reader)
         {
-            int count = reader.ReadInt32();
-            Item_Data result;
-            if (count == 3)
-                result = new Item_Data(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
-            else //Debug
-                result = new Item_Data(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
-
-            return result;
+            Type = (Item_Data_Type)reader.ReadInt32();
+            Id = reader.ReadInt32();
+            Uses = reader.ReadInt32();
         }
 
         public void write(BinaryWriter writer)
         {
-            if (true) //Debug
-            {
-                writer.Write(3);
-                writer.Write((int)Type);
-                writer.Write(Id);
-                writer.Write(Uses);
-            }
+            writer.Write((int)Type);
+            writer.Write(Id);
+            writer.Write(Uses);
         }
         #endregion
 

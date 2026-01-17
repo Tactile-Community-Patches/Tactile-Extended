@@ -40,7 +40,7 @@ namespace Tactile.Metrics
             result.Team = reader.ReadInt32();
             result.ActorId = reader.ReadInt32();
             result.ClassId = reader.ReadInt32();
-            result.ItemData = Item_Data.read(reader);
+            result.ItemData.read(reader);
             result.ItemName = reader.ReadString();
             result.Loc = result.Loc.read(reader);
             return result;
@@ -52,7 +52,7 @@ namespace Tactile.Metrics
             return string.Format("Combat Metrics: Turn {0}, Actor {1}, {2}", Turn, ActorId, ItemData.name);
         }
 
-        private Item_Metrics() { }
+        private Item_Metrics() { ItemData = new Item_Data(); }
         public Item_Metrics(int turn, Game_Unit unit, Item_Data item_data)
         {
             Turn = turn;

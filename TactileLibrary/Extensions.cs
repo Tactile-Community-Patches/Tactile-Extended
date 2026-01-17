@@ -656,7 +656,11 @@ namespace ListExtension
             list.Clear();
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
-                list.Add(TactileLibrary.Item_Data.read(reader));
+            {
+                Item_Data item_Data = new Item_Data();
+                item_Data.read(reader);
+                list.Add(item_Data);
+            }
         }
 
         // List<ShopItemData>
@@ -672,7 +676,10 @@ namespace ListExtension
             list.Clear();
             int count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
-                list.Add(TactileLibrary.ShopItemData.read(reader));
+            {
+                ShopItemData shopItemData = new ShopItemData();
+                shopItemData.read(reader);
+            }    
         }
 
         // List<Battle_Frame_Data>

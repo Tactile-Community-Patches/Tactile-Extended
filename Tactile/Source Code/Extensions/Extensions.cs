@@ -152,7 +152,11 @@ namespace TactileArrayExtension
         {
             TactileLibrary.Item_Data[] result = new TactileLibrary.Item_Data[reader.ReadInt32()];
             for (int i = 0; i < result.GetLength(0); i++)
-                result[i] = TactileLibrary.Item_Data.read(reader);
+            {
+                TactileLibrary.Item_Data item_Data = new TactileLibrary.Item_Data();
+                item_Data.read(reader);
+                result[i] = item_Data;
+            }
             return result;
         }
 

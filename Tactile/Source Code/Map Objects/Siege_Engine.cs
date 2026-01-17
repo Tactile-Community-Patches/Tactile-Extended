@@ -26,7 +26,7 @@ namespace Tactile
             Id = reader.ReadInt32();
             Loc = Loc.read(reader);
             Real_Loc = Real_Loc.read(reader);
-            Item = TactileLibrary.Item_Data.read(reader);
+            Item.read(reader);
             State = (Siege_Engine_State)reader.ReadByte();
         }
         #endregion
@@ -61,7 +61,7 @@ namespace Tactile
         }
         #endregion
 
-        public Siege_Engine() { }
+        public Siege_Engine() { Item = new TactileLibrary.Item_Data(); }
         public Siege_Engine(int id, Vector2 loc, TactileLibrary.Item_Data item)
         {
             Id = id;
