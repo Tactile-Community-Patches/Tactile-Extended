@@ -10,7 +10,6 @@ namespace Tactile
         Skill = 2,
         Status = 3,
         Etc = 4,
-        Skill_Icon = 5,
     }
     public class Map_Animations
     {
