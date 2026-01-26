@@ -10,6 +10,7 @@ using Tactile.Graphics.Text;
 using TactileLibrary;
 using EnumExtension;
 using TactileRectangleExtension;
+using System.Diagnostics;
 
 namespace Tactile
 {
@@ -768,17 +769,48 @@ namespace Tactile
 
             texture.SetData(texture_data);
         }
-
-        public void set_map_effect(Vector2 loc, MapEffectType type, int id)
+        public void set_map_effects(List<Vector2> locs, List<MapEffectType> types, List<int> ids)
         {
-            Unit_Map_Effect = new Map_Effect(type, id);
-            Unit_Map_Effect.loc = loc * TILE_SIZE + new Vector2(TILE_SIZE, TILE_SIZE) / 2;
-            string name = Unit_Map_Effect.filename;
+            Debug.Assert(locs.Count == types.Count
+                        && locs.Count == ids.Count,
+                "Must pass lists of equal length to set_map_effects.");
+            Debug.Assert(locs.Count > 1,
+                "set_map_effects must try to set more than one map effect.");
+            List<Map_Effect> sub_effects = new List<Map_Effect>() { };
+            for (int n = 1; n < locs.Count; n++)
+            {
+                sub_effects.Add(prepare_map_effect(locs[n], types[n], ids[n]));
+            }
+            Unit_Map_Effect = prepare_map_effect(locs[0], types[0], ids[0], sub_effects);
+        }
+        public void set_map_effect(Vector2 loc, MapEffectType type, int id)
+        { 
+            Unit_Map_Effect = prepare_map_effect(loc, type, id);
+        }
+        private Map_Effect prepare_map_effect(Vector2 loc, MapEffectType type, int id)
+        {
+            Map_Effect map_effect = new Map_Effect(type, id);
+            map_effect.loc = loc * TILE_SIZE + new Vector2(TILE_SIZE, TILE_SIZE) / 2;
+            string name = map_effect.filename;
             if (name == "")
-                Unit_Map_Effect = null;
+                map_effect = null;
             else
-                Unit_Map_Effect.texture = Global.Content.Load<Texture2D>(@"Graphics/Pictures/" + name);
-            Unit_Map_Effect.stereoscopic = Config.MAP_STATUS_ICON_DEPTH;
+                map_effect.texture = Global.Content.Load<Texture2D>(@"Graphics/Pictures/" + name);
+            map_effect.stereoscopic = Config.MAP_STATUS_ICON_DEPTH;
+            return map_effect;
+        }
+        private Map_Effect prepare_map_effect(Vector2 loc, MapEffectType type, int id, List<Map_Effect> sub_effects)
+        {
+            // Code duplication... eugh
+            Map_Effect map_effect = new Map_Effect(type, id, sub_effects);
+            map_effect.loc = loc * TILE_SIZE + new Vector2(TILE_SIZE, TILE_SIZE) / 2;
+            string name = map_effect.filename;
+            if (name == "")
+                map_effect = null;
+            else
+                map_effect.texture = Global.Content.Load<Texture2D>(@"Graphics/Pictures/" + name);
+            map_effect.stereoscopic = Config.MAP_STATUS_ICON_DEPTH;
+            return map_effect;
         }
 
         public void set_ballista_effect(Vector2 loc, Vector2 dest_loc)

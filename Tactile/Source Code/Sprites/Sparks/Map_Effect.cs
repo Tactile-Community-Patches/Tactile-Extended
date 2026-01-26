@@ -62,6 +62,12 @@ namespace Tactile.Graphics.Map
             Type = type;
             Id = id;
         }
+        public Map_Effect(MapEffectType type, int id, List<Map_Effect> sub_effects)
+        {
+            Type = type;
+            Id = id;
+            Sub_Effects = sub_effects;
+        }
 
         protected void process_frame(int frame)
         {

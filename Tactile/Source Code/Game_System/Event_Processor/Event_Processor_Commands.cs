@@ -2793,7 +2793,35 @@ namespace Tactile
                     int Y = process_number(command.Value[2]);
                     int type = process_number(command.Value[3]);
                     int id = process_number(command.Value[4]);
-                    ((Scene_Map)Global.scene).set_map_effect(new Vector2(X, Y), type, id);
+                    ((Scene_Map)Global.scene).set_map_effect(new Vector2(X, Y), (MapEffectType)type, id);
+                    break;
+                #endregion
+                case "Set Map Effects":
+                    #region Set Map Effects
+                    // Value[4n + 0] = X
+                    // Value[4n + 1] = Y
+                    // Value[4n + 2] = Type
+                    // Value[4n + 3] = Id
+                    int n_max = command.Value.Count() / 4;
+                    int[] X_array = new int[n_max];
+                    int[] Y_array = new int[n_max];
+                    int[] type_array = new int[n_max];
+                    int[] id_array = new int[n_max];
+                    for (int n = 0; n < n_max; n++)
+                    {
+                        X_array[n] = process_number(command.Value[4 * n]);
+                        Y_array[n] = process_number(command.Value[4 * n + 1]);
+                        type_array[n] = process_number(command.Value[4 * n + 2]);
+                        id_array[n] = process_number(command.Value[4 * n + 3]);
+                    }
+                    List<Vector2> locs = new List<Vector2>() { };
+                    List<MapEffectType> types = new List<MapEffectType>() { };
+                    for (int n = 0; n < n_max; n++)
+                    {
+                        locs.Add(new Vector2(X_array[n], Y_array[n]));
+                        types.Add((MapEffectType)type_array[n]);
+                    }
+                    ((Scene_Map)Global.scene).set_map_effects(locs, types, id_array.ToList());
                     break;
                 #endregion
 #if DEBUG
