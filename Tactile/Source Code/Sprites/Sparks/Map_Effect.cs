@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Tactile.Graphics.Map
 {
-    
     class Map_Effect : Matrix_Position_Sprite
     {
         protected Texture2D Texture;
